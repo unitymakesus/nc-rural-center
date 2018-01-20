@@ -1,0 +1,50 @@
+.et_pb_button.et_pb_button.et_pb_button {
+  position: relative;
+  padding-left: 40px !important;
+  padding-right: 40px !important;
+
+  &::before, &::after {
+    display: block !important;
+    content: '';
+    position: absolute;
+    top: 0;
+    border: 20px solid transparent;
+    opacity: 1;
+    margin: 0;
+  }
+
+  &::before {
+    left: 0;
+    border-left-color: $color-orange-dark;
+  }
+
+  &::after {
+    right: 0;
+    border-right-color: $color-orange-dark;
+  }
+
+  &:hover, &:focus, &:active {
+    &::before, &::after {
+      display: block !important;
+      opacity: 0;
+    }
+  }
+
+  &.invest_button {
+    display: inline-block;
+
+    &, &:hover, &:active, &:focus {
+      background: $color-green-light !important;
+      border: 3px solid $color-green-dark !important;
+      color: $color-black !important;
+    }
+
+    &::before {
+      border-left-color: $color-green-dark;
+    }
+
+    &::after {
+      border-right-color: $color-green-dark;
+    }
+  }
+}

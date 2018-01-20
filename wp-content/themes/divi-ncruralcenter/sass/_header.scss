@@ -1,0 +1,93 @@
+#logo {
+  position: relative;
+  top: -22px;
+}
+
+// Secondary Nav
+#top-header a {
+  text-decoration: none;
+  transition: color .2s ease;
+
+  &:hover, &:active, &:focus {
+    color: $color-blue-a11y;
+    text-decoration: underline;
+  }
+}
+
+// Primary Nav
+.nav li {
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 30%;
+    border: 17px solid transparent;
+    opacity: 0;
+    transition: opacity .3s;
+  }
+
+  &:hover, &:active, &:focus {
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  // Engagement (Blue)
+  &.menu-item-143 {
+    .sub-menu {
+      border: 2px solid $color-blue-dark;
+    }
+
+    &::before {
+      border-bottom-color: $color-blue-dark;
+    }
+  }
+  // Leadership (Orange)
+  &.menu-item-144 {
+    .sub-menu {
+      border: 2px solid $color-orange-dark;
+    }
+
+    &::before {
+      border-bottom-color: $color-orange-dark;
+    }
+  }
+  // Lending (Green)
+  &.menu-item-145 {
+    .sub-menu {
+      border: 2px solid $color-green-dark;
+    }
+
+    &::before {
+      border-bottom-color: $color-green-dark;
+    }
+  }
+  // Research (Yellow)
+  &.menu-item-146 {
+    .sub-menu {
+      border: 2px solid $color-yellow-dark;
+    }
+
+    &::before {
+      border-bottom-color: $color-yellow-dark;
+    }
+  }
+}
+
+#top-menu .sub-menu {
+  padding-top: 10px;
+
+  li {
+    padding: 0;
+    width: 100%;
+
+    a {
+      width: 100%;
+      text-transform: none;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.35em;
+      padding: 10px 20px;
+    }
+  }
+}
