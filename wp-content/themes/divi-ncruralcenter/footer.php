@@ -31,13 +31,17 @@ if ( ! is_page_template( 'page-template-blank.php' ) ) : ?>
 
 				<div id="footer-bottom">
 					<div class="container clearfix">
-				<?php
-					if ( false !== et_get_option( 'show_footer_social_icons', true ) ) {
-						get_template_part( 'includes/social_icons', 'footer' );
-					}
-
-					echo et_get_footer_credits();
-				?>
+						<div class="left">
+							&copy;<?php echo current_time('Y'); ?> NC Rural Center
+						</div>
+						<div class="center">
+							<a href="/privacy-policy/">Privacy Policy</a>
+						</div>
+						<div class="right">
+							<a href="https://www.unitymakes.us/" target="_blank" rel="noopener" class="unity-link">
+								<?php echo file_get_contents(get_stylesheet_directory() . '/images/made-with-unity.svg'); ?>
+							</a>
+						</div>
 					</div>	<!-- .container -->
 				</div>
 			</footer> <!-- #main-footer -->

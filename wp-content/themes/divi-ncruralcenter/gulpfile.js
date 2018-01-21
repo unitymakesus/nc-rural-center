@@ -29,5 +29,6 @@ gulp.task('bs-reload', function () {
 // Watch scss AND html files, doing different things with each.
 gulp.task('default', ['browser-sync', 'compass'], function () {
     gulp.watch("sass/*.scss", ['compass']);
+    gulp.watch("sass/*/*.scss", ['compass']);
     gulp.watch("*.html").on("change", browserSync.reload);
 });

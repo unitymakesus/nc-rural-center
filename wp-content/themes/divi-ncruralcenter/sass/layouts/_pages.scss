@@ -1,0 +1,20 @@
+.page {
+  .et_pb_post_title {
+    height: 18.5em;
+  }
+
+  .et_section_specialty {
+    .et_pb_column_1_3, .et_pb_column_1_4 {
+      padding-bottom: 0;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -25vw;
+        left: 0;
+        border: 12.5vw solid transparent;
+      }
+    }
+  }
+}

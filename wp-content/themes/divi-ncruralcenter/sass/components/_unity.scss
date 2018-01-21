@@ -1,0 +1,15 @@
+.unity-link {
+  display: inline-block;
+  max-width: 120px;
+}
+
+.svg-unity-logo {
+  width: 100%;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
+
+  path {
+    fill: $color-white;
+  }
+}

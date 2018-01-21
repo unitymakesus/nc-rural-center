@@ -15,7 +15,7 @@
 }
 
 // Primary Nav
-.nav li {
+#top-menu li {
   &::before {
     content: '';
     position: absolute;
@@ -24,6 +24,14 @@
     border: 17px solid transparent;
     opacity: 0;
     transition: opacity .3s;
+  }
+
+  a:first-child {
+    padding-right: 0 !important;
+    padding-left: 20px;
+    &::after {
+      display: none;
+    }
   }
 
   &:hover, &:active, &:focus {

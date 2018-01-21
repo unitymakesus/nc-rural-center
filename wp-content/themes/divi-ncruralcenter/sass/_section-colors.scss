@@ -1,0 +1,21 @@
+.page {
+  .et_section_specialty {
+    $color-names: "orange" "yellow" "green" "blue";
+    $color-a11ys: $color-orange-a11y $color-yellow-a11y $color-green-a11y $color-blue-a11y;
+
+    @each $name in $color-names {
+      $i: index($color-names, $name);
+      &.#{$name} {
+        .et_pb_column_1_3, .et_pb_column_1_4, .breadcrumb-trail {
+          background: nth($color-a11ys, $i);
+        }
+
+        .et_pb_column_1_3::after,
+        .et_pb_column_1_4::after {
+          border-top-color: nth($color-a11ys, $i);
+          border-left-color: nth($color-a11ys, $i);
+        }
+      }
+    }
+  }
+}
