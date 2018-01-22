@@ -1,0 +1,60 @@
+.et_pb_section.what-we-do {
+  .et_pb_row_fullwidth {
+    .et_pb_text {
+      position: relative;
+
+      h3 {
+        margin: 0;
+        padding: 0;
+      }
+
+      a {
+        display: block;
+        text-decoration: none;
+        padding: 22% 20px;
+        text-shadow: 0.08em 0.08em 0.08em rgba(0,0,0,0.4);
+        transition: all .3s ease-in-out;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          opacity: 0;
+          transition: opacity .3s ease-in-out;
+          z-index: -1;
+        }
+        &:hover, &:active, &:focus {
+          color: $color-white;
+          text-shadow: 0.08em 0.08em 0.8em rgba(0,0,0,1);
+
+          &::before {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    // Engagement
+    .et_pb_text_1 a::before {
+      background: rgba($color-blue-a11y,0.3);
+    }
+
+    // Leadership
+    .et_pb_text_2 a::before {
+      background: rgba($color-orange-a11y,0.3);
+    }
+
+    // Lending
+    .et_pb_text_3 a::before {
+      background: rgba($color-green-a11y,0.3);
+    }
+
+    // Research
+    .et_pb_text_4 a::before {
+      background: rgba($color-yellow-a11y,0.3);
+    }
+  }
+}

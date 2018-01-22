@@ -68,6 +68,9 @@
   right: 0;
   border-right-color: #D57027;
 }
+.et_pb_button.et_pb_button.et_pb_button:hover, .et_pb_button.et_pb_button.et_pb_button:focus, .et_pb_button.et_pb_button.et_pb_button:active {
+  box-shadow: 0.08em 0.08em 0.6em rgba(0, 0, 0, 0.4);
+}
 .et_pb_button.et_pb_button.et_pb_button:hover::before, .et_pb_button.et_pb_button.et_pb_button:hover::after, .et_pb_button.et_pb_button.et_pb_button:focus::before, .et_pb_button.et_pb_button.et_pb_button:focus::after, .et_pb_button.et_pb_button.et_pb_button:active::before, .et_pb_button.et_pb_button.et_pb_button:active::after {
   display: block !important;
   opacity: 0;
@@ -175,13 +178,21 @@ a:hover, a:focus, a:active {
   padding: 0;
   width: 100%;
 }
+#top-menu .sub-menu li::before {
+  display: none !important;
+}
 #top-menu .sub-menu li a {
   width: 100%;
   text-transform: none;
   font-size: 16px;
   font-weight: 300;
   line-height: 1.35em;
-  padding: 10px 20px;
+  padding: 10px 20px !important;
+}
+#top-menu .sub-menu li a:hover, #top-menu .sub-menu li a:focus, #top-menu .sub-menu li a:active {
+  text-decoration: underline;
+  background: none;
+  opacity: 1;
 }
 
 #main-footer .container, #footer-bottom .container {
@@ -274,6 +285,51 @@ a:hover, a:focus, a:active {
   bottom: -25vw;
   left: 0;
   border: 12.5vw solid transparent;
+}
+
+.et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text {
+  position: relative;
+}
+.et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text h3 {
+  margin: 0;
+  padding: 0;
+}
+.et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text a {
+  display: block;
+  text-decoration: none;
+  padding: 22% 20px;
+  text-shadow: 0.08em 0.08em 0.08em rgba(0, 0, 0, 0.4);
+  transition: all .3s ease-in-out;
+}
+.et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  z-index: -1;
+}
+.et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text a:hover, .et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text a:active, .et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text a:focus {
+  color: #FFF;
+  text-shadow: 0.08em 0.08em 0.8em black;
+}
+.et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text a:hover::before, .et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text a:active::before, .et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text a:focus::before {
+  opacity: 1;
+}
+.et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text_1 a::before {
+  background: rgba(35, 123, 192, 0.3);
+}
+.et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text_2 a::before {
+  background: rgba(189, 91, 13, 0.3);
+}
+.et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text_3 a::before {
+  background: rgba(53, 135, 52, 0.3);
+}
+.et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text_4 a::before {
+  background: rgba(190, 141, 1, 0.3);
 }
 
 .et_pb_widget_area {
