@@ -49,6 +49,18 @@
     &::before {
       border-bottom-color: $color-blue-dark;
     }
+
+    &.current-menu-ancestor {
+      & > a {
+        color: $color-blue-a11y;
+      }
+
+      .sub-menu {
+        .current-menu-item > a {
+          color: $color-blue-a11y;
+        }
+      }
+    }
   }
   // Leadership (Orange)
   &.menu-item-144 {
@@ -58,6 +70,18 @@
 
     &::before {
       border-bottom-color: $color-orange-dark;
+    }
+
+    &.current-menu-ancestor {
+      & > a {
+        color: $color-orange-a11y;
+      }
+
+      .sub-menu {
+        .current-menu-item > a {
+          color: $color-orange-a11y;
+        }
+      }
     }
   }
   // Lending (Green)
@@ -69,6 +93,18 @@
     &::before {
       border-bottom-color: $color-green-dark;
     }
+
+    &.current-menu-ancestor {
+      & > a {
+        color: $color-green-a11y;
+      }
+
+      .sub-menu {
+        .current-menu-item > a {
+          color: $color-green-a11y;
+        }
+      }
+    }
   }
   // Research (Yellow)
   &.menu-item-146 {
@@ -78,6 +114,18 @@
 
     &::before {
       border-bottom-color: $color-yellow-dark;
+    }
+
+    &.current-menu-ancestor {
+      & > a {
+        color: $color-yellow-a11y;
+      }
+
+      .sub-menu {
+        .current-menu-item > a {
+          color: $color-yellow-a11y;
+        }
+      }
     }
   }
 }
@@ -106,6 +154,10 @@
         background: none;
         opacity: 1;
       }
+    }
+
+    &.current-menu-item > a {
+      font-weight: bold;
     }
   }
 }

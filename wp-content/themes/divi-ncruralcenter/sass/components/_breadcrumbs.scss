@@ -10,8 +10,29 @@
     list-style: none;
     padding: 0;
 
-    li {
+    .trail-item {
       display: inline-block;
+      font-family: 'Montserrat', Montserrat, sans-serif;
+
+      &::after {
+        content: '';
+        display: inline-block;
+        width: 11px;
+        height: 9px;
+        background-image: url('../images/arrow-right.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        margin: 0 5px;
+      }
+
+      &:last-child::after {
+        display: none;
+      }
+    }
+
+    a {
+      color: $color-white;
+      text-decoration: underline;
     }
   }
 }

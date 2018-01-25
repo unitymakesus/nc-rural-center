@@ -42,8 +42,26 @@
   list-style: none;
   padding: 0;
 }
-.breadcrumb-trail .trail-items li {
+.breadcrumb-trail .trail-items .trail-item {
   display: inline-block;
+  font-family: 'Montserrat', Montserrat, sans-serif;
+}
+.breadcrumb-trail .trail-items .trail-item::after {
+  content: '';
+  display: inline-block;
+  width: 11px;
+  height: 9px;
+  background-image: url("../images/arrow-right.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0 5px;
+}
+.breadcrumb-trail .trail-items .trail-item:last-child::after {
+  display: none;
+}
+.breadcrumb-trail .trail-items a {
+  color: #FFF;
+  text-decoration: underline;
 }
 
 .et_pb_button.et_pb_button.et_pb_button {
@@ -152,11 +170,23 @@ a:hover, a:focus, a:active {
 #top-menu li.menu-item-143::before {
   border-bottom-color: #2686C7;
 }
+#top-menu li.menu-item-143.current-menu-ancestor > a {
+  color: #237BC0;
+}
+#top-menu li.menu-item-143.current-menu-ancestor .sub-menu .current-menu-item > a {
+  color: #237BC0;
+}
 #top-menu li.menu-item-144 .sub-menu {
   border: 2px solid #D57027;
 }
 #top-menu li.menu-item-144::before {
   border-bottom-color: #D57027;
+}
+#top-menu li.menu-item-144.current-menu-ancestor > a {
+  color: #BD5B0D;
+}
+#top-menu li.menu-item-144.current-menu-ancestor .sub-menu .current-menu-item > a {
+  color: #BD5B0D;
 }
 #top-menu li.menu-item-145 .sub-menu {
   border: 2px solid #54A352;
@@ -164,11 +194,23 @@ a:hover, a:focus, a:active {
 #top-menu li.menu-item-145::before {
   border-bottom-color: #54A352;
 }
+#top-menu li.menu-item-145.current-menu-ancestor > a {
+  color: #358734;
+}
+#top-menu li.menu-item-145.current-menu-ancestor .sub-menu .current-menu-item > a {
+  color: #358734;
+}
 #top-menu li.menu-item-146 .sub-menu {
   border: 2px solid #DFB12E;
 }
 #top-menu li.menu-item-146::before {
   border-bottom-color: #DFB12E;
+}
+#top-menu li.menu-item-146.current-menu-ancestor > a {
+  color: #BE8D01;
+}
+#top-menu li.menu-item-146.current-menu-ancestor .sub-menu .current-menu-item > a {
+  color: #BE8D01;
 }
 
 #top-menu .sub-menu {
@@ -193,6 +235,9 @@ a:hover, a:focus, a:active {
   text-decoration: underline;
   background: none;
   opacity: 1;
+}
+#top-menu .sub-menu li.current-menu-item > a {
+  font-weight: bold;
 }
 
 #main-footer .container, #footer-bottom .container {
@@ -285,6 +330,11 @@ a:hover, a:focus, a:active {
   bottom: -25vw;
   left: 0;
   border: 12.5vw solid transparent;
+}
+.page .et_section_specialty .et_pb_column_3_4 .et_pb_text {
+  padding: 50px 20px;
+  font-size: 18px;
+  line-height: 1.7em;
 }
 
 .et_pb_section.what-we-do .et_pb_row_fullwidth .et_pb_text {
