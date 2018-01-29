@@ -860,9 +860,6 @@
     -webkit-transition: padding 0.25s ease-in-out, margin 0.25s ease-in-out, bottom 0.25s ease-in-out;
     transition: padding 0.25s ease-in-out, margin 0.25s ease-in-out, bottom 0.25s ease-in-out;
     padding: 6px; }
-  .rtl .et-fb-section-button-wrap--add .et-fb-button, .rtl .et-fb-row-button-wrap--add .et-fb-button, .rtl .et-fb-module-button-wrap--add .et-fb-button, .rtl .et-fb-item-button-wrap--add .et-fb-button {
-      left: auto;
-      right: 45%; }
   .et-fb-section-button-wrap--add .et-fb-button:hover, .et-fb-row-button-wrap--add .et-fb-button:hover, .et-fb-module-button-wrap--add .et-fb-button:hover, .et-fb-item-button-wrap--add .et-fb-button:hover, .et-fb-section-button-wrap--add .et-fb-button--active, .et-fb-row-button-wrap--add .et-fb-button--active, .et-fb-module-button-wrap--add .et-fb-button--active, .et-fb-item-button-wrap--add .et-fb-button--active {
       padding: 12px;
       margin: -6px; }
