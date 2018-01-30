@@ -1,27 +1,124 @@
 .page {
   .et_pb_post_title {
-    height: 18.5em;
+    height: 19em;
+    position: relative;
+    margin-bottom: 2em !important;
+
+    .et_pb_title_container {
+      height: 100%;
+    }
+
+    .entry-title {
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+    }
   }
 
   .et_section_specialty {
-    .et_pb_column_1_3, .et_pb_column_1_4 {
-      padding-bottom: 0;
+    & > .et_pb_row {
+      display: flex;
+    }
+
+    .et_pb_widget_area {
+      padding: 0;
+    }
+
+    .widget_nav_menu {
+      padding: 26px 30px 0;
+      min-height: 21em;
       position: relative;
 
       &::after {
         content: '';
         position: absolute;
-        bottom: -25vw;
+        bottom: -24.7vw;
         left: 0;
-        border: 12.5vw solid transparent;
+        border: 12.35vw solid transparent;
       }
     }
 
-    .et_pb_column_3_4 {
+    .et_pb_column_inner {
       .et_pb_text {
-        padding: 50px 20px;
-        font-size: 18px;
-        line-height: 1.7em;
+        padding-left: 20px;
+      }
+    }
+  }
+
+  .et_pb_text {
+    font-size: 18px;
+    line-height: 1.7em;
+  }
+
+  .et_pb_salvattore_content {
+    display: flex;
+
+    .column.size-1of3 {
+      width: auto !important;
+      margin: 0 1.5%;
+
+      .et_pb_image_container {
+        margin: 0 !important;
+
+        a {
+          margin: 0;
+        }
+      }
+
+      .et_pb_post {
+        border: 0;
+        padding: 0 !important;
+        position: relative;
+
+        .post-meta {
+          text-transform: uppercase;
+          font-family: $font-sans-serif;
+          color: $color-black;
+          font-size: 18px;
+        }
+
+        .entry-title {
+          background: $color-blue-light;
+          padding: 0;
+          font-size: 16px;
+          font-weight: normal;
+          margin-bottom: 1em;
+
+          a {
+            color: $color-white;
+            display: block;
+            padding: 10px 25px;
+            position: relative;
+
+            &::before, &::after {
+              display: block;
+              content: '';
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              background: $color-blue-dark;
+              width: 20px;
+              height: 100%;
+              transition: padding 0.3s ease;
+            }
+
+            &::before {
+              left: 0;
+              -webkit-clip-path: polygon(0 0, 100% 50%, 0 100%);
+              clip-path: polygon(0 0, 100% 50%, 0 100%);
+            }
+
+            &::after {
+              right: 0;
+              -webkit-clip-path: polygon(100% 0, 100% 100%, 0 50%);
+              clip-path: polygon(100% 0, 100% 100%, 0 50%);
+            }
+
+            &:hover, &:focus, &:active {
+              // padding: 20px 25px;
+            }
+          }
+        }
       }
     }
   }

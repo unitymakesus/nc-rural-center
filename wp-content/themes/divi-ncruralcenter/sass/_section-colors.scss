@@ -6,12 +6,11 @@
     @each $name in $color-names {
       $i: index($color-names, $name);
       &.#{$name} {
-        .et_pb_column_1_3, .et_pb_column_1_4, .breadcrumb-trail {
+        .widget_nav_menu, .breadcrumb-trail {
           background: nth($color-a11ys, $i);
         }
 
-        .et_pb_column_1_3::after,
-        .et_pb_column_1_4::after {
+        .widget_nav_menu::after {
           border-top-color: nth($color-a11ys, $i);
           border-left-color: nth($color-a11ys, $i);
         }

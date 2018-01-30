@@ -1,0 +1,45 @@
+.ctct-form-wrapper {
+  .ctct-form-field {
+    margin: 0 auto;
+    padding: 1em 0;
+    width: 320px;
+
+    label {
+      display: block;
+      font-size: .8em;
+
+      abbr {
+        text-decoration: none;
+      }
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+    }
+  }
+
+  .ctct-form-field-submit {
+    input {
+      position: relative;
+      padding-left: 40px;
+      padding-right: 40px;
+      background: $color-yellow-light;
+      color: $color-black;
+      border: 0;
+      border-bottom: 3px solid $color-yellow-dark;
+      font-family: $font-sans-serif;
+      text-transform: uppercase;
+
+      &:hover, &:focus, &:active {
+        box-shadow: 0.08em 0.08em 0.6em rgba(0,0,0,0.4);
+      }
+    }
+  }
+
+  .ctct-disclosure {
+    font-size: 14px;
+    display: none;
+  }
+}
