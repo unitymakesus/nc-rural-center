@@ -1,4 +1,4 @@
-.person {
+.person, .staff {
   clear: both;
   display: flex;
   flex-direction: row;
@@ -12,7 +12,9 @@
 
   .tagline {
     font-family: $font-sans-serif;
-    font-weight: bold;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.2em;
   }
 
   h3 {
@@ -38,16 +40,35 @@
 }
 
 .col_3_8 {
-  width: 37.5%;
-  padding-right: 20px;
+  width: 25%;
 }
 
 .col_5_8 {
-  width: 62.5%;
+  width: 75%;
+  padding-right: 20px;
 }
 
 .single-staff {
   .page-title {
     font-size: 14px;
+  }
+
+  .entry-title {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .hentry {
+    width: 75%;
+    padding: 0 20px;
+    margin-left: 25%;
+    font-size: 18px;
+    line-height: 1.7em;
+    border-bottom: 0;
+  }
+
+  .person {
+    border-bottom: 0 none;
+    margin-bottom: 0;
   }
 }

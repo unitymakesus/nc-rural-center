@@ -153,6 +153,9 @@
   border-right-color: #54A352;
 }
 
+.ctct-form-wrapper .ctct-button {
+  display: none !important;
+}
 .ctct-form-wrapper .ctct-form-field {
   margin: 0 auto;
   padding: 1em 0;
@@ -467,6 +470,38 @@ a:hover, a:focus, a:active {
   text-align: right;
 }
 
+[class*="icon-"] {
+  position: relative;
+  overflow: hidden;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  text-indent: -100em;
+  color: #D57027 !important;
+}
+[class*="icon-"]::before {
+  position: absolute;
+  content: '';
+  display: block;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+}
+
+.icon-facebook::before {
+  background-image: url("../images/facebook.svg");
+}
+
+.icon-twitter::before {
+  background-image: url("../images/twitter.svg");
+}
+
+.icon-instagram::before {
+  background-image: url("../images/instagram.svg");
+}
+
 .single-staff .page-title, .page .page-title {
   height: 19em;
   position: relative;
@@ -482,7 +517,6 @@ a:hover, a:focus, a:active {
 }
 .single-staff .et_section_specialty > .et_pb_row, .page .et_section_specialty > .et_pb_row {
   display: flex;
-  overflow: hidden;
 }
 .single-staff .et_section_specialty .et_pb_widget_area, .page .et_section_specialty .et_pb_widget_area {
   padding: 0;
@@ -501,6 +535,7 @@ a:hover, a:focus, a:active {
 }
 .single-staff .et_section_specialty .et_pb_column_inner .et_pb_text, .page .et_section_specialty .et_pb_column_inner .et_pb_text {
   padding-left: 20px;
+  padding-right: 20px;
 }
 .single-staff .et_pb_text, .page .et_pb_text {
   font-size: 18px;
@@ -613,6 +648,10 @@ a:hover, a:focus, a:active {
 .home .blog-highlights .et_pb_salvattore_content {
   display: flex;
 }
+.home .blog-highlights .et_pb_salvattore_content .column {
+  flex-grow: 1;
+  max-width: none;
+}
 .home .blog-highlights .et_pb_post {
   border: none;
   height: 100%;
@@ -668,7 +707,7 @@ a:hover, a:focus, a:active {
   margin: 0;
 }
 
-.person {
+.person, .staff {
   clear: both;
   display: flex;
   flex-direction: row;
@@ -676,42 +715,60 @@ a:hover, a:focus, a:active {
   margin-bottom: 3em;
   padding-bottom: 1.5em;
 }
-.person img {
+.person img, .staff img {
   display: block;
 }
-.person .tagline {
+.person .tagline, .staff .tagline {
   font-family: "Montserrat", Montserrat, sans-serif;
-  font-weight: bold;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.2em;
 }
-.person h3 {
+.person h3, .staff h3 {
   font-size: 26px;
   margin: 0;
   padding: 0;
 }
-.person .title {
+.person .title, .staff .title {
   font-family: "Montserrat", Montserrat, sans-serif;
   font-weight: 300;
   font-size: 22px;
   margin: 0;
 }
-.person a {
+.person a, .staff a {
   font-family: "Montserrat", Montserrat, sans-serif;
 }
-.person a.read-more {
+.person a.read-more, .staff a.read-more {
   text-transform: uppercase;
 }
 
 .col_3_8 {
-  width: 37.5%;
-  padding-right: 20px;
+  width: 25%;
 }
 
 .col_5_8 {
-  width: 62.5%;
+  width: 75%;
+  padding-right: 20px;
 }
 
 .single-staff .page-title {
   font-size: 14px;
+}
+.single-staff .entry-title {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.single-staff .hentry {
+  width: 75%;
+  padding: 0 20px;
+  margin-left: 25%;
+  font-size: 18px;
+  line-height: 1.7em;
+  border-bottom: 0;
+}
+.single-staff .person {
+  border-bottom: 0 none;
+  margin-bottom: 0;
 }
 
 .et_pb_widget_area h4.widgettitle {

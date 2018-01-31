@@ -1,4 +1,6 @@
 <?php
+if (!defined('ABSPATH')) { exit(); } // No direct access
+
 add_action('admin_head', 'wtfdivi094_admin_css');
 
 function wtfdivi094_admin_css() { ?>
@@ -32,6 +34,14 @@ div[data-action].et_pb_modal_overlay .et_pb_prompt_modal {
     width: 100% !important;
     margin: 0 !important;
     bottom: 0 !important; 
+}
+
+/* Make the code module content box wider */
+[data-module_type="et_pb_code"] [data-option_name="raw_content"] .et-pb-option-container { 
+    width: calc(100% - 480px) !important; 
+}
+[data-module_type="et_pb_code"] [data-option_name="raw_content"] .et-pb-option-container textarea { 
+    width: 100% !important; 
 }
 </style>
 

@@ -72,6 +72,11 @@
 
   .et_pb_salvattore_content {
     display: flex;
+
+    .column {
+      flex-grow: 1;
+      max-width: none;
+    }
   }
 
   .et_pb_post {

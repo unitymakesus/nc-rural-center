@@ -1,4 +1,5 @@
 <?php 
+if (!defined('ABSPATH')) { exit(); } // No direct access
 
 // === Common ===
 
@@ -89,7 +90,7 @@ function wtfdivi014_visual_builder_css() {
 	if (!isset($option['urlmax'])) { $option['urlmax']=0; }
 	for($i=0; $i<=$option['urlmax']; $i++) {
 		if (!empty($option["url$i"])) { ?>
-			[data-icon="wtfdivi014-url<?php echo $i; ?>"]:after { background: url('<?php echo htmlentities(@$option["url$i"]); ?>') no-repeat center center; -webkit-background-size: cover; -moz-background-size: cover;-o-background-size: cover;background-size:cover; content:'a' !important; width:16px !important; height:16px !important; color:rgba(0,0,0,0) !important; }
+			.et-fb-font-icon-list li[data-icon="wtfdivi014-url<?php echo $i; ?>"]:after { background: url('<?php echo htmlentities(@$option["url$i"]); ?>') no-repeat center center; -webkit-background-size: cover; -moz-background-size: cover;-o-background-size: cover;background-size:cover; content:'a' !important; width:16px !important; height:16px !important; color:rgba(0,0,0,0) !important; }
 		<?php 
 		}
 	}
@@ -101,8 +102,8 @@ function db014_user_css($plugin) {
 	if (!isset($option['urlmax'])) { $option['urlmax']=0; }
 	for($i=0; $i<=$option['urlmax']; $i++) {
 		if (!empty($option["url$i"])) { ?>
-			.et_pb_inline_icon[data-icon="wtfdivi014-url<?php echo $i; ?>"]:before { content: '' !important; }
 			
+			.et_pb_custom_button_icon[data-icon="wtfdivi014-url<?php echo $i; ?>"]:before, 
 			.et_pb_custom_button_icon[data-icon="wtfdivi014-url<?php echo $i; ?>"]:after { 
 				background-image: url('<?php echo htmlentities(@$option["url$i"]); ?>') !important; 
 				background-size: auto 1em;
@@ -117,6 +118,21 @@ function db014_user_css($plugin) {
 			.et_pb_custom_button_icon[data-icon="wtfdivi014-url<?php echo $i; ?>"] { 
 				overflow: hidden;
 			}
+			.et_pb_posts .et_pb_inline_icon[data-icon="wtfdivi014-url<?php echo $i; ?>"]:before,
+			.et_pb_portfolio_item .et_pb_inline_icon[data-icon="wtfdivi014-url<?php echo $i; ?>"]:before {
+				content: '' !important;
+				-webkit-transition: all 0.4s;
+				-moz-transition: all 0.4s;
+				transition: all 0.4s;
+			}
+			.et_pb_posts .entry-featured-image-url:hover .et_pb_inline_icon[data-icon="wtfdivi014-url<?php echo $i; ?>"] img,
+			.et_pb_portfolio_item .et_portfolio_image:hover .et_pb_inline_icon[data-icon="wtfdivi014-url<?php echo $i; ?>"] img { 
+				margin-top:0px; transition: all 0.4s;
+			}
+			.et_pb_posts .entry-featured-image-url .et_pb_inline_icon[data-icon="wtfdivi014-url<?php echo $i; ?>"] img, 
+			.et_pb_portfolio_item .et_portfolio_image .et_pb_inline_icon[data-icon="wtfdivi014-url<?php echo $i; ?>"] img { 
+				margin-top: 14px; 
+			}
 	
 		<?php
 		} 
@@ -130,6 +146,11 @@ function db014_user_css($plugin) {
 		top:50%;
 		left:50%;
 		-webkit-transform: translate(-50%,-50%); -moz-transform: translate(-50%,-50%); -ms-transform: translate(-50%,-50%); transform: translate(-50%,-50%); 
+	}
+	
+	.et_pb_gallery .et_pb_gallery_image .et_pb_inline_icon[data-icon^="wtfdivi014"]:before,
+	.et_pb_blog_grid .et_pb_inline_icon[data-icon^="wtfdivi014"]:before	{ 
+		display:none; 
 	}
 <?php 
 }

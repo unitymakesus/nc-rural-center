@@ -3262,7 +3262,7 @@
 .et_divi_builder #et_builder_outer_content .et_pb_no_bg {
   padding: 0 !important;
 }
-.et_divi_builder #et_builder_outer_content .logged-in .et_pb_login .et_pb_newsletter_description,
+.et_divi_builder #et_builder_outer_content .logged-in:not(.et-fb) .et_pb_login .et_pb_newsletter_description,
 .et_divi_builder #et_builder_outer_content .et_pb_column_1_2 .et_pb_newsletter_form,
 .et_divi_builder #et_builder_outer_content .et_pb_column_1_2 .et_pb_newsletter_description,
 .et_divi_builder #et_builder_outer_content .et_pb_column_3_8.et_pb_column_inner .et_pb_newsletter_form,
@@ -3272,7 +3272,9 @@
 .et_divi_builder #et_builder_outer_content .et_pb_column_1_3.et_pb_column_inner .et_pb_newsletter_form,
 .et_divi_builder #et_builder_outer_content .et_pb_column_1_3.et_pb_column_inner .et_pb_newsletter_description,
 .et_divi_builder #et_builder_outer_content .et_pb_column_1_4 .et_pb_newsletter_form,
-.et_divi_builder #et_builder_outer_content .et_pb_column_1_4 .et_pb_newsletter_description {
+.et_divi_builder #et_builder_outer_content .et_pb_column_1_4 .et_pb_newsletter_description,
+.et_divi_builder #et_builder_outer_content .et_pb_column_1_4.et_pb_column_inner .et_pb_newsletter_form,
+.et_divi_builder #et_builder_outer_content .et_pb_column_1_4.et_pb_column_inner .et_pb_newsletter_description {
   width: 100%;
   padding: 0;
 }
@@ -4869,16 +4871,7 @@
   position: relative;
   width: 100%;
   text-align: center;
-  -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
   list-style: none !important;
-}
-.et_divi_builder #et_builder_outer_content .format-gallery .et_pb_slider .et_pb_slide,
-.et_divi_builder #et_builder_outer_content .et_pb_slider_no_shadow .et_pb_slide {
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
 }
 .et_divi_builder #et_builder_outer_content .format-gallery .et_pb_slider.gallery-not-found .et_pb_slide {
   -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
@@ -5483,6 +5476,7 @@
   background-color: #222;
   overflow: hidden;
   display: block;
+  pointer-events: none;
 }
 .et_divi_builder #et_builder_outer_content .et_pb_section_video_bg .mejs-controls,
 .et_divi_builder #et_builder_outer_content .et_pb_section_video_bg .mejs-overlay-play {
@@ -9063,10 +9057,6 @@
   .et_divi_builder #et_builder_outer_content .et_pb_row.et_pb_equal_columns > .et_pb_column {
     order: 1;
   }
-  .et_divi_builder #et_builder_outer_content .et_pb_filterable_portfolio_grid,
-  .et_divi_builder #et_builder_outer_content .et_pb_gallery_grid {
-    display: none;
-  }
   .et_divi_builder #et_builder_outer_content .et_pb_gallery_grid .et_pb_gallery_item,
   .et_divi_builder #et_builder_outer_content .et_pb_portfolio_grid .et_pb_portfolio_item,
   .et_divi_builder #et_builder_outer_content .et_pb_filterable_portfolio_grid .et_pb_portfolio_item {
@@ -9811,13 +9801,23 @@
     padding: 0;
   }
   .et_divi_builder #et_builder_outer_content .et_pb_column .et_pb_newsletter_form,
-  .et_divi_builder #et_builder_outer_content .et_pb_column.et_pb_column_inner .et_pb_newsletter_form {
+  .et_divi_builder #et_builder_outer_content .et_pb_column.et_pb_column_inner .et_pb_newsletter_form,
+  .et_divi_builder #et_builder_outer_content .et_pb_row_1-4_3-4 .et_pb_column.et_pb_column_1_4 .et_pb_newsletter_form,
+  .et_divi_builder #et_builder_outer_content .et_pb_row_1-4_3-4 .et_pb_column.et_pb_column_1_4.et_pb_column_inner .et_pb_newsletter_form,
+  .et_divi_builder #et_builder_outer_content .et_pb_row_3-4_1-4 .et_pb_column.et_pb_column_1_4 .et_pb_newsletter_form,
+  .et_divi_builder #et_builder_outer_content .et_pb_row_3-4_1-4 .et_pb_column.et_pb_column_1_4.et_pb_column_inner .et_pb_newsletter_form {
     padding-left: 40px;
   }
   .et_divi_builder #et_builder_outer_content .et_pb_column.et_pb_column_1_4 .et_pb_newsletter_form,
   .et_divi_builder #et_builder_outer_content .et_pb_column.et_pb_column_1_4 .et_pb_newsletter_description {
     width: 100%;
     padding: 0;
+  }
+  .et_divi_builder #et_builder_outer_content .et_pb_row_1-4_3-4 .et_pb_column.et_pb_column_1_4 .et_pb_newsletter_form,
+  .et_divi_builder #et_builder_outer_content .et_pb_row_1-4_3-4 .et_pb_column.et_pb_column_1_4 .et_pb_newsletter_description,
+  .et_divi_builder #et_builder_outer_content .et_pb_row_3-4_1-4 .et_pb_column.et_pb_column_1_4 .et_pb_newsletter_form,
+  .et_divi_builder #et_builder_outer_content .et_pb_row_3-4_1-4 .et_pb_column.et_pb_column_1_4 .et_pb_newsletter_description {
+    width: 50%;
   }
   .et_divi_builder #et_builder_outer_content .et_pb_column .et_pb_pricing_table {
     width: 50% !important;
@@ -10250,7 +10250,14 @@
   .et_divi_builder #et_builder_outer_content .et_pb_column .et_pb_newsletter_form,
   .et_divi_builder #et_builder_outer_content .et_pb_column .et_pb_newsletter_description,
   .et_divi_builder #et_builder_outer_content .et_pb_column.et_pb_column_inner .et_pb_newsletter_form,
-  .et_divi_builder #et_builder_outer_content .et_pb_column.et_pb_column_inner .et_pb_newsletter_description {
+  .et_divi_builder #et_builder_outer_content .et_pb_column.et_pb_column_inner .et_pb_newsletter_description,
+  .et_divi_builder #et_builder_outer_content .et_pb_row_1-4_3-4 .et_pb_column.et_pb_column_1_4 .et_pb_newsletter_form,
+  .et_divi_builder #et_builder_outer_content .et_pb_row_1-4_3-4 .et_pb_column.et_pb_column_1_4 .et_pb_newsletter_description,
+  .et_divi_builder #et_builder_outer_content .et_pb_row_1-4_3-4 .et_pb_column.et_pb_column_1_4.et_pb_column_inner .et_pb_newsletter_form,
+  .et_divi_builder #et_builder_outer_content .et_pb_row_1-4_3-4 .et_pb_column.et_pb_column_1_4.et_pb_column_inner .et_pb_newsletter_description,
+  .et_divi_builder #et_builder_outer_content .et_pb_row_3-4_1-4 .et_pb_column.et_pb_column_1_4 .et_pb_newsletter_form,
+  .et_divi_builder #et_builder_outer_content .et_pb_row_3-4_1-4 .et_pb_column.et_pb_column_1_4 .et_pb_newsletter_description,
+  .et_divi_builder #et_builder_outer_content .et_pb_row_3-4_1-4 .et_pb_column.et_pb_column_1_4.et_pb_column_inner .et_pb_newsletter_form {
     width: 100%;
     padding: 0;
   }

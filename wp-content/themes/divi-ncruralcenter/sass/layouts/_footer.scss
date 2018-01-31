@@ -43,7 +43,7 @@
       display: flex;
       justify-content: flex-end;
       flex-direction: column;
-      
+
       .et_pb_widget {
         float: none;
         text-align: right;
@@ -86,4 +86,37 @@
   .right {
     text-align: right;
   }
+}
+
+[class*="icon-"] {
+  position: relative;
+  overflow: hidden;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  text-indent: -100em;
+  color: $color-orange-dark !important;
+
+  &::before {
+    position: absolute;
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-repeat: no-repeat;
+  }
+}
+
+.icon-facebook::before {
+  background-image: url('../images/facebook.svg');
+}
+
+.icon-twitter::before {
+  background-image: url('../images/twitter.svg');
+}
+
+.icon-instagram::before {
+  background-image: url('../images/instagram.svg');
 }
