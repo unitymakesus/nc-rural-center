@@ -1,14 +1,14 @@
-.page {
-  .et_pb_post_title {
+.single-staff, .page {
+  .page-title {
     height: 19em;
     position: relative;
     margin-bottom: 2em !important;
 
-    .et_pb_title_container {
+    .et_pb_title_container, .et_pb_text_inner {
       height: 100%;
     }
 
-    .entry-title {
+    h1 {
       position: absolute;
       bottom: 10px;
       left: 20px;
@@ -18,6 +18,7 @@
   .et_section_specialty {
     & > .et_pb_row {
       display: flex;
+      overflow: hidden;
     }
 
     .et_pb_widget_area {

@@ -90,7 +90,7 @@ add_shortcode('staff-listing', function($atts) {
 				<h3 itemprop="name"><?php the_title(); ?></h3>
 				<div class="title" itemprop="jobTitle"><?php the_field('title'); ?></div>
 				<div><a itemprop="email" href="mailto:<?php echo eae_encode_str(get_field('email')); ?>"><?php the_field('email'); ?></a></div>
-				<p><?php the_advanced_excerpt(); ?></p>
+				<?php the_advanced_excerpt(); ?>
 			</div>
 		</div>
 		<?php
