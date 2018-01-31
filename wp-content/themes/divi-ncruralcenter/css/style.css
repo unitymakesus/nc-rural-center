@@ -628,6 +628,8 @@ a:hover, a:focus, a:active {
   bottom: 0;
   left: 0;
   width: 100%;
+  margin-bottom: 0 !important;
+  z-index: 100;
 }
 .home .blog-highlights .et_pb_post .entry-title a {
   color: #FFF;
