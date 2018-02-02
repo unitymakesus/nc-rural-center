@@ -822,6 +822,9 @@ a:hover, a:focus, a:active {
   display: flex;
   flex-direction: column;
 }
+.home .blog-highlights .et_pb_post .entry-featured-image-url {
+  width: 100%;
+}
 .home .blog-highlights .et_pb_post .entry-title {
   margin-bottom: 0 !important;
   flex: 1 0 auto;
