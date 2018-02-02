@@ -39,7 +39,10 @@ $is_page_builder_used = et_pb_is_pagebuilder_used( get_the_ID() );
       } elseif ($cat->slug == "data-visualization") {
         $color = "yellow";
         $header = do_shortcode('[et_pb_section global_module="1086"][/et_pb_section]'); // Data Viz heading layout
-      }
+      } else {
+				$color ="yellow";
+				$header = do_shortcode('[et_pb_section global_module="1099"][/et_pb_section]'); // News heading layout
+			}
     }
     ?>
 
