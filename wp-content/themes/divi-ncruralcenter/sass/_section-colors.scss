@@ -5,11 +5,11 @@
   @each $name in $color-names {
     $i: index($color-names, $name);
     &.#{$name} {
-      .widget_nav_menu, .breadcrumb-trail {
+      .widget_nav_menu, .breadcrumb-trail, .widget_categories {
         background: nth($color-a11ys, $i);
       }
 
-      .widget_nav_menu::after {
+      .widget_nav_menu::after, .widget_categories::after {
         border-top-color: nth($color-a11ys, $i);
         border-left-color: nth($color-a11ys, $i);
       }

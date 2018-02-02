@@ -18,31 +18,31 @@
   /* Above WP toolbar. */
 }
 
-.et_section_specialty.orange .widget_nav_menu, .et_section_specialty.orange .breadcrumb-trail, .single-post #content-area.orange .widget_nav_menu, .single-post #content-area.orange .breadcrumb-trail {
+.et_section_specialty.orange .widget_nav_menu, .et_section_specialty.orange .breadcrumb-trail, .et_section_specialty.orange .widget_categories, .single-post #content-area.orange .widget_nav_menu, .single-post #content-area.orange .breadcrumb-trail, .single-post #content-area.orange .widget_categories {
   background: #BD5B0D;
 }
-.et_section_specialty.orange .widget_nav_menu::after, .single-post #content-area.orange .widget_nav_menu::after {
+.et_section_specialty.orange .widget_nav_menu::after, .et_section_specialty.orange .widget_categories::after, .single-post #content-area.orange .widget_nav_menu::after, .single-post #content-area.orange .widget_categories::after {
   border-top-color: #BD5B0D;
   border-left-color: #BD5B0D;
 }
-.et_section_specialty.yellow .widget_nav_menu, .et_section_specialty.yellow .breadcrumb-trail, .single-post #content-area.yellow .widget_nav_menu, .single-post #content-area.yellow .breadcrumb-trail {
+.et_section_specialty.yellow .widget_nav_menu, .et_section_specialty.yellow .breadcrumb-trail, .et_section_specialty.yellow .widget_categories, .single-post #content-area.yellow .widget_nav_menu, .single-post #content-area.yellow .breadcrumb-trail, .single-post #content-area.yellow .widget_categories {
   background: #BE8D01;
 }
-.et_section_specialty.yellow .widget_nav_menu::after, .single-post #content-area.yellow .widget_nav_menu::after {
+.et_section_specialty.yellow .widget_nav_menu::after, .et_section_specialty.yellow .widget_categories::after, .single-post #content-area.yellow .widget_nav_menu::after, .single-post #content-area.yellow .widget_categories::after {
   border-top-color: #BE8D01;
   border-left-color: #BE8D01;
 }
-.et_section_specialty.green .widget_nav_menu, .et_section_specialty.green .breadcrumb-trail, .single-post #content-area.green .widget_nav_menu, .single-post #content-area.green .breadcrumb-trail {
+.et_section_specialty.green .widget_nav_menu, .et_section_specialty.green .breadcrumb-trail, .et_section_specialty.green .widget_categories, .single-post #content-area.green .widget_nav_menu, .single-post #content-area.green .breadcrumb-trail, .single-post #content-area.green .widget_categories {
   background: #358734;
 }
-.et_section_specialty.green .widget_nav_menu::after, .single-post #content-area.green .widget_nav_menu::after {
+.et_section_specialty.green .widget_nav_menu::after, .et_section_specialty.green .widget_categories::after, .single-post #content-area.green .widget_nav_menu::after, .single-post #content-area.green .widget_categories::after {
   border-top-color: #358734;
   border-left-color: #358734;
 }
-.et_section_specialty.blue .widget_nav_menu, .et_section_specialty.blue .breadcrumb-trail, .single-post #content-area.blue .widget_nav_menu, .single-post #content-area.blue .breadcrumb-trail {
+.et_section_specialty.blue .widget_nav_menu, .et_section_specialty.blue .breadcrumb-trail, .et_section_specialty.blue .widget_categories, .single-post #content-area.blue .widget_nav_menu, .single-post #content-area.blue .breadcrumb-trail, .single-post #content-area.blue .widget_categories {
   background: #237BC0;
 }
-.et_section_specialty.blue .widget_nav_menu::after, .single-post #content-area.blue .widget_nav_menu::after {
+.et_section_specialty.blue .widget_nav_menu::after, .et_section_specialty.blue .widget_categories::after, .single-post #content-area.blue .widget_nav_menu::after, .single-post #content-area.blue .widget_categories::after {
   border-top-color: #237BC0;
   border-left-color: #237BC0;
 }
@@ -926,12 +926,12 @@ a:hover, a:focus, a:active {
   color: #FFF;
   text-decoration: none;
 }
-.et_pb_widget_area .widget_nav_menu, #sidebar .widget_nav_menu {
+.et_pb_widget_area .widget_nav_menu, .et_pb_widget_area .widget_categories, #sidebar .widget_nav_menu, #sidebar .widget_categories {
   padding: 26px 30px 0;
   min-height: 21em;
   position: relative;
 }
-.et_pb_widget_area .widget_nav_menu::after, #sidebar .widget_nav_menu::after {
+.et_pb_widget_area .widget_nav_menu::after, .et_pb_widget_area .widget_categories::after, #sidebar .widget_nav_menu::after, #sidebar .widget_categories::after {
   content: '';
   position: absolute;
   bottom: -24.7vw;
