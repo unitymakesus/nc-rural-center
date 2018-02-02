@@ -1,19 +1,17 @@
-.single-staff, .page {
-  .et_section_specialty {
-    $color-names: "orange" "yellow" "green" "blue";
-    $color-a11ys: $color-orange-a11y $color-yellow-a11y $color-green-a11y $color-blue-a11y;
+.et_section_specialty, .single-post #content-area {
+  $color-names: "orange" "yellow" "green" "blue";
+  $color-a11ys: $color-orange-a11y $color-yellow-a11y $color-green-a11y $color-blue-a11y;
 
-    @each $name in $color-names {
-      $i: index($color-names, $name);
-      &.#{$name} {
-        .widget_nav_menu, .breadcrumb-trail {
-          background: nth($color-a11ys, $i);
-        }
+  @each $name in $color-names {
+    $i: index($color-names, $name);
+    &.#{$name} {
+      .widget_nav_menu, .breadcrumb-trail {
+        background: nth($color-a11ys, $i);
+      }
 
-        .widget_nav_menu::after {
-          border-top-color: nth($color-a11ys, $i);
-          border-left-color: nth($color-a11ys, $i);
-        }
+      .widget_nav_menu::after {
+        border-top-color: nth($color-a11ys, $i);
+        border-left-color: nth($color-a11ys, $i);
       }
     }
   }

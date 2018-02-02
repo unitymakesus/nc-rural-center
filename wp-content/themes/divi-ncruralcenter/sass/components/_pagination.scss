@@ -1,0 +1,35 @@
+.pagination {
+
+  .nav-links {
+    display: block;
+
+    .page-numbers {
+      display: inline-block;
+      min-width: 40px;
+      padding: 0 15px;
+      height: 40px;
+      line-height: 40px;
+      font-weight: 300;
+      font-size: 1.2em;
+      border-right: 1px solid $color-orange-light;
+
+      &:last-child {
+        border-right: none;
+      }
+
+      &.current {
+        color: $color-orange-a11y;
+        font-weight: bold;
+      }
+    }
+
+    a {
+      color: $color-black;
+      text-decoration: none;
+
+      &:hover, &:focus, &:active {
+        text-decoration: underline;
+      }
+    }
+  }
+}

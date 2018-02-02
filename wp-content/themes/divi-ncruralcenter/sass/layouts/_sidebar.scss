@@ -1,9 +1,12 @@
-.et_pb_widget_area {
+.et_pb_widget_area, #sidebar {
+  padding: 0;
+
   h4.widgettitle {
     font-size: 25px;
     font-weight: normal;
     text-transform: uppercase;
     padding-bottom: 20px;
+    color: $color-white;
   }
 
   .et_pb_widget {
@@ -14,12 +17,27 @@
         text-decoration: underline;
         display: block;
         padding: 5px 0;
+        color: $color-white;
 
         &:hover, &:focus, &:active {
           color: $color-white;
           text-decoration: none;
         }
       }
+    }
+  }
+
+  .widget_nav_menu {
+    padding: 26px 30px 0;
+    min-height: 21em;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -24.7vw;
+      left: 0;
+      border: 12.35vw solid transparent;
     }
   }
 

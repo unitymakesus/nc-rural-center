@@ -1,4 +1,4 @@
-.single-staff, .page {
+.single-staff, .page, .single-post {
   .page-title {
     height: 19em;
     position: relative;
@@ -18,24 +18,6 @@
   .et_section_specialty {
     & > .et_pb_row {
       display: flex;
-    }
-
-    .et_pb_widget_area {
-      padding: 0;
-    }
-
-    .widget_nav_menu {
-      padding: 26px 30px 0;
-      min-height: 21em;
-      position: relative;
-
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: -24.7vw;
-        left: 0;
-        border: 12.35vw solid transparent;
-      }
     }
 
     .et_pb_column_inner {
