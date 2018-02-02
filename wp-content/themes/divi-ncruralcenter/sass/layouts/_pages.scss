@@ -37,15 +37,18 @@
     display: flex;
 
     .column.size-1of3 {
-      width: auto !important;
+      width: 50% !important;
       margin: 0 1.5%;
+      flex: 1 0 auto;
 
       .et_pb_image_container {
         margin: 0 !important;
+      }
 
-        a {
-          margin: 0;
-        }
+      .entry-featured-image-url {
+        width: 100%;
+        float: none;
+        margin: 0;
       }
 
       .et_pb_post {
