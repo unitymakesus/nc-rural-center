@@ -10,6 +10,10 @@ add_action('wp_enqueue_scripts', function () {
   // wp_enqueue_script('ncruralcenter/scripts', get_stylesheet_directory_uri() . '/scripts/main.js', false, $theme_version, true);
 }, 100);
 
+/**
+ * Set image quality
+ */
+add_filter('jpeg_quality', function($arg){return 100;});
 
 /**
  * Breadcrumbs setup for Justin Tadlock's Breadcrumbs Plugin

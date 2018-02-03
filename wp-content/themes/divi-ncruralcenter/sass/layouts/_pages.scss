@@ -36,10 +36,11 @@
   .et_pb_salvattore_content {
     display: flex;
 
-    .column.size-1of3 {
+    .column.size-1of3, .column.size-1of2 {
       width: 50% !important;
-      margin: 0 1.5%;
+      margin: 0 !important;
       flex: 1 0 auto;
+      padding: 0 1.5%;
 
       .et_pb_image_container {
         margin: 0 !important;
