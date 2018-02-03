@@ -65,17 +65,38 @@ add_action( 'init', function() {
 			'query_var' => true
 		)
 	);
+
+	register_taxonomy(
+		'staff-type',
+		'staff',
+		array(
+			'label' => __( 'Staff Type' ),
+			'rewrite' => false,
+			'hierarchical' => true,
+		)
+	);
 });
 
 /**
  * Staff list shortcode
  */
 add_shortcode('staff-listing', function($atts) {
+	extract( shortcode_atts([
+    'type' => 'staff'
+  ], $atts ) );
+
 	$staff = new WP_Query([
 		'post_type' => 'staff',
 		'posts_per_page' => -1,
 		'orderby' => 'menu_order',
-		'order' => 'ASC'
+		'order' => 'ASC',
+		'tax_query' => array(
+			array(
+				'taxonomy' => 'staff-type',
+				'field'    => 'slug',
+				'terms'    => $type,
+			),
+		)
 	]);
 
 	ob_start();
