@@ -1,3 +1,7 @@
+.entry-content {
+  overflow: hidden;
+}
+
 .single-staff, .page, .single-post {
   .page-title {
     height: 19em;
@@ -21,9 +25,10 @@
     }
 
     .et_pb_column_inner {
-      .et_pb_text {
+      .et_pb_text, .et_pb_video {
         padding-left: 20px;
         padding-right: 20px;
+        max-width: 900px;
       }
     }
   }

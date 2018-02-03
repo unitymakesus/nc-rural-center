@@ -555,7 +555,8 @@ a:hover, a:focus, a:active {
 }
 #main-footer .footer-widget {
   margin: 0;
-  width: 33%;
+  width: 33.333%;
+  padding: 0px;
 }
 #main-footer .footer-widget:nth-child(2) {
   text-align: center;
@@ -648,6 +649,10 @@ a:hover, a:focus, a:active {
   background-image: url("../images/linkedin.svg");
 }
 
+.entry-content {
+  overflow: hidden;
+}
+
 .single-staff .page-title, .page .page-title, .single-post .page-title {
   height: 19em;
   position: relative;
@@ -664,9 +669,10 @@ a:hover, a:focus, a:active {
 .single-staff .et_section_specialty > .et_pb_row, .page .et_section_specialty > .et_pb_row, .single-post .et_section_specialty > .et_pb_row {
   display: flex;
 }
-.single-staff .et_section_specialty .et_pb_column_inner .et_pb_text, .page .et_section_specialty .et_pb_column_inner .et_pb_text, .single-post .et_section_specialty .et_pb_column_inner .et_pb_text {
+.single-staff .et_section_specialty .et_pb_column_inner .et_pb_text, .single-staff .et_section_specialty .et_pb_column_inner .et_pb_video, .page .et_section_specialty .et_pb_column_inner .et_pb_text, .page .et_section_specialty .et_pb_column_inner .et_pb_video, .single-post .et_section_specialty .et_pb_column_inner .et_pb_text, .single-post .et_section_specialty .et_pb_column_inner .et_pb_video {
   padding-left: 20px;
   padding-right: 20px;
+  max-width: 900px;
 }
 .single-staff .et_pb_text, .page .et_pb_text, .single-post .et_pb_text {
   font-size: 18px;
@@ -813,6 +819,9 @@ a:hover, a:focus, a:active {
   padding: 0;
   width: 100%;
   max-width: none;
+}
+.single-post.single-format-standard #left-area .et_post_meta_wrapper img {
+  width: 100%;
 }
 .single-post.single-format-standard #left-area .hentry {
   padding: 0 20px;
