@@ -1,7 +1,10 @@
 .breadcrumb-trail {
   color: $color-white;
   height: 2em;
-  padding-left: 20px;
+
+  @media (max-width: 767px) {
+    padding-left: 20px;
+  }
 
   .trail-browse {
     display: none;
