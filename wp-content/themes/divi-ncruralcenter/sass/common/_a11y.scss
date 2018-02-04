@@ -8,7 +8,9 @@
   overflow: hidden;
 
   &:focus {
-    clip: auto !important;
+    background: $color-white;
+    clip: auto;
+    clip-path: none;
     display: block;
     height: auto;
     left: 5px;
@@ -16,4 +18,8 @@
     width: auto;
     z-index: 100000; /* Above WP toolbar. */
   }
+}
+
+a:focus {
+  outline: rgb(153, 153, 158) auto 5px;
 }

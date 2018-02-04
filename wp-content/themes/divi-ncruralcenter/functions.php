@@ -7,7 +7,7 @@ add_action('wp_enqueue_scripts', function () {
 	$theme_version = et_get_theme_version();
 	wp_enqueue_style('divi/style', get_template_directory_uri() . '/style.css', false, $theme_version);
 	wp_enqueue_style('ncruralcenter/style', get_stylesheet_directory_uri() . '/css/style.css', false, null);
-  // wp_enqueue_script('ncruralcenter/scripts', get_stylesheet_directory_uri() . '/scripts/main.js', false, $theme_version, true);
+  wp_enqueue_script('ncruralcenter/scripts', get_stylesheet_directory_uri() . '/scripts/main.js', false, null, true);
 }, 100);
 
 /**
@@ -30,6 +30,27 @@ add_shortcode('breadcrumbs', function($atts) {
 
 // Remove Breadcrumbs inline styles
 add_filter( 'breadcrumb_trail_inline_style', '__return_false' );
+
+/**
+ * Accessible mobile nav menu
+ */
+add_action('after_setup_theme', function() {
+	remove_action( 'et_header_top', 'et_add_mobile_navigation' );
+	add_action('et_header_top', 'a11y_mobile_navigation');
+	function a11y_mobile_navigation(){
+		if ( is_customize_preview() || ( 'slide' !== et_get_option( 'header_style', 'left' ) && 'fullscreen' !== et_get_option( 'header_style', 'left' ) ) ) {
+			printf(
+				'<div id="et_mobile_nav_menu">
+					<div class="mobile_nav closed">
+						<span class="select_page">%1$s</span>
+						<a class="mobile_menu_toggle" href="#"></a>
+					</div>
+				</div>',
+				esc_html__( 'Select Page', 'Divi' )
+			);
+		}
+	}
+});
 
 
 /**

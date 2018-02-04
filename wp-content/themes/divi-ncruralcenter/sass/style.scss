@@ -1,8 +1,8 @@
 // Global
-@import "variables";
-@import "a11y";
-@import "section-colors";
-@import "typography";
+@import "common/variables";
+@import "common/a11y";
+@import "common/section-colors";
+@import "common/typography";
 
 // Components
 @import "components/breadcrumbs";
