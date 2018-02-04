@@ -2,11 +2,12 @@
   .ctct-button {
     display: none !important;
   }
-  
+
   .ctct-form-field {
     margin: 0 auto;
     padding: 1em 0;
     width: 320px;
+    max-width: 100%;
 
     label {
       display: block;
