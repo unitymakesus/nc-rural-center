@@ -33,15 +33,15 @@
     position: relative;
     margin-bottom: 0;
 
-    div[class*="menu-"] {
-      min-height: 216px;
+    div[class*="menu-"], ul.menu {
+      min-height: 223px;
     }
 
     @media (max-width: 980px) {
       min-height: 298px;
 
-      div[class*="menu-"] {
-        min-height: 219px;
+      div[class*="menu-"], ul.menu {
+        min-height: 228px;
       }
     }
 
@@ -56,7 +56,7 @@
     }
   }
 
-  li {
+  ul li {
     margin: 0;
   }
 
@@ -80,6 +80,7 @@
   .et_pb_module.bottom {
     margin-top: auto !important;
     padding-bottom: 1em;
+    font-size: 16px;
   }
 }
 

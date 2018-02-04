@@ -14,6 +14,12 @@ while ( have_posts() ) : the_post();
 
   <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="row person" itemscope itemprop="author" itemtype="http://schema.org/Person">
+      <div class="col_3_8">
+        <?php the_post_thumbnail('medium', ['alt' => 'Photograph of ' . get_the_title(), 'itemprop' => 'image']); ?>
+        <div class="tagline">
+          <?php the_field('tagline'); ?>
+        </div>
+      </div>
       <div class="col_5_8">
       	<h2 class="entry-title main_title"><?php the_title(); ?></h2>
         <div class="title" itemprop="jobTitle"><?php the_field('title'); ?></div>
@@ -21,12 +27,6 @@ while ( have_posts() ) : the_post();
       	<div class="entry-content">
       	   <?php the_content(); ?>
       	</div> <!-- .entry-content -->
-      </div>
-      <div class="col_3_8">
-        <?php the_post_thumbnail('medium', ['alt' => 'Photograph of ' . get_the_title(), 'itemprop' => 'image']); ?>
-        <div class="tagline">
-          <?php the_field('tagline'); ?>
-        </div>
       </div>
     </div>
   	<?php

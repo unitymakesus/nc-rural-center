@@ -1,6 +1,6 @@
 .breadcrumb-trail {
   color: $color-white;
-  height: 2em;
+  height: 28px;
 
   @media (max-width: 767px) {
     padding-left: 20px;
@@ -13,6 +13,7 @@
   .trail-items {
     list-style: none;
     padding: 0;
+    line-height: 26px;
 
     .trail-item {
       display: inline-block;
