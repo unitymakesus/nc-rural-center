@@ -771,7 +771,7 @@ a:hover, a:focus, a:active {
   }
 }
 .single-staff .page-title, .page .page-title, .single-post .page-title {
-  height: 19em;
+  height: 266px;
   position: relative;
   margin-bottom: 2em !important;
 }
@@ -785,6 +785,19 @@ a:hover, a:focus, a:active {
 }
 .single-staff .et_section_specialty > .et_pb_row, .page .et_section_specialty > .et_pb_row, .single-post .et_section_specialty > .et_pb_row {
   display: flex;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+@media (max-width: 980px) {
+  .single-staff .et_section_specialty .et_pb_column_1_4, .page .et_section_specialty .et_pb_column_1_4, .single-post .et_section_specialty .et_pb_column_1_4 {
+    flex: 1 1 33%;
+  }
+  .single-staff .et_section_specialty .et_pb_column_1_4 .et_pb_widget, .page .et_section_specialty .et_pb_column_1_4 .et_pb_widget, .single-post .et_section_specialty .et_pb_column_1_4 .et_pb_widget {
+    width: 100% !important;
+  }
+  .single-staff .et_section_specialty .et_pb_column_3_4, .page .et_section_specialty .et_pb_column_3_4, .single-post .et_section_specialty .et_pb_column_3_4 {
+    flex: 1 1 67%;
+  }
 }
 .single-staff .et_section_specialty .et_pb_column_inner .et_pb_text, .single-staff .et_section_specialty .et_pb_column_inner .et_pb_video, .page .et_section_specialty .et_pb_column_inner .et_pb_text, .page .et_section_specialty .et_pb_column_inner .et_pb_video, .single-post .et_section_specialty .et_pb_column_inner .et_pb_text, .single-post .et_section_specialty .et_pb_column_inner .et_pb_video {
   padding-left: 20px;
@@ -1137,7 +1150,7 @@ a:hover, a:focus, a:active {
 }
 .et_pb_widget_area .widget_nav_menu, .et_pb_widget_area .widget_categories, #sidebar .widget_nav_menu, #sidebar .widget_categories {
   padding: 26px 30px 0;
-  min-height: 21em;
+  min-height: 294px;
   position: relative;
 }
 .et_pb_widget_area .widget_nav_menu::after, .et_pb_widget_area .widget_categories::after, #sidebar .widget_nav_menu::after, #sidebar .widget_categories::after {
@@ -1146,6 +1159,12 @@ a:hover, a:focus, a:active {
   bottom: -24.7vw;
   left: 0;
   border: 12.35vw solid transparent;
+}
+@media (max-width: 980px) {
+  .et_pb_widget_area .widget_nav_menu::after, .et_pb_widget_area .widget_categories::after, #sidebar .widget_nav_menu::after, #sidebar .widget_categories::after {
+    bottom: -33vw;
+    border: 16.5vw solid transparent;
+  }
 }
 .et_pb_widget_area li.current_page_item a, #sidebar li.current_page_item a {
   text-decoration: none;
