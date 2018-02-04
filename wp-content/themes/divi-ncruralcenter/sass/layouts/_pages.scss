@@ -33,19 +33,26 @@
       display: flex;
       width: 100% !important;
       max-width: 100% !important;
-    }
 
-    @media (max-width: 980px) {
-      .et_pb_column_1_4 {
-        flex: 1 1 33%;
+      @media (max-width: 980px) {
+        .et_pb_column_1_4 {
+          flex: 1 1 33%;
 
-        .et_pb_widget {
-          width: 100% !important;
+          .et_pb_widget {
+            width: 100% !important;
+          }
+        }
+
+        .et_pb_column_3_4 {
+          flex: 1 1 67%;
         }
       }
 
-      .et_pb_column_3_4 {
-        flex: 1 1 67%;
+      @media (max-width: 767px) {
+        .et_pb_column_1_4 {
+          display: none;
+          speak: none;
+        }
       }
     }
 
