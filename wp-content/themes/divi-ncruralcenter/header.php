@@ -1,3 +1,14 @@
+<?php
+if (is_category(12)) {
+  // Redirect to Data Viz page
+	wp_redirect('/research/data-visualizations/', 301);
+	exit;
+} elseif (is_category(22)) {
+  // Redirect to Latest Research page
+	wp_redirect('/research/', 301);
+	exit;
+}
+?>
 <!DOCTYPE html>
 <!--[if IE 6]>
 <html id="ie6" <?php language_attributes(); ?>>

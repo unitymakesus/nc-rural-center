@@ -4,11 +4,14 @@
   margin: 0 20px 20px 0;
 }
 
-.et_pb_module.et_pb_posts {
+.et_pb_module.et_pb_posts,
+.archive.category #left-area {
   padding-right: 20px;
 
   .hentry {
     margin: 30px 0 50px;
+    overflow: hidden;
+    padding: 0;
 
     a:hover, a:focus, a:active {
       color: $color-orange-a11y;
@@ -17,10 +20,14 @@
     .post-meta {
       font-family: $font-sans-serif;
       text-transform: uppercase;
+      color: #666;
+      padding-bottom: 0;
     }
 
     .post-content {
       overflow: hidden;
+      font-size: 14px;
+      color: #666;
     }
 
     a.more-link {
@@ -59,7 +66,8 @@
   }
 }
 
-.single-post.single-format-standard {
+.single-post.single-format-standard,
+.archive.category {
   #main-content .container {
     width: 100%;
     max-width: none;
