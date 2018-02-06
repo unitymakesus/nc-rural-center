@@ -241,6 +241,7 @@
     position: relative;
 
     &::after {
+      display: block !important;
       font-family: 'ETmodules';
       text-align: center;
       speak: none;
@@ -270,6 +271,10 @@
       display: block;
       height: auto;
       opacity: 1;
+    }
+
+    & > a::after {
+      content: '\4b';
     }
   }
 }

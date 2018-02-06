@@ -604,6 +604,7 @@ a:hover, a:focus, a:active {
   position: relative;
 }
 #mobile_menu .menu-item-has-children > a::after {
+  display: block !important;
   font-family: 'ETmodules';
   text-align: center;
   speak: none;
@@ -629,6 +630,9 @@ a:hover, a:focus, a:active {
   display: block;
   height: auto;
   opacity: 1;
+}
+#mobile_menu .menu-item-has-children.opened > a::after {
+  content: '\4b';
 }
 
 #main-footer .container, #footer-bottom .container {
