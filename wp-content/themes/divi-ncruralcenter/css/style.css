@@ -242,6 +242,44 @@ a.more-link.invest_button::after {
   display: none;
 }
 
+.wpcf7-form .row {
+  clear: both;
+  width: 100%;
+  margin: 0 0 1em;
+}
+.wpcf7-form .row label {
+  font-size: 16px;
+  color: #666;
+  font-family: "Montserrat", Montserrat, sans-serif;
+  display: block;
+}
+.wpcf7-form .row .wpcf7-form-control-wrap {
+  display: block;
+}
+.wpcf7-form input[type="email"], .wpcf7-form input[type="text"], .wpcf7-form textarea {
+  margin: 0;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+}
+.wpcf7-form .wpcf7-submit {
+  position: relative;
+  padding-left: 40px;
+  padding-right: 40px;
+  background: #FECF3D;
+  color: #000;
+  border: 0;
+  border-bottom: 3px solid #DFB12E;
+  font-family: "Montserrat", Montserrat, sans-serif;
+  text-transform: uppercase;
+  padding: 10px 40px;
+  font-size: 18px;
+}
+.wpcf7-form .wpcf7-submit:hover, .wpcf7-form .wpcf7-submit:focus, .wpcf7-form .wpcf7-submit:active {
+  box-shadow: 0.08em 0.08em 0.6em rgba(0, 0, 0, 0.4);
+}
+
 a {
   text-decoration: underline;
   transition: color .2s ease;

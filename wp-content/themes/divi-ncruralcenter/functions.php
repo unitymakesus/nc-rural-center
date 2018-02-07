@@ -144,10 +144,11 @@ add_shortcode('staff-listing', function($atts) {
 	return ob_get_clean();
 });
 
- /**
-  *	This will hide the Divi "Project" post type.
-  *	Thanks to georgiee (https://gist.github.com/EngageWP/062edef103469b1177bc#gistcomment-1801080) for his improved solution.
-  */
+
+/**
+*	This will hide the Divi "Project" post type.
+*	Thanks to georgiee (https://gist.github.com/EngageWP/062edef103469b1177bc#gistcomment-1801080) for his improved solution.
+*/
 add_filter( 'et_project_posttype_args', function( $args ) {
  	return array_merge( $args, array(
  		'public'              => false,
@@ -157,3 +158,15 @@ add_filter( 'et_project_posttype_args', function( $args ) {
  		'show_ui'             => false
  	));
 }, 10, 1);
+
+
+/**
+ * Change WordPress email sender name and email
+ */
+add_filter( 'wp_mail_from_name', function( $original_email_from ) {
+  return 'NC Rural Center';
+});
+
+add_filter('wp_mail_from', function($original_email_from) {
+  return 'info@ncruralcenter.org';
+});
