@@ -980,7 +980,7 @@ a:hover, a:focus, a:active {
     speak: none;
   }
 }
-.page .et_section_specialty .et_pb_column_inner .et_pb_text, .page .et_section_specialty .et_pb_column_inner .et_pb_video, .single .et_section_specialty .et_pb_column_inner .et_pb_text, .single .et_section_specialty .et_pb_column_inner .et_pb_video, .archive .et_section_specialty .et_pb_column_inner .et_pb_text, .archive .et_section_specialty .et_pb_column_inner .et_pb_video {
+.page .et_section_specialty .et_pb_column_inner .et_pb_text, .page .et_section_specialty .et_pb_column_inner .et_pb_video, .page .et_section_specialty .et_pb_column_inner .et_pb_button_alignment_left, .single .et_section_specialty .et_pb_column_inner .et_pb_text, .single .et_section_specialty .et_pb_column_inner .et_pb_video, .single .et_section_specialty .et_pb_column_inner .et_pb_button_alignment_left, .archive .et_section_specialty .et_pb_column_inner .et_pb_text, .archive .et_section_specialty .et_pb_column_inner .et_pb_video, .archive .et_section_specialty .et_pb_column_inner .et_pb_button_alignment_left {
   padding-left: 20px;
   padding-right: 20px;
   max-width: 900px;
