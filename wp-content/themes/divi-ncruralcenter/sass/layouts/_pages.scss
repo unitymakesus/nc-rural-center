@@ -46,6 +46,14 @@
     .et_pb_column_3_4 {
       width: 75%;
       margin: 0;
+
+      .et_pb_text, .et_pb_video, .et_pb_button_alignment_left, .staff-list {
+        padding-left: 20px;
+        padding-right: 20px;
+        max-width: 900px;
+        font-size: 18px;
+        line-height: 1.7em;
+      }
     }
 
     @media (max-width: 980px) {
@@ -68,19 +76,6 @@
         speak: none;
       }
     }
-    
-    .et_pb_column_inner {
-      .et_pb_text, .et_pb_video, .et_pb_button_alignment_left, .staff-list {
-        padding-left: 20px;
-        padding-right: 20px;
-        max-width: 900px;
-      }
-    }
-  }
-
-  .et_pb_text, .staff-list {
-    font-size: 18px;
-    line-height: 1.7em;
   }
 
   .et_pb_blog_grid {
