@@ -55,27 +55,27 @@ h2.category-title {
   line-height: inherit;
 }
 
-.et_pb_testimonial {
+.et_pb_testimonial.et_pb_testimonial {
   background: #EFEFEF !important;
   padding: 30px 0 30px 20px;
 }
 @media (max-width: 980px) {
-  .et_pb_testimonial {
+  .et_pb_testimonial.et_pb_testimonial {
     padding-left: 60px;
   }
 }
-.et_pb_testimonial::before {
+.et_pb_testimonial.et_pb_testimonial::before {
   display: none !important;
 }
-.et_pb_testimonial .et_pb_testimonial_description {
-  max-width: 720px;
+.et_pb_testimonial.et_pb_testimonial .et_pb_testimonial_description {
+  max-width: 66.666%;
   color: #000;
   font-size: 18px;
 }
-.et_pb_testimonial .et_pb_testimonial_description p {
+.et_pb_testimonial.et_pb_testimonial .et_pb_testimonial_description p {
   font-style: italic;
 }
-.et_pb_testimonial .et_pb_testimonial_description::before {
+.et_pb_testimonial.et_pb_testimonial .et_pb_testimonial_description::before {
   position: absolute;
   z-index: 2;
   top: -16px;
@@ -89,11 +89,11 @@ h2.category-title {
   content: "\7b";
   transform: rotate(180deg);
 }
-.et_pb_testimonial .et_pb_testimonial_author {
+.et_pb_testimonial.et_pb_testimonial .et_pb_testimonial_author {
   font-family: "Montserrat", Montserrat, sans-serif;
   text-transform: uppercase;
 }
-.et_pb_testimonial p.et_pb_testimonial_meta {
+.et_pb_testimonial.et_pb_testimonial p.et_pb_testimonial_meta {
   font-family: "Montserrat", Montserrat, sans-serif;
   font-style: normal;
 }
@@ -971,12 +971,17 @@ a:hover, a:focus, a:active {
   width: 75%;
   margin: 0;
 }
-.page .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_text, .page .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_video, .page .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_button_alignment_left, .page .et_section_specialty > .et_pb_row .et_pb_column_3_4 .staff-list, .page .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_text, .page .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_video, .page .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_button_alignment_left, .page .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .staff-list, .single .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_text, .single .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_video, .single .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_button_alignment_left, .single .et_section_specialty > .et_pb_row .et_pb_column_3_4 .staff-list, .single .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_text, .single .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_video, .single .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_button_alignment_left, .single .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .staff-list, .archive .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_text, .archive .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_video, .archive .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_button_alignment_left, .archive .et_section_specialty > .et_pb_row .et_pb_column_3_4 .staff-list, .archive .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_text, .archive .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_video, .archive .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_button_alignment_left, .archive .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .staff-list {
+.page .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_text, .page .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_video, .page .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_button_module_wrapper, .page .et_section_specialty > .et_pb_row .et_pb_column_3_4 .staff-list, .page .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_text, .page .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_video, .page .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_button_module_wrapper, .page .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .staff-list, .single .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_text, .single .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_video, .single .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_button_module_wrapper, .single .et_section_specialty > .et_pb_row .et_pb_column_3_4 .staff-list, .single .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_text, .single .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_video, .single .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_button_module_wrapper, .single .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .staff-list, .archive .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_text, .archive .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_video, .archive .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_button_module_wrapper, .archive .et_section_specialty > .et_pb_row .et_pb_column_3_4 .staff-list, .archive .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_text, .archive .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_video, .archive .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_button_module_wrapper, .archive .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .staff-list {
   padding-left: 20px;
   padding-right: 20px;
-  max-width: 900px;
+  max-width: 66.666%;
   font-size: 18px;
   line-height: 1.7em;
+}
+@media (max-width: 980px) {
+  .page .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_text, .page .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_video, .page .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_button_module_wrapper, .page .et_section_specialty > .et_pb_row .et_pb_column_3_4 .staff-list, .page .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_text, .page .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_video, .page .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_button_module_wrapper, .page .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .staff-list, .single .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_text, .single .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_video, .single .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_button_module_wrapper, .single .et_section_specialty > .et_pb_row .et_pb_column_3_4 .staff-list, .single .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_text, .single .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_video, .single .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_button_module_wrapper, .single .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .staff-list, .archive .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_text, .archive .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_video, .archive .et_section_specialty > .et_pb_row .et_pb_column_3_4 .et_pb_button_module_wrapper, .archive .et_section_specialty > .et_pb_row .et_pb_column_3_4 .staff-list, .archive .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_text, .archive .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_video, .archive .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .et_pb_button_module_wrapper, .archive .et_section_regular .et_pb_row_fullwidth .et_pb_column_3_4 .staff-list {
+    max-width: none;
+  }
 }
 @media (max-width: 980px) {
   .page .et_section_specialty > .et_pb_row .et_pb_column_1_4, .page .et_section_regular .et_pb_row_fullwidth .et_pb_column_1_4, .single .et_section_specialty > .et_pb_row .et_pb_column_1_4, .single .et_section_regular .et_pb_row_fullwidth .et_pb_column_1_4, .archive .et_section_specialty > .et_pb_row .et_pb_column_1_4, .archive .et_section_regular .et_pb_row_fullwidth .et_pb_column_1_4 {

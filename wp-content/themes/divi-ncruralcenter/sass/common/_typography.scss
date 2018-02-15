@@ -20,7 +20,7 @@ h2.category-title {
   }
 }
 
-.et_pb_testimonial {
+.et_pb_testimonial.et_pb_testimonial {
   background: $color-gray-light !important;
   padding: 30px 0 30px 20px;
 
@@ -33,7 +33,7 @@ h2.category-title {
   }
 
   .et_pb_testimonial_description {
-    max-width: 720px;
+    max-width: 66.666%;
     color: $color-black;
     font-size: 18px;
 
