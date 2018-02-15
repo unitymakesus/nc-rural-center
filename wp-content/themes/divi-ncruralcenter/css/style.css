@@ -1193,7 +1193,13 @@ a:hover, a:focus, a:active {
   padding: 30px 20px 0;
   font-size: 16px;
   line-height: 1.5em;
-  max-width: 900px;
+  max-width: 66.666%;
+}
+@media (max-width: 980px) {
+  .single-post.single-format-standard #left-area .hentry,
+  .archive.category #left-area .hentry {
+    max-width: none;
+  }
 }
 @media (max-width: 980px) {
   .single-post.single-format-standard #left-area,
