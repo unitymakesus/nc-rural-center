@@ -37,7 +37,7 @@ a:focus {
   background: #237BC0;
 }
 
-.et_pb_text h2 {
+.et_pb_text h2, .staff-list h2 {
   font-weight: normal;
   font-size: 2.5em;
   line-height: 1.2em;
@@ -57,18 +57,13 @@ h2.category-title {
 
 .et_pb_testimonial {
   background: #EFEFEF !important;
-}
-@media (max-width: 980px) {
-  .et_pb_testimonial {
-    padding-left: 60px;
-  }
+  padding-left: 60px;
 }
 .et_pb_testimonial::before {
   display: none !important;
 }
 .et_pb_testimonial .et_pb_testimonial_description {
   max-width: 720px;
-  margin: 0 auto;
   color: #000;
   font-size: 18px;
 }
@@ -980,12 +975,12 @@ a:hover, a:focus, a:active {
     speak: none;
   }
 }
-.page .et_section_specialty .et_pb_column_inner .et_pb_text, .page .et_section_specialty .et_pb_column_inner .et_pb_video, .page .et_section_specialty .et_pb_column_inner .et_pb_button_alignment_left, .single .et_section_specialty .et_pb_column_inner .et_pb_text, .single .et_section_specialty .et_pb_column_inner .et_pb_video, .single .et_section_specialty .et_pb_column_inner .et_pb_button_alignment_left, .archive .et_section_specialty .et_pb_column_inner .et_pb_text, .archive .et_section_specialty .et_pb_column_inner .et_pb_video, .archive .et_section_specialty .et_pb_column_inner .et_pb_button_alignment_left {
+.page .et_section_specialty .et_pb_column_inner .et_pb_text, .page .et_section_specialty .et_pb_column_inner .et_pb_video, .page .et_section_specialty .et_pb_column_inner .et_pb_button_alignment_left, .page .et_section_specialty .et_pb_column_inner .staff-list, .single .et_section_specialty .et_pb_column_inner .et_pb_text, .single .et_section_specialty .et_pb_column_inner .et_pb_video, .single .et_section_specialty .et_pb_column_inner .et_pb_button_alignment_left, .single .et_section_specialty .et_pb_column_inner .staff-list, .archive .et_section_specialty .et_pb_column_inner .et_pb_text, .archive .et_section_specialty .et_pb_column_inner .et_pb_video, .archive .et_section_specialty .et_pb_column_inner .et_pb_button_alignment_left, .archive .et_section_specialty .et_pb_column_inner .staff-list {
   padding-left: 20px;
   padding-right: 20px;
   max-width: 900px;
 }
-.page .et_pb_text, .single .et_pb_text, .archive .et_pb_text {
+.page .et_pb_text, .page .staff-list, .single .et_pb_text, .single .staff-list, .archive .et_pb_text, .archive .staff-list {
   font-size: 18px;
   line-height: 1.7em;
 }
@@ -1306,7 +1301,7 @@ a:hover, a:focus, a:active {
 }
 .person .tagline, .staff .tagline {
   font-family: "Montserrat", Montserrat, sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
   line-height: 1.2em;
 }

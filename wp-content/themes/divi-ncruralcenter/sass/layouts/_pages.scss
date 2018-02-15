@@ -62,7 +62,7 @@
     }
 
     .et_pb_column_inner {
-      .et_pb_text, .et_pb_video, .et_pb_button_alignment_left {
+      .et_pb_text, .et_pb_video, .et_pb_button_alignment_left, .staff-list {
         padding-left: 20px;
         padding-right: 20px;
         max-width: 900px;
@@ -70,7 +70,7 @@
     }
   }
 
-  .et_pb_text {
+  .et_pb_text, .staff-list {
     font-size: 18px;
     line-height: 1.7em;
   }

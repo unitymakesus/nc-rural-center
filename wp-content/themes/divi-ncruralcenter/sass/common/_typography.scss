@@ -1,4 +1,4 @@
-.et_pb_text {
+.et_pb_text, .staff-list {
   h2 {
     font-weight: normal;
     font-size: 2.5em;
@@ -22,10 +22,7 @@ h2.category-title {
 
 .et_pb_testimonial {
   background: $color-gray-light !important;
-
-  @media (max-width: 980px) {
-    padding-left: 60px;
-  }
+  padding-left: 60px;
 
   &::before {
     display: none !important;
@@ -33,7 +30,6 @@ h2.category-title {
 
   .et_pb_testimonial_description {
     max-width: 720px;
-    margin: 0 auto;
     color: $color-black;
     font-size: 18px;
 
