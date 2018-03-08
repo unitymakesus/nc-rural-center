@@ -353,7 +353,7 @@ class ET_Builder_Library {
 			->not()->with_meta( '_et_pb_built_for_post_type', $extra_layout_post_type )
 			->run();
 
-		$posts = self::$_->array_sort_by( $posts, 'post_name' );
+		$posts = self::$_->array_sort_by( is_array( $posts ) ? $posts : array( $posts ), 'post_name' );
 
 		foreach ( $posts as $post ) {
 			$layout = new stdClass;
