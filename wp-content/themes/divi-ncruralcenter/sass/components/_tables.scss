@@ -8,8 +8,10 @@
       font-family: $font-sans-serif;
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1200px) {
       width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
       border-collapse: collapse;
       border-spacing: 0;
       display: block;

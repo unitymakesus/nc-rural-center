@@ -6,8 +6,14 @@
     $i: index($color-names, $name);
     &.#{$name} {
       .widget_nav_menu, .breadcrumb-trail, .widget_categories {
-        &, &::after {
+        & {
           background: nth($color-a11ys, $i);
+
+          &::after {
+            background: none;
+            border-top-color: nth($color-a11ys, $i);
+            border-left-color: nth($color-a11ys, $i);
+          }
         }
       }
     }

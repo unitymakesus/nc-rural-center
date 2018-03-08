@@ -1,9 +1,13 @@
 .et_pb_text, .staff-list {
   h2 {
     font-weight: normal;
-    font-size: 2.5em;
+    font-size: 2.3em;
     line-height: 1.2em;
     margin: .5em 0 0;
+
+    @media (max-width: 767px) {
+      font-size: 1.8em;
+    }
   }
 }
 
@@ -33,9 +37,12 @@ h2.category-title {
   }
 
   .et_pb_testimonial_description {
-    max-width: 66.666%;
     color: $color-black;
     font-size: 18px;
+
+    @media (min-width: 981px) {
+      max-width: 66.666%;
+    }
 
     p {
       font-style: italic;
