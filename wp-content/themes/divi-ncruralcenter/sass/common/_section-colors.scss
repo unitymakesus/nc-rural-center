@@ -10,9 +10,21 @@
           background: nth($color-a11ys, $i);
 
           &::after {
-            background: none;
-            border-top-color: nth($color-a11ys, $i);
-            border-left-color: nth($color-a11ys, $i);
+            background: nth($color-a11ys, $i);
+
+            // Edge
+            @supports (display:-ms-grid) {
+              background: none;
+              border-top-color: nth($color-a11ys, $i);
+              border-left-color: nth($color-a11ys, $i);
+            }
+
+            // IE
+            @media all and (-ms-high-contrast:none) {
+              background: none;
+              border-top-color: nth($color-a11ys, $i);
+              border-left-color: nth($color-a11ys, $i);
+            }
           }
         }
       }
