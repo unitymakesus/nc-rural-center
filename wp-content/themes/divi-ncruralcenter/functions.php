@@ -52,6 +52,12 @@ add_action('after_setup_theme', function() {
 	}
 });
 
+//* Exclude Categories from Category Widget - basicWP.com
+add_filter('widget_categories_args', function($args) {
+	$exclude = "1"; // Category IDs to be excluded
+	$args["exclude"] = $exclude;
+	return $args;
+});
 
 /**
  * Custom Post Types
