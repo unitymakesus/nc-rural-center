@@ -4,7 +4,7 @@ Donate link: http://profiles.wordpress.org/emrevona/
 Tags: cache, performance, wp-cache, total cache, super cache
 Requires at least: 3.3
 Tested up to: 4.9
-Stable tag: 0.8.7.7
+Stable tag: 0.8.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,42 @@ Wpfc does not support Wordpress Multisite yet.
 18. Database Cleanup
 
 == Changelog ==
+
+= 0.8.8.1 =
+* to update russian translation
+* to set browser caching for Cloudflare
+* not to load the css and js sources of clear cache button when toolar is not visible
+* to fix SyntaxError: Unexpected token M in JSON at position 0 error
+
+= 0.8.8.0 =
+* to rename the text on admin bar
+* to move cdn functions to speed up wp fastest cache
+* check if settings are indexed by multilang locales for WeePie Cookie Allow
+* <strong>[FEATURE]</strong> to add Cloudflare integration
+
+= 0.8.7.9 =
+* refactoring of delete_cache_of_term()
+* <strong>[FEATURE]</strong> exclude archives
+* to delete cache of pagination after new post
+* to add do_action() for deleteCache()
+* to shorten the url of the minified and combined sources
+* to fix excluding googleanalytics problem
+* to create cache for mobile user-agents when mobile option is disabled
+* <strong>[FEATURE]</strong> Compatible with WeePie Cookie Allow
+
+= 0.8.7.8 =
+* to check <title> for 404 if the header return 200
+* to clear all the cache if the visibility is converted to private
+* refactoring of ignored()
+* to stop loading the admin functions if DOING_AJAX is set
+* to fix excluding attachment pages problem
+* <strong>[FEATURE]</strong> Compatible with Yet Another Stars Rating
+* to disable including powerfulhtml class for ajax request
+* to convert the uninstall method to uninstall.php
+* <strong>[FEATURE]</strong> exclude Google Analytics Parameters [<a target="_blank" href="http://www.wpfastestcache.com/features/cache-url-with-google-analytics-parameters-querystring/#disable-cache-google-analytics-parameters">Details</a>]
+* to add WPFC_DISABLE_WEBP [<a target="_blank" href="http://www.wpfastestcache.com/premium/image-optimization/#disable-webp">Details</a>]
+* to fix 403 cdn template error
+* to fix height problem of lightbox
 
 = 0.8.7.7 =
 * to remove "via php" text if WPFC_REMOVE_VIA_FOOTER_COMMENT is defined as true
@@ -709,7 +745,7 @@ Wpfc does not create .htaccess automatically so you need to create empty one.
 When the cached files are deleted, they are moved to "tmpWpfc" instead of being deleted and a cron-job is set. Delete all files are so difficult for server so cron-job is set not to use a lot of CPU resources. Cron-job is set and it deletes 100 files every 5 minutes. When all files in "tmpWpfc" are deleted, cron-job is unset.
 
 = How can stop caching for some pages? =
-If you add &lt;!--[wpfcNOT]--&gt; into source coude, creating cache stops. You can find it on visual and text editor after opening Add New Post panel.
+If you add &lt;!-- [wpfcNOT] --&gt; into source coude, creating cache stops. You can find it on visual and text editor after opening Add New Post panel.
 
 = Does Wpfc work with WPMU (Wordpress Multisite) properly? =
 No. Wpfc does not support Wordpress Multisite yet.

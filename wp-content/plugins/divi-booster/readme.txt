@@ -3,8 +3,8 @@ Contributors: danmossop
 Donate link: 
 Tags: divi theme, elegant themes
 Requires at least: 3.0
-Tested up to: 4.9
-Stable tag: 2.7.1
+Tested up to: 4.9.4
+Stable tag: 2.7.2
 
 Enhancements to the Divi Theme by Elegant Themes, including bug fixes and extra configuration options.
 
@@ -51,6 +51,13 @@ The Divi Booster plugin is an independent product which is not associated with, 
 To follow...
 
 == Changelog ==
+
+= 2.7.2 =
+* Updated full screen divi builder feature to work with new layouts section
+* Fixed slider height option not showing in some older versions of Divi
+* Improvements to header on settings page
+* Fixed second slide button no showing in latest Divi
+* Fixed slide background link not working in latest Divi
 
 = 2.7.1 =
 * Added additional error checking to htaccess editing code

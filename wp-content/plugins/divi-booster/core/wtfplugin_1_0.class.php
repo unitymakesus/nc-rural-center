@@ -274,6 +274,18 @@ class wtfplugin_1_0 {
 		
 		<form id="wtf-form" class="wtf-form" enctype="multipart/form-data" method="post" action="options.php">
 		
+		<div id="db-header">
+			<div id="db-header-left">
+			<h2><?php echo $this->config['plugin']['name']; ?> Settings</h2>
+			</div>
+			<div id="db-header-right">
+				<div class="wtf-form-license-area">
+					Plugin active. <a href="<?php esc_attr_e(esc_url($update_link));?>">Check for updates</a>.<br><i>License keys are no longer required</i>
+				</div>
+			<?php submit_button(); ?>
+			</div>
+		</div>
+		
 		<input type="hidden" name="<?php esc_attr_e($slug); ?>[lastsave]" value="<?php esc_attr_e(intval(time())); ?>"/>
 		
 		<?php 

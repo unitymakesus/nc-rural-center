@@ -66,7 +66,8 @@ function db_pb_slide_filter_content($content, $args) {
 			$url = ($parts=parse_url($url) and empty($parts['scheme']))?"http://$url":$url; // Add http if missing
 		} 
 		
-		$content = preg_replace('#(<a href=".*?" class="et_pb_more_button et_pb_button">.*?</a>)#', '\\1<a '.((isset($url))?'href="'.esc_attr($url).'"':'').' class="et_pb_more_button et_pb_button db_pb_button_2">'.esc_html($args['button_text_2']).'</a>', $content);
+		$content = preg_replace('#(<a href=".*?" class="et_pb_more_button et_pb_button">.*?</a>)#', '\\1<a '.((isset($url))?'href="'.esc_attr($url).'"':'').' class="et_pb_more_button et_pb_button db_pb_button_2">'.esc_html($args['button_text_2']).'</a>', $content); // Old format
+		$content = preg_replace('#(<a class="et_pb_button et_pb_more_button" href=".*?">.*?</a>)#', '\\1<a class="et_pb_button et_pb_more_button db_pb_button_2" '.((isset($url))?'href="'.esc_attr($url).'"':'').'>'.esc_html($args['button_text_2']).'</a>', $content); // New format
 	}
 	
 	// Make slide background clickable link
@@ -76,7 +77,7 @@ function db_pb_slide_filter_content($content, $args) {
 		$url = ($parts=parse_url($url) and empty($parts['scheme']) and $args['db_background_url'][0]!='/' and $args['db_background_url'][0]!='#')?"http://$url":$url; // Add http if missing 
 		
 		// Add jquery to make correct slide clickable
-		preg_match('#div class="et_pb_slide [^"]*? (et_pb_slide_\d+)\b#', $content, $m);
+		preg_match('#div class="et_pb_slide\b[^"]*?\b(et_pb_slide_\d+)\b#', $content, $m);
 
 		if (!empty($m[1])) {
 			
