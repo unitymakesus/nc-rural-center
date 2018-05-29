@@ -1409,7 +1409,7 @@ a:hover, a:focus, a:active {
 }
 
 .thumb-caption {
-  text-align: right;
+  text-align: center;
   font-style: italic;
   padding: 0 4px 5px;
   font-size: 0.9em;
@@ -1418,7 +1418,7 @@ a:hover, a:focus, a:active {
 .wp-caption {
   background: none;
   border: none;
-  text-align: right;
+  text-align: center;
   padding: 0;
   max-width: 100%;
 }
