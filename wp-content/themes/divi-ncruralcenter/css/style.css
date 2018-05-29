@@ -1408,6 +1408,25 @@ a:hover, a:focus, a:active {
   margin: 0 auto;
 }
 
+.thumb-caption {
+  text-align: right;
+  font-style: italic;
+  padding: 0 4px 5px;
+  font-size: 0.9em;
+}
+
+.wp-caption {
+  background: none;
+  border: none;
+  text-align: right;
+  padding: 0;
+  max-width: 100%;
+}
+.wp-caption p.wp-caption-text {
+  font-style: italic;
+  font-size: 0.9em;
+}
+
 @media (max-width: 480px) {
   .home h1.et_pb_module_header {
     font-size: 36px !important;

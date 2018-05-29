@@ -174,3 +174,23 @@
     }
   }
 }
+
+.thumb-caption {
+  text-align: right;
+  font-style: italic;
+  padding: 0 4px 5px;
+  font-size: 0.9em;
+}
+
+.wp-caption {
+  background: none;
+  border: none;
+  text-align: right;
+  padding: 0;
+  max-width: 100%;
+
+  p.wp-caption-text {
+    font-style: italic;
+    font-size: 0.9em;
+  }
+}

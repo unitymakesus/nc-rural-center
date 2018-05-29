@@ -71,6 +71,7 @@ $is_page_builder_used = et_pb_is_pagebuilder_used( get_the_ID() );
 								$titletext = get_the_title();
 								$thumbnail = get_thumbnail( $width, $height, $classtext, $titletext, $titletext, false, 'Blogimage' );
 								$thumb = $thumbnail["thumb"];
+								$thumb_caption = get_the_post_thumbnail_caption($post->ID);
 
 								$post_format = et_pb_post_format();
 
@@ -83,6 +84,9 @@ $is_page_builder_used = et_pb_is_pagebuilder_used( get_the_ID() );
 									);
 								} else if ( ! in_array( $post_format, array( 'gallery', 'link', 'quote' ) ) && 'on' === et_get_option( 'divi_thumbnails', 'on' ) && '' !== $thumb ) {
 									print_thumbnail( $thumb, $thumbnail["use_timthumb"], $titletext, $width, $height );
+									if (!empty($thumb_caption)) {
+										echo '<div class="thumb-caption">' . $thumb_caption . '</div>';
+									}
 								} else if ( 'gallery' === $post_format ) {
 									et_pb_gallery_images();
 								}
