@@ -682,7 +682,7 @@ a:hover, a:focus, a:active {
   position: relative;
   top: -22px;
 }
-@media (max-width: 980px) {
+@media (max-width: 1275px) {
   #logo {
     top: 0;
   }
