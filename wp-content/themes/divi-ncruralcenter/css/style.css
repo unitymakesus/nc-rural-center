@@ -687,11 +687,6 @@ a:hover, a:focus, a:active {
     top: 0;
   }
 }
-@media only screen and (min-width: 1275px) {
-  #logo {
-    max-height: 88%;
-  }
-}
 
 #top-header a {
   text-decoration: none;
@@ -926,6 +921,11 @@ a:hover, a:focus, a:active {
   content: '\4b';
 }
 
+@media only screen and (min-width: 981px) and (max-width: 1263px) {
+  #logo {
+    max-height: 55% !important;
+  }
+}
 #main-footer .container, #footer-bottom .container {
   padding: 0 30px;
   width: 100%;

@@ -13,10 +13,6 @@
   @media (max-width: 980px) {
     top: 0;
   }
-
-  @media only screen and (min-width: 1275px) {
-    max-height: 88%;
-  }
 }
 
 // Secondary Nav
@@ -331,5 +327,11 @@
     & > a::after {
       content: '\4b';
     }
+  }
+}
+
+@media only screen and (min-width: 981px) and (max-width: 1263px) {
+  #logo {
+      max-height: 55% !important;
   }
 }
