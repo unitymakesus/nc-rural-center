@@ -921,13 +921,13 @@ a:hover, a:focus, a:active {
   content: '\4b';
 }
 
-@media only screen and (min-width: 1194px) and (max-width: 1263px) {
+@media only screen and (min-width: 981px) and (max-width: 1263px) {
   #logo {
     max-height: 55% !important;
   }
 
   #et-top-navigation {
-    margin-left: 100px;
+    margin-left: 75px !important;
   }
 }
 #main-footer .container, #footer-bottom .container {
