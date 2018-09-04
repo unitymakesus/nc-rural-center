@@ -330,8 +330,12 @@
   }
 }
 
-@media only screen and (min-width: 981px) and (max-width: 1263px) {
+@media only screen and (min-width: 1194px) and (max-width: 1263px) {
   #logo {
-      max-height: 55% !important;
+    max-height: 55% !important;
+  }
+
+  #et-top-navigation {
+    margin-left: 100px;
   }
 }
