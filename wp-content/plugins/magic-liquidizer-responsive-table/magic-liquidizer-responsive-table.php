@@ -4,7 +4,7 @@ Plugin Name: Magic Liquidizer Responsive Table
 Plugin URI: http://www.innovedesigns.com/wordpress/magic-liquidizer-responsive-table-rwd-you-must-have-wp-plugin/
 Author: Elvin D.
 Description: A simple and lightweight plugin that makes HTML &lt;table&gt; tag become responsive. After activation, go to Dashboard > Magic Liquidizer Lite > Table.
-Version: 2.0.3
+Version: 2.0.4
 Tags: responsive, table, fluid, mobile screens
 Author URI: http://innovedesigns.com/author/esstat17
 Text Domain: ml-txt
@@ -13,7 +13,7 @@ Text Domain: ml-txt
 | License: GLP Version 3                                             |
 |                                                                    |
 | Magic Liquidizer Responsive Table - Make HTML Table Responsive.    |
-| Copyright (C) 2018, Elvin Deza,                                    |
+| Copyright (C) 2019, Elvin Deza,                                    |
 | http://innovedesigns.com/                                          |
 | All rights reserved.                                               |
 |                                                                    |
@@ -36,9 +36,9 @@ class magic_liquidizer_wp_class_lite {
 		add_action('plugins_loaded', array($this, 'ml_load_textdomain')); // internatinalizing
 	}
 	public function magic_liquidizer_menu_lite() {
-		add_menu_page(__('Magic Liquidizer Lite', 'ml-txt'), __('Magic Liquidizer Lite', 'ml-txt'), 'manage_options', 'magic-liquidizer-page-lite', array($this, 'ml_settings_fn_lite'),'' );
-		add_submenu_page('magic-liquidizer-page-lite', __('Setup Magic Liquidizer', 'ml-txt'), __('Setup Wizard', 'ml-txt'), 'manage_options', 'magic-liquidizer-page-lite', array($this, 'ml_settings_fn_lite'),29 );
-		add_submenu_page('magic-liquidizer-page-lite', __('About Magic Liquidizer and More', 'ml-txt'), __('About', 'ml-txt'), 'manage_options', 'magic-liquidizer-about', array($this, 'magic_liquidizer_about'),30 );
+		add_menu_page(__('Magic Liquidizer Lite', 'ml-txt'), __('Magic Liquidizer Lite', 'ml-txt'), 'manage_options', 'magic-liquidizer-page-lite', array($this, 'ml_settings_fn_lite'));
+		add_submenu_page('magic-liquidizer-page-lite', __('Setup Magic Liquidizer', 'ml-txt'), __('Setup Wizard', 'ml-txt'), 'manage_options', 'magic-liquidizer-page-lite', array($this, 'ml_settings_fn_lite'));
+		add_submenu_page('magic-liquidizer-page-lite', __('About Magic Liquidizer and More', 'ml-txt'), __('About', 'ml-txt'), 'manage_options', 'magic-liquidizer-about', array($this, 'magic_liquidizer_about'));
 	}
 
 	public function ml_settings_fn_lite(){

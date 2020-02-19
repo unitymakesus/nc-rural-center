@@ -3,6 +3,7 @@
 class ET_Builder_Module_Fullwidth_Map extends ET_Builder_Module {
 	function init() {
 		$this->name            = esc_html__( 'Fullwidth Map', 'et_builder' );
+		$this->plural          = esc_html__( 'Fullwidth Maps', 'et_builder' );
 		$this->slug            = 'et_pb_fullwidth_map';
 		$this->vb_support      = 'on';
 		$this->fullwidth       = true;
@@ -29,7 +30,7 @@ class ET_Builder_Module_Fullwidth_Map extends ET_Builder_Module {
 			'box_shadow'            => array(
 				'default' => array(
 					'css' => array(
-						'custom_style' => true,
+						'overlay' => 'inset',
 					),
 				),
 			),
@@ -43,13 +44,26 @@ class ET_Builder_Module_Fullwidth_Map extends ET_Builder_Module {
 					'main' => '%%order_class%%',
 				),
 				'child_filters_target' => array(
-					'tab_slug' => 'advanced',
+					'tab_slug'    => 'advanced',
 					'toggle_slug' => 'child_filters',
+					'label'       => esc_html__( 'Map', 'et_builder' ),
 				),
 			),
 			'child_filters'         => array(
 				'css' => array(
 					'main' => '%%order_class%% .gm-style>div>div>div>div>div>img',
+				),
+			),
+			'height'                => array(
+				'css' => array(
+					'main'    => '%%order_class%% > .et_pb_map',
+				),
+				'options' => array(
+					'height' => array(
+						'default'         => '440px',
+						'default_tablet'  => '350px',
+						'default_phone'   => '200px',
+					),
 				),
 			),
 			'fonts'                 => false,
@@ -141,7 +155,7 @@ class ET_Builder_Module_Fullwidth_Map extends ET_Builder_Module {
 				'default_on_front'         => 'on',
 			),
 			'mobile_dragging' => array(
-				'label'           => esc_html__( 'Draggable on Mobile', 'et_builder' ),
+				'label'           => esc_html__( 'Draggable On Mobile', 'et_builder' ),
 				'type'            => 'yes_no_button',
 				'option_category' => 'configuration',
 				'options'         => array(
@@ -155,6 +169,7 @@ class ET_Builder_Module_Fullwidth_Map extends ET_Builder_Module {
 			),
 			'use_grayscale_filter' => array(
 				'label'           => esc_html__( 'Use Grayscale Filter', 'et_builder' ),
+				'description'     => esc_html__( 'Adjusting the grayscale filter will allow you to change the color saturation of the map.', 'et_builder' ),
 				'type'            => 'hidden',
 				'option_category' => 'configuration',
 				'options'         => array(
@@ -170,6 +185,7 @@ class ET_Builder_Module_Fullwidth_Map extends ET_Builder_Module {
 			),
 			'grayscale_filter_amount' => array(
 				'label'           => esc_html__( 'Grayscale Filter Amount (%)', 'et_builder' ),
+				'description'     => esc_html__( 'Adjusting the grayscale filter will allow you to change the color saturation of the map.', 'et_builder' ),
 				'type'            => 'hidden',
 				'default_on_front'=> '0',
 				'option_category' => 'configuration',

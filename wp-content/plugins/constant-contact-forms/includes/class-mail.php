@@ -6,15 +6,14 @@
  * @subpackage Mail
  * @author Constant Contact
  * @since 1.0.2
+ *
+ * phpcs:disable WebDevStudios.All.RequireAuthor -- Don't require author tag in docblocks.
  */
-
-#require_once constant_contact()->path . '/vendor/autoload.php';
-
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 
 /**
  * Wrapper functions for mailing successful contact forms to the user.
+ *
+ * @since 1.0.0
  */
 class ConstantContact_Mail {
 
@@ -24,7 +23,7 @@ class ConstantContact_Mail {
 	 * @since 1.0.0
 	 * @var object
 	 */
-	protected $plugin = null;
+	protected $plugin;
 
 	/**
 	 * Constructor.
@@ -44,7 +43,7 @@ class ConstantContact_Mail {
 	 * @since 1.0.0
 	 */
 	protected function hooks() {
-		add_action( 'ctct_schedule_form_opt_in', array( $this, 'opt_in_user' ) );
+		add_action( 'ctct_schedule_form_opt_in', [ $this, 'opt_in_user' ] );
 	}
 
 	/**
@@ -56,17 +55,14 @@ class ConstantContact_Mail {
 	 * @param bool  $add_to_opt_in Whether or not to add to opt in.
 	 * @return bool
 	 */
-	public function submit_form_values( $values = array(), $add_to_opt_in = false ) {
+	public function submit_form_values( $values = [], $add_to_opt_in = false ) {
 
-		// Sanity check.
 		if ( ! is_array( $values ) ) {
 			return false;
 		}
 
-		// Clean our values.
 		$values = constant_contact()->process_form->clean_values( $values );
 
-		// If a user opted-in and we're still connected, push their data to CC.
 		if ( $add_to_opt_in && constant_contact()->api->is_connected() ) {
 
 			$maybe_bypass = ctct_get_settings_option( '_ctct_bypass_cron', '' );
@@ -80,63 +76,59 @@ class ConstantContact_Mail {
 				 * @param int $schedule_delay The time to add to `time()` for the event.
 				 */
 				$schedule_delay = apply_filters( 'constant_contact_opt_in_delay', MINUTE_IN_SECONDS );
-				wp_schedule_single_event( time() + absint( $schedule_delay ), 'ctct_schedule_form_opt_in', array( $values ) );
+
+				wp_schedule_single_event( current_time( 'timestamp' ) + absint( $schedule_delay ), 'ctct_schedule_form_opt_in', [ $values ] );
 			}
 		}
 
-		$opt_in_details = ( isset( $values['ctct-opt-in'] ) ) ? $values['ctct-opt-in'] : array();
+		$opt_in_details = ( isset( $values['ctct-opt-in'] ) ) ? $values['ctct-opt-in'] : [];
 
 		// Preserve form ID for mail() method. Lost in pretty_values() pass.
-		$submission_details                    = array();
+		$submission_details                    = [];
 		$submission_details['form_id']         = $values['ctct-id']['value'];
 		$submission_details['submitted_email'] = $this->get_user_email_from_submission( $values );
 
-		// Pretty our values.
 		$values = constant_contact()->process_form->pretty_values( $values );
 
-		// Format them.
-		$email_values = $this->format_values_for_email( $values );
-		$was_forced = false; // Set a value regardless of status.
+		$email_values = $this->format_values_for_email( $values, $submission_details['form_id'] );
+		$was_forced   = false; // Set a value regardless of status.
 
-		// Increment our counter for processed form entries.
 		constant_contact()->process_form->increment_processed_form_count();
 
-		// Skip sending e-mail if we're connected, the site owner has opted out of notification emails, and the user has opted in
-		if ( constant_contact()->api->is_connected() && 'on' === ctct_get_settings_option( '_ctct_disable_email_notifications' ) ) {
+		// Skip sending e-mail if we're connected, the site owner has opted out of notification emails, and the user has opted in.
+		if ( constant_contact()->api->is_connected() && constant_contact_emails_disabled( $submission_details['form_id'] ) ) {
 			if ( $add_to_opt_in ) {
 				return true;
 			}
 
+			// phpcs:disable WordPress.Security.NonceVerification -- OK checking of $_POST values.
 			if ( empty( $_POST['ctct_must_opt_in'] ) || ! empty( $_POST['ctct-opt-in'] ) ) {
 				return true;
 			}
+			// phpcs:enable WordPress.Security.NonceVerification
 		}
 
 		// This would allow for setting each sections error and also allow for returning early again for cases
 		// like having a list, but not needing to opt in.
 		$has_list = get_post_meta( $submission_details['form_id'], '_ctct_list', true );
 
-		// Checks if we have a list
-		if (
-			( ! constant_contact()->api->is_connected() || empty( $has_list ) ) &&
-			( 'on' === ctct_get_settings_option( '_ctct_disable_email_notifications' ) )
-		) { // If we're not connected or have no list set AND we've disabled. Override.
+		$emails_disabled = constant_contact_emails_disabled( $submission_details['form_id'] );
 
+		if ( ( ! constant_contact()->api->is_connected() || empty( $has_list ) ) && $emails_disabled ) {
+
+			// If we're not connected or have no list set AND we've disabled. Override.
 			$submission_details['list-available'] = 'no';
 			$was_forced                           = true;
 		}
 
-		if (
-			! empty( $_POST['ctct_must_opt_in'] ) &&
-			empty( $opt_in_details ) &&
-			( 'on' === ctct_get_settings_option( '_ctct_disable_email_notifications' ) )
-		) {
+		// phpcs:disable WordPress.Security.NonceVerification -- OK checking of $_POST values.
+		if ( ! empty( $_POST['ctct_must_opt_in'] ) && empty( $opt_in_details ) && $emails_disabled ) {
 			$submission_details['opted-in'] = 'no';
 			$was_forced                     = true;
 		}
+		// phpcs:enable WordPress.Security.NonceVerification
 
-		// Send the mail.
-		return $this->mail( $this->get_email(), $email_values, $submission_details, $was_forced );
+		return $this->mail( $this->get_email( $submission_details['form_id'] ), $email_values, $submission_details, $was_forced );
 	}
 
 	/**
@@ -149,37 +141,27 @@ class ConstantContact_Mail {
 	 */
 	public function opt_in_user( $values ) {
 
-		// Go through all our fields.
 		foreach ( $values as $key => $val ) {
-
-			// Clean up our data that we'll be using.
 			$key  = sanitize_text_field( isset( $val['key'] ) ? $val['key'] : '' );
 			$orig = sanitize_text_field( isset( $val['orig_key'] ) ? $val['orig_key'] : '' );
 			$val  = sanitize_text_field( isset( $val['value'] ) ? $val['value'] : '' );
 
-			// Make sure we have a key that we can use.
 			if ( $key && ( 'ctct-opt-in' !== $key ) && ( 'ctct-id' !== $key ) ) {
 
-				// Set our args that we'll pass to our API.
-				$args[ $orig ] = array(
+				$args[ $orig ] = [
 					'key' => $key,
 					'val' => $val,
-				);
+				];
 
-				// If we have an email, make sure we keep it safe.
 				if ( 'email' === $key ) {
 					$args['email'] = $val;
 				}
 			}
 		}
 
-		// Make sure we have an email set.
 		if ( isset( $values['ctct-opt-in'] ) && isset( $values['ctct-opt-in']['value'] ) ) {
-
-			// Make sure that our list is a top level.
 			$args['list'] = sanitize_text_field( $values['ctct-opt-in']['value'] );
 
-			// Send that to our API.
 			return constantcontact_api()->add_contact( $args, $values['ctct-id']['value'] );
 		}
 	}
@@ -188,23 +170,32 @@ class ConstantContact_Mail {
 	 * Formats values for email.
 	 *
 	 * @since 1.0.0
+	 * @since 1.4.0 Added form_id parameter.
 	 *
-	 * @param array $pretty_vals Values to format.
+	 * @param array  $pretty_vals Values to format.
+	 * @param string $form_id Form ID being submitted to.
 	 * @return string HTML content for email.
 	 */
-	public function format_values_for_email( $pretty_vals ) {
+	public function format_values_for_email( $pretty_vals, $form_id ) {
 
 		$return = '';
+
+		$original_field_data = $this->plugin->process_form->get_original_fields( $form_id );
 		foreach ( $pretty_vals as $val ) {
 
 			$label = isset( $val['orig_key'] ) ? $val['orig_key'] : false;
 
-			if ( $label ) {
-				// Break out our unique key.
-				$label = explode( '___', $label );
+			$custom_field_name = '';
+			if ( false !== strpos( $label, 'custom___' ) ) {
+				$custom_field       = ( $original_field_data[ $val['orig_key'] ] );
+				$custom_field_name .= $custom_field['name'];
+			}
 
-				// Uppercase and format to be human readable.
+			if ( $label && empty( $custom_field_name ) ) {
+				$label = explode( '___', $label );
 				$label = ucwords( str_replace( '_', ' ', $label[0] ) );
+			} else {
+				$label = $custom_field_name;
 			}
 			$value = isset( $val['post'] ) ? $val['post'] : '&nbsp;';
 
@@ -218,10 +209,13 @@ class ConstantContact_Mail {
 	 * Get the email address to send to.
 	 *
 	 * @since 1.0.0
+	 * @since 1.4.0 Added form ID parameter.
+	 *
+	 * @param string $form_id Current form ID being submitted to.
 	 *
 	 * @return string Email address to send to.
 	 */
-	public function get_email() {
+	public function get_email( $form_id ) {
 
 		$email = get_option( 'admin_email' );
 
@@ -229,10 +223,12 @@ class ConstantContact_Mail {
 		 * Filters the email to send Constant Contact Forms admin emails to.
 		 *
 		 * @since 1.3.0
+		 * @since 1.4.0 Added form ID parameter.
 		 *
 		 * @param string $email Email address to send to. Default admin_email option.
+		 * @param string $form_id Current form ID being submitted to.
 		 */
-		return apply_filters( 'constant_contact_destination_email', $email );
+		return apply_filters( 'constant_contact_destination_email', $email, $form_id );
 	}
 
 	/**
@@ -240,6 +236,8 @@ class ConstantContact_Mail {
 	 *
 	 * @since 1.0.0
 	 * @since 1.3.6 Added $was_forced.
+	 *
+	 * @throws Exception
 	 *
 	 * @param string $destination_email  Intended mail address.
 	 * @param string $content            Data from clean values.
@@ -249,28 +247,43 @@ class ConstantContact_Mail {
 	 */
 	public function mail( $destination_email, $content, $submission_details, $was_forced = false ) {
 
-		// Define a mail key for the cache.
 		static $last_sent = false;
-
 		$screen = '';
-		// Sanity check for get_current_screen, as we may run too early.
+
 		if ( function_exists( 'get_current_screen' ) ) {
 			$screen = get_current_screen();
 		}
 
-		$mail_key = md5( "{$destination_email}:{$content}:" . ( isset( $screen->id ) ? $screen->id : '' ) );
-		$partial_email = $this->get_email_part( $destination_email );
+		if ( is_array( $destination_email ) ) {
+			$temp_destination_email = implode( ',', $destination_email );
+		} else {
+			$temp_destination_email = $destination_email;
+		}
+		$mail_key = md5( "{$temp_destination_email}:{$content}:" . ( isset( $screen->id ) ? $screen->id : '' ) );
 
-		// If we already have sent this e-mail, don't send it again.
+		if ( is_array( $destination_email ) ) {
+			$partial_email = array_map( [ $this, 'get_email_part' ], $destination_email );
+			$partial_email = implode( ',', $partial_email );
+		} else {
+			if ( false !== strpos( $destination_email, ',' ) ) {
+				// Use trim to handle cases of ", ".
+				$partials = array_map( 'trim', explode( ',', $destination_email ) );
+				$partial_email = array_map( [ $this, 'get_email_part' ], $partials );
+				$partial_email = implode( ',', $partial_email );
+			} else {
+				$partial_email = $this->get_email_part( $destination_email );
+			}
+		}
+
 		if ( $last_sent === $mail_key ) {
 			$this->maybe_log_mail_status(
 				vsprintf(
 					/* translators: this is only used when some debugging is enabled */
 					__( 'Duplicate send mail for: %1$s and: %2$s', 'constant-contact-forms' ),
-					array(
+					[
 						$partial_email,
 						$mail_key,
-					)
+					]
 				),
 				$partial_email,
 				$mail_key
@@ -278,30 +291,37 @@ class ConstantContact_Mail {
 			return true;
 		}
 
-		// If we didn't get passed in a sanitized email, we know something is
-		// wonky here, so bail out.
-		if ( sanitize_email( $destination_email ) !== $destination_email ) {
-			return false;
+		if ( is_array( $destination_email ) ) {
+			$destination_email = array_map( 'sanitize_email', $destination_email );
+			$destination_email = implode( ',', $destination_email );
+		} else {
+			if ( false !== strpos( $destination_email, ',' ) ) {
+				// Use trim to handle cases of ", ".
+				$partials          = array_map( 'trim', explode( ',', $destination_email ) );
+				$partials          = array_map( 'sanitize_email', $partials );
+				$destination_email = implode( ',', $partials );
+			} else {
+				$destination_email = sanitize_email( $destination_email );
+			}
 		}
 
-		// Filter to allow sending HTML for our message body.
-		add_filter( 'wp_mail_content_type', array( $this, 'set_email_type' ) );
+		add_filter( 'wp_mail_content_type', [ $this, 'set_email_type' ] );
 
-		$content_notice_note = $this->maybe_append_forced_email_notice_note( $was_forced );
+		$content_notice_note    = $this->maybe_append_forced_email_notice_note( $was_forced );
 		$content_notice_reasons = $this->maybe_append_forced_email_notice_reasons( $was_forced, $submission_details );
 
 		$content_before = esc_html__( 'Your Constant Contact Forms plugin has captured new information.', 'constant-contact-forms' );
 
 		$content_before = $content_notice_note . $content_before . $content_notice_reasons;
 
-		$content_title = '<p><strong>' . esc_html__( 'Form title: ', 'constant-contact-forms' ) . '</strong>' . get_the_title( $submission_details['form_id'] ) . '<br/>';
+		$content_title  = '<p><strong>' . esc_html__( 'Form title: ', 'constant-contact-forms' ) . '</strong>' . get_the_title( $submission_details['form_id'] ) . '<br/>';
 		$content_title .= '<strong>' . esc_html__( 'Form information: ', 'constant-contact-forms' ) . '</strong></p>';
 
 		$content = $content_title . $content;
 
-
 		$content_after = sprintf(
-			esc_html__( "Email marketing is a great way to stay connected and engage with visitors after they've left your site. Visit %shttps://www.constantcontact.com/index?pn=miwordpress%s to sign up for a Free Trial.", 'constant-contact-forms' ),
+			/* Translators: placeholders provide Constant Contact link information. */
+			esc_html__( "Email marketing is a great way to stay connected and engage with visitors after they've left your site. Visit %1\$shttps://www.constantcontact.com/index?pn=miwordpress%2\$s to sign up for a Free Trial.", 'constant-contact-forms' ),
 				'<a href="https://www.constantcontact.com/index?pn=miwordpress">',
 				'</a>'
 			);
@@ -354,10 +374,8 @@ class ConstantContact_Mail {
 		 */
 		do_action( 'constant_contact_after_email_send', $submission_details['form_id'], $submission_details['submitted_email'], $destination_email, $content );
 
-		// Clean up, remove the filter we had set.
-		remove_filter( 'wp_mail_content_type', array( $this, 'set_email_type' ) );
+		remove_filter( 'wp_mail_content_type', [ $this, 'set_email_type' ] );
 
-		// Store this for later.
 		if ( $mail_status ) {
 			$last_sent = $mail_key;
 		}
@@ -369,6 +387,8 @@ class ConstantContact_Mail {
 	 * Helper method to return 'text/html' string for actions.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return string
 	 */
 	public function set_email_type() {
 		return 'text/html';
@@ -379,10 +399,11 @@ class ConstantContact_Mail {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @throws Exception Exception.
+	 *
 	 * @param string $status     Status from wp_mail.
 	 * @param string $dest_email Destination email.
 	 * @param string $content    Content of email.
-	 * @return void
 	 */
 	public function maybe_log_mail_status( $status, $dest_email, $content ) {
 
@@ -402,7 +423,7 @@ class ConstantContact_Mail {
 	 * @param array $values Values submitted to form.
 	 * @return mixed
 	 */
-	public function get_user_email_from_submission( $values = array() ) {
+	public function get_user_email_from_submission( $values = [] ) {
 		foreach ( $values as $key => $value ) {
 			if ( false === strpos( $key, 'email___' ) ) {
 				continue;
@@ -416,7 +437,7 @@ class ConstantContact_Mail {
 	 *
 	 * @since 1.3.6
 	 *
-	 * @param  bool   $was_forced Whether or not we have to force send an email.
+	 * @param  bool $was_forced Whether or not we have to force send an email.
 	 * @return string $value      Message to explain why an email was received.
 	 */
 	public function maybe_append_forced_email_notice_note( $was_forced = false ) {
@@ -426,7 +447,8 @@ class ConstantContact_Mail {
 		}
 
 		return sprintf(
-			'<p>' . esc_html__( '%sNote:%s You have disabled admin email notifications under the plugin settings, but are receiving this email because of the following reason.', 'constant-contact-forms' ) . '</p>',
+			/* Translators: placeholders simply meant for `<strong>` html tags */
+			'<p>' . esc_html__( '%1\$sNote:%2\$s You have disabled admin email notifications under the plugin settings, but are receiving this email because of the following reason.', 'constant-contact-forms' ) . '</p>',
 			'<strong>*',
 			'</strong>'
 		);
@@ -442,14 +464,14 @@ class ConstantContact_Mail {
 	 * @param array $submission_details Array of submission details that we tack reasons to send email in.
 	 * @return string
 	 */
-	public function maybe_append_forced_email_notice_reasons( $was_forced = false, $submission_details = array() ) {
+	public function maybe_append_forced_email_notice_reasons( $was_forced = false, $submission_details = [] ) {
 
 		if ( ! $was_forced ) {
 			return '';
 		}
 
 		$content_notice = '';
-		$template = '<p><strong>' . esc_html__( 'Submitted to Constant Contact:', 'constant-contact-forms' ) . '</strong> %s</p>';
+		$template       = '<p><strong>' . esc_html__( 'Submitted to Constant Contact:', 'constant-contact-forms' ) . '</strong> %s</p>';
 
 		if ( isset( $submission_details['list-available'] ) || isset( $submission_details['opted-in'] ) ) {
 			if ( isset( $submission_details['list-available'] ) && 'no' === $submission_details['list-available'] ) {
@@ -462,7 +484,6 @@ class ConstantContact_Mail {
 				$content_notice .= sprintf(
 					$template,
 					esc_html__( 'NO (User did not select the Email Opt-in checkbox)', 'constant-contact-forms' ) . '<br/>' . esc_html__( "You can disable this under Form options. Email Opt-in isn't required to add subscribers into your account", 'constant-contact-forms' )
-
 				);
 			}
 		}

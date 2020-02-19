@@ -3,6 +3,7 @@
 class ET_Builder_Module_Fullwidth_Image extends ET_Builder_Module {
 	function init() {
 		$this->name       = esc_html__( 'Fullwidth Image', 'et_builder' );
+		$this->plural     = esc_html__( 'Fullwidth Images', 'et_builder' );
 		$this->slug       = 'et_pb_fullwidth_image';
 		$this->vb_support = 'on';
 		$this->fullwidth  = true;
@@ -45,13 +46,17 @@ class ET_Builder_Module_Fullwidth_Image extends ET_Builder_Module {
 			'box_shadow'            => array(
 				'default' => array(
 					'css' => array(
-						'custom_style' => true,
+						'overlay' => 'inset',
 					),
 				),
 			),
 			'fonts'                 => false,
 			'text'                  => false,
 			'button'                => false,
+			'link_options'          => false,
+			'position_fields'       => array(
+				'default' => 'relative',
+			),
 		);
 
 		$this->help_videos = array(
@@ -65,7 +70,7 @@ class ET_Builder_Module_Fullwidth_Image extends ET_Builder_Module {
 	function get_fields() {
 		$fields = array(
 			'src' => array(
-				'label'              => esc_html__( 'Image URL', 'et_builder' ),
+				'label'              => esc_html__( 'Image', 'et_builder' ),
 				'type'               => 'upload',
 				'option_category'    => 'basic_option',
 				'upload_button_text' => esc_attr__( 'Upload an image', 'et_builder' ),
@@ -77,6 +82,9 @@ class ET_Builder_Module_Fullwidth_Image extends ET_Builder_Module {
 				),
 				'description'        => esc_html__( 'Upload your desired image, or type in the URL to the image you would like to display.', 'et_builder' ),
 				'toggle_slug'        => 'main_content',
+				'dynamic_content'    => 'image',
+				'mobile_options'     => true,
+				'hover'              => 'tabs',
 			),
 			'alt' => array(
 				'label'           => esc_html__( 'Image Alternative Text', 'et_builder' ),
@@ -89,6 +97,7 @@ class ET_Builder_Module_Fullwidth_Image extends ET_Builder_Module {
 				'description'     => esc_html__( 'This defines the HTML ALT text. A short description of your image can be placed here.', 'et_builder' ),
 				'tab_slug'        => 'custom_css',
 				'toggle_slug'     => 'attributes',
+				'dynamic_content' => 'text',
 			),
 			'title_text' => array(
 				'label'           => esc_html__( 'Image Title Text', 'et_builder' ),
@@ -101,6 +110,7 @@ class ET_Builder_Module_Fullwidth_Image extends ET_Builder_Module {
 				'description'     => esc_html__( 'This defines the HTML Title text.', 'et_builder' ),
 				'tab_slug'        => 'custom_css',
 				'toggle_slug'     => 'attributes',
+				'dynamic_content' => 'text',
 			),
 			'show_in_lightbox' => array(
 				'label'             => esc_html__( 'Open In Lightbox', 'et_builder' ),
@@ -120,7 +130,7 @@ class ET_Builder_Module_Fullwidth_Image extends ET_Builder_Module {
 				'description'       => esc_html__( 'Here you can choose whether or not the image should open in Lightbox. Note: if you select to open the image in Lightbox, url options below will be ignored.', 'et_builder' ),
 			),
 			'url' => array(
-				'label'           => esc_html__( 'Link URL', 'et_builder' ),
+				'label'           => esc_html__( 'Image Link URL', 'et_builder' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'depends_show_if' => 'off',
@@ -129,9 +139,10 @@ class ET_Builder_Module_Fullwidth_Image extends ET_Builder_Module {
 				),
 				'description'     => esc_html__( 'If you would like your image to be a link, input your destination URL here. No link will be created if this field is left blank.', 'et_builder' ),
 				'toggle_slug'     => 'link',
+				'dynamic_content' => 'url',
 			),
 			'url_new_window' => array(
-				'label'             => esc_html__( 'Url Opens', 'et_builder' ),
+				'label'             => esc_html__( 'Image Link Target', 'et_builder' ),
 				'type'              => 'select',
 				'option_category'   => 'configuration',
 				'options'           => array(
@@ -195,7 +206,15 @@ class ET_Builder_Module_Fullwidth_Image extends ET_Builder_Module {
 		return $fields;
 	}
 
+	public function get_transition_fields_css_props() {
+		$fields = parent::get_transition_fields_css_props();
+		$filters = $this->get_transition_filters_fields_css_props( 'child_filters' );
+
+		return array_merge( $fields, $filters );
+	}
+
 	function render( $attrs, $content = null, $render_slug ) {
+		$multi_view          = et_pb_multi_view_options( $this );
 		$src                 = $this->props['src'];
 		$alt                 = $this->props['alt'];
 		$title_text          = $this->props['title_text'];
@@ -249,12 +268,20 @@ class ET_Builder_Module_Fullwidth_Image extends ET_Builder_Module {
 			);
 		}
 
+		$image_html = $multi_view->render_element( array(
+			'tag'   => 'img',
+			'attrs' => array(
+				'src'   => '{{src}}',
+				'alt'   => '{{alt}}',
+				'title' => '{{title_text}}',
+			),
+			'required' => 'src',
+		) );
+
 		$output = sprintf(
-			'<img src="%1$s" alt="%2$s"%3$s />
-			%4$s',
-			esc_attr( $src ),
-			esc_attr( $alt ),
-			( '' !== $title_text ? sprintf( ' title="%1$s"', esc_attr( $title_text ) ) : '' ),
+			'%1$s
+			%2$s',
+			$image_html,
 			'on' === $is_overlay_applied ? $overlay_output : ''
 		);
 

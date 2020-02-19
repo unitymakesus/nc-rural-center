@@ -2,7 +2,7 @@
 Contributors: DaganLev
 Tags: Solid Code, Dagan Lev, Bulk Page Creator, batch action, add pages, add posts
 Requires at least: 3.1
-Tested up to: 4.4.2
+Tested up to: 5.0.0
 Stable tag: trunk
 
 Allows you to create multiple pages in a batch/bulk manner saving time when initially setting up your WordPress site
@@ -51,6 +51,9 @@ Added support for HTTPS logins
 
 = 1.1.0 =
 Deprecated class constructor for PHP 7 support
+
+= 1.1.1 =
+Maintenance Version Release
 
 == Screenshots ==
 

@@ -16,10 +16,6 @@ function wtfdivi094_admin_css() { ?>
 	margin:0 !important; 
 	border-radius: 0 !important; 
 }
-.et_pb_prompt_modal { 
-	top: 100px !important; 
-	bottom: 0 !important; 
-}
 div.et_pb_prompt_modal div.et_pb_prompt_buttons input.et_pb_prompt_proceed { 
 	border-radius: 0px !important; 
 }
@@ -56,6 +52,18 @@ div[data-action].et_pb_modal_overlay .et_pb_prompt_modal {
 }
 .et-pb-main-settings-full { 
 	text-align: center;
+}
+
+
+/*
+.et_pb_prompt_modal { 
+	top: 100px !important; 
+	bottom: 0 !important; 
+}
+*/
+.et_pb_prompt_buttons, 
+.et-pb-modal-bottom-container { 
+	margin-bottom: 32px !important;
 }
 </style>
 

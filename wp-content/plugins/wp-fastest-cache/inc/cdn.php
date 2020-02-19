@@ -77,7 +77,7 @@
 												"X-Auth-Key" => $key,
 												"Content-Type" => "application/json"
 												),
-								'body' => '{"value":2073600}'
+								'body' => '{"value":16070400}'
 								);
 
 				$response = wp_remote_request('https://api.cloudflare.com/client/v4/zones/'.$zoneid.'/settings/browser_cache_ttl', $header);
@@ -143,8 +143,11 @@
 											"Content-Type" => "application/json"
 											),
 							);
-
-			$response = wp_remote_request('https://api.cloudflare.com/client/v4/zones?name='.$hostname, $header);
+			
+			/*
+			status=active has been removed because status may be "pending"
+			*/
+			$response = wp_remote_request('https://api.cloudflare.com/client/v4/zones/?page=1&per_page=1000', $header);
 
 			if(!$response || is_wp_error($response)){
 				$res = array("success" => false, "error_message" => $response->get_error_message());
@@ -155,14 +158,37 @@
 					$res = array("success" => false, "error_message" => $zone->errors[0]->message);
 				}else{
 					if(isset($zone->result) && isset($zone->result[0])){
-						$res = array("success" => true, "zoneid" => $zone->result[0]->id);
+						foreach ($zone->result as $zone_key => $zone_value) {
+							if(preg_match("/".$zone_value->name."/", $hostname)){
+								$res = array("success" => true, 
+											 "zoneid" => $zone_value->id,
+											 "plan" => $zone_value->plan->legacy_id);
+							}
+						}
+
+						if(!$res["success"]){
+							$res = array("success" => false, "error_message" => "No zone name ".$hostname);
+						}
 					}else{
-						$res = array("success" => false, "error_message" => "No zone name ".$hostname);
+						$res = array("success" => false, "error_message" => "There is no zone");
 					}
 				}
 			}
 
 			return $res;
+		}
+
+		public static function cloudflare_remove_webp(){
+			$path = ABSPATH.".htaccess";
+
+			if(file_exists($path)){
+				if(is_writable($path)){
+					$htaccess = file_get_contents($path);
+					$htaccess = preg_replace("/#\s?BEGIN\s?WEBPWpFastestCache.*?#\s?END\s?WEBPWpFastestCache/s", "", $htaccess);
+
+					file_put_contents($path, $htaccess);
+				}
+			}
 		}
 
 
@@ -182,6 +208,11 @@
 					$rocket_loader = CdnWPFC::cloudflare_disable_rocket_loader($email, $key, $zone["zoneid"]);
 					$purge_cache = CdnWPFC::cloudflare_clear_cache($email, $key, $zone["zoneid"]);
 					$browser_caching = CdnWPFC::cloudflare_set_browser_caching($email, $key, $zone["zoneid"]);
+
+					if($zone["plan"] == "free"){
+						CdnWPFC::cloudflare_remove_webp();;
+					}
+
 
 					if($minify["success"]){
 						if($rocket_loader["success"]){
@@ -222,8 +253,12 @@
 				if(!preg_match("/^http/", $_GET["url"])){
 					$_GET["url"] = "http://".$_GET["url"];
 				}
+
+				if(preg_match("/^https/i", site_url()) && preg_match("/^https/i", home_url())){
+					$_GET["url"] = preg_replace("/http\:\/\//i", "https://", $_GET["url"]);
+				}
 				
-				$response = wp_remote_get($_GET["url"], array('timeout' => 20 ) );
+				$response = wp_remote_get($_GET["url"], array('timeout' => 20, 'user-agent' => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:64.0) Gecko/20100101 Firefox/64.0"));
 
 				$header = wp_remote_retrieve_headers($response);
 
@@ -233,6 +268,9 @@
 					if($response->get_error_code() == "http_request_failed"){
 						if($response->get_error_message() == "Failure when receiving data from the peer"){
 							$res = array("success" => true);
+						}else if(preg_match("/cURL\serror\s60/i", $response->get_error_message())){
+							//cURL error 60: SSL: no alternative certificate subject name matches target host name
+							$res = array("success" => false, "error_message" => "<a href='https://www.wpfastestcache.com/warnings/how-to-use-cdn-on-ssl-sites/' target='_blank'>Please Read: https://www.wpfastestcache.com/warnings/how-to-use-cdn-on-ssl-sites/</a>");
 						}else if(preg_match("/cURL\serror\s6/i", $response->get_error_message())){
 							//cURL error 6: Couldn't resolve host
 							if(preg_match("/".preg_quote($host, "/")."/i", $_GET["url"])){
@@ -261,6 +299,10 @@
 
 						if(($response_code == 403) && (preg_match("/stackpathdns\.com/i", $_GET["url"]))){
 							$res = array("success" => true);
+						}
+
+						if(($response_code == 403) && (preg_match("/cloudfront\.net/i", $_GET["url"]))){
+							$res = array("success" => false, "error_message" => "<a href='https://www.wpfastestcache.com/warnings/amazon-s3-cloudfront-access-denied-403-forbidden/' target='_blank'>Please Read: https://www.wpfastestcache.com/warnings/amazon-s3-cloudfront-access-denied-403-forbidden</a>");
 						}
 					}
 				}
@@ -361,6 +403,12 @@
 
 		public static function save_cdn_integration(){
 			if(current_user_can('manage_options')){
+				if(isset($_POST) && isset($_POST["values"])){
+					foreach ($_POST["values"] as $val_key => &$val_value) {
+						$val_value = sanitize_text_field($val_value);
+					}
+				}
+				
 				if($data = get_option("WpFastestCacheCDN")){
 					$cdn_exist = false;
 					$arr = json_decode($data);

@@ -9,6 +9,8 @@
 		public $exclude_rules = false;
 		public $preload_user_agent = false;
 		public $current_page_type = false;
+		public $current_page_content_type = false;
+		public $exclude_current_page_text = false;
 
 		public function __construct(){
 			//to fix: PHP Notice: Undefined index: HTTP_USER_AGENT
@@ -77,36 +79,32 @@
 		}
 
 		public function set_cache_file_path(){
+			$type = "all";
 
 			if($this->isMobile() && isset($this->options->wpFastestCacheMobile)){
 				if(class_exists("WpFcMobileCache") && isset($this->options->wpFastestCacheMobileTheme)){
-					$wpfc_mobile = new WpFcMobileCache();
-					$this->cacheFilePath = $this->getWpContentDir()."/cache/".$wpfc_mobile->get_folder_name()."".$_SERVER["REQUEST_URI"];
+					$type = "wpfc-mobile-cache";
 				}
-			}else{
-				if($this->isPluginActive('gtranslate/gtranslate.php')){
-					if(isset($_SERVER["HTTP_X_GT_LANG"])){
-						//$this->cacheFilePath = $this->getWpContentDir()."/cache/all/".$_SERVER["HTTP_X_GT_LANG"];
-						$this->cacheFilePath = $this->getWpContentDir()."/cache/all/".$_SERVER["HTTP_X_GT_LANG"].$_SERVER["REQUEST_URI"];
-					}else if(isset($_SERVER["REDIRECT_URL"]) && $_SERVER["REDIRECT_URL"] != "/index.php"){
-						$this->cacheFilePath = $this->getWpContentDir()."/cache/all/".$_SERVER["REDIRECT_URL"];
-					}else if(isset($_SERVER["REQUEST_URI"])){
-						$this->cacheFilePath = $this->getWpContentDir()."/cache/all/".$_SERVER["REQUEST_URI"];
-					}
-				}else{
-					$this->cacheFilePath = $this->getWpContentDir()."/cache/all/".$_SERVER["REQUEST_URI"];
-				}
-			}
-			
-			//WPML language switch
-			//https://wpml.org/forums/topic/wpml-language-switch-wp-fastest-cache-issue/
-			if($this->isPluginActive('sitepress-multilingual-cms/sitepress.php')){
-				$current_language = apply_filters('wpml_current_language', false);
-				$this->cacheFilePath = str_replace('/cache/all/', '/cache/all/'.$current_language.'/', $this->cacheFilePath);
 			}
 
+			if($this->isPluginActive('gtranslate/gtranslate.php')){
+				if(isset($_SERVER["HTTP_X_GT_LANG"])){
+					$this->cacheFilePath = $this->getWpContentDir("/cache/".$type."/").$_SERVER["HTTP_X_GT_LANG"].$_SERVER["REQUEST_URI"];
+				}else if(isset($_SERVER["REDIRECT_URL"]) && $_SERVER["REDIRECT_URL"] != "/index.php"){
+					$this->cacheFilePath = $this->getWpContentDir("/cache/".$type."/").$_SERVER["REDIRECT_URL"];
+				}else if(isset($_SERVER["REQUEST_URI"])){
+					$this->cacheFilePath = $this->getWpContentDir("/cache/".$type."/").$_SERVER["REQUEST_URI"];
+				}
+			}else{
+				$this->cacheFilePath = $this->getWpContentDir("/cache/".$type."/").$_SERVER["REQUEST_URI"];
+
+				// for /?s=
+				$this->cacheFilePath = preg_replace("/(\/\?s\=)/", "$1/", $this->cacheFilePath);
+			}
+
+
 			$this->cacheFilePath = $this->cacheFilePath ? rtrim($this->cacheFilePath, "/")."/" : "";
-			$this->cacheFilePath = str_replace("/cache/all//", "/cache/all/", $this->cacheFilePath);
+			$this->cacheFilePath = preg_replace("/\/cache\/(all|wpfc-mobile-cache)\/\//", "/cache/$1/", $this->cacheFilePath);
 
 
 			if(strlen($_SERVER["REQUEST_URI"]) > 1){ // for the sub-pages
@@ -115,6 +113,10 @@
 						if(!preg_match("/\/$/", $_SERVER["REQUEST_URI"])){
 							if(defined('WPFC_CACHE_QUERYSTRING') && WPFC_CACHE_QUERYSTRING){
 							
+							}else if(preg_match("/gclid\=/i", $this->cacheFilePath)){
+								
+							}else if(preg_match("/fbclid\=/i", $this->cacheFilePath)){
+
 							}else if(preg_match("/utm_(source|medium|campaign|content|term)/i", $this->cacheFilePath)){
 
 							}else{
@@ -127,17 +129,38 @@
 				}
 			}
 			
-			$this->remove_google_analytics_paramters();
+			$this->remove_url_paramters();
 
 			// to decode path if it is not utf-8
 			if($this->cacheFilePath){
 				$this->cacheFilePath = urldecode($this->cacheFilePath);
 			}
+
+			// for security
+			if(preg_match("/\.{2,}/", $this->cacheFilePath)){
+				$this->cacheFilePath = false;
+			}
 		}
 
-		public function remove_google_analytics_paramters(){
+		public function remove_url_paramters(){
+			$action = false;
+
+			//to remove query strings for cache if Google Click Identifier are set
+			if(preg_match("/gclid\=/i", $this->cacheFilePath)){
+				$action = true;
+			}
+
+			//to remove query strings for cache if facebook parameters are set
+			if(preg_match("/fbclid\=/i", $this->cacheFilePath)){
+				$action = true;
+			}
+
 			//to remove query strings for cache if google analytics parameters are set
 			if(preg_match("/utm_(source|medium|campaign|content|term)/i", $this->cacheFilePath)){
+				$action = true;
+			}
+
+			if($action){
 				if(strlen($_SERVER["REQUEST_URI"]) > 1){ // for the sub-pages
 
 					$this->cacheFilePath = preg_replace("/\/*\?.+/", "", $this->cacheFilePath);
@@ -202,9 +225,10 @@
 				}
 
 				// to exclude admin users
-				$users_groups = get_users(array("role" => "administrator", "fields" => array("user_login")));
 				foreach ((array)$_COOKIE as $cookie_key => $cookie_value){
 					if(preg_match("/wordpress_logged_in/i", $cookie_key)){
+						$users_groups = get_users(array("role" => "administrator", "fields" => array("user_login")));
+						
 						foreach ($users_groups as $user_key => $user_value) {
 							if(preg_match("/^".preg_quote($user_value->user_login, "/")."/", $cookie_value)){
 								ob_start(array($this, "cdn_rewrite"));
@@ -224,48 +248,13 @@
 					}
 				}
 
-				// to check wp_woocommerce_session cookie
+				// to check woocommerce_items_in_cart
 				foreach ((array)$_COOKIE as $cookie_key => $cookie_value){
-					if(preg_match("/^wp\_woocommerce\_session/", $cookie_key)){
-						//"<!-- \$_COOKIE['wp_woocommerce_session'] has been set -->";
+					//if(preg_match("/^wp\_woocommerce\_session/", $cookie_key)){
+					if(preg_match("/^woocommerce\_items\_in\_cart/", $cookie_key)){
 						ob_start(array($this, "cdn_rewrite"));
 						
 						return 0;
-					}
-				}
-
-				// WeePie Cookie Allow: to create cache if the cookie named wpca_consent is set
-				if($this->isPluginActive('wp-cookie-allow/wp-cookie-allow.php')){
-					$wpca_settings_general = get_option('wpca_settings_general', array());
-
-					// check if settings are indexed by multilang locales
-					if($this->isPluginActive('sitepress-multilingual-cms/sitepress.php')){
-						$wpml_current_language = apply_filters('wpml_current_language', false);
-
-						if($wpml_current_language){
-							$wpml_languages = apply_filters('wpml_active_languages', NULL, 'orderby=id&order=desc');
-
-							if(isset($wpml_languages[$wpml_current_language]) && isset($wpml_languages[$wpml_current_language]['default_locale'])) {
-								$wpml_locale = $wpml_languages[$wpml_current_language]['default_locale'];
-
-								if(isset($wpca_settings_general[$wpml_locale])) {
-									$wpca_settings_general = $wpca_settings_general[$wpml_locale];
-									if(!is_array($wpca_settings_general)) {
-										$wpca_settings_general = array();
-									}
-								}
-							}
-						}
-					}
-
-					$wpca_enabled = (isset($wpca_settings_general['general_plugin_status']) && $wpca_settings_general['general_plugin_status'] == '1');
-
-					if($wpca_enabled){
-						if(!isset($_COOKIE["wpca_consent"]) || (isset($_COOKIE["wpca_consent"]) && $_COOKIE["wpca_consent"] == 0)){
-							ob_start(array($this, "cdn_rewrite"));
-							
-							return 0;
-						}
 					}
 				}
 
@@ -273,6 +262,16 @@
 					ob_start(array($this, "cdn_rewrite"));
 
 					return 0;
+				}
+
+				if(isset($_COOKIE) && isset($_COOKIE["wptouch-pro-view"])){
+					if($this->is_wptouch_smartphone()){
+						if($_COOKIE["wptouch-pro-view"] == "desktop"){
+							ob_start(array($this, "cdn_rewrite"));
+
+							return 0;
+						}
+					}
 				}
 
 				if(preg_match("/\?/", $_SERVER["REQUEST_URI"]) && !preg_match("/\/\?fdx\_switcher\=true/", $_SERVER["REQUEST_URI"])){ // for WP Mobile Edition
@@ -295,6 +294,13 @@
 					return 0;
 				}
 
+				// to check permalink if it does not end with slash
+				if(isset($_SERVER['REQUEST_URI']) && preg_match("/[^\/]+\/$/", $_SERVER['REQUEST_URI'])){
+					if(!preg_match("/\/$/", get_option('permalink_structure'))){
+						return 0;
+					}
+				}
+
 				if(isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == "POST"){
 					return 0;
 				}
@@ -310,7 +316,9 @@
 						if(!$this->isPluginActive('really-simple-ssl-pro/really-simple-ssl-pro.php')){
 							if(!$this->isPluginActive('ssl-insecure-content-fixer/ssl-insecure-content-fixer.php')){
 								if(!$this->isPluginActive('https-redirection/https-redirection.php')){
-									return 0;
+									if(!$this->isPluginActive('better-wp-security/better-wp-security.php')){
+										return 0;
+									}
 								}
 							}
 						}
@@ -323,13 +331,6 @@
 
 				if(!preg_match("/www\./i", get_option("home")) && preg_match("/www\./i", $_SERVER['HTTP_HOST'])){
 					return 0;
-				}
-
-				//different domain names may be used for different languages
-				if($this->isPluginActive('polylang/polylang.php')){
-					if(!preg_match("/".preg_quote(str_replace("www.", "", $_SERVER["HTTP_HOST"]), "/")."/i", get_option("home"))){
-						return 0;
-					}
 				}
 
 				if($this->exclude_page()){
@@ -348,14 +349,30 @@
 
 
 				//to show cache version via php if htaccess rewrite rule does not work
-				if(!$this->preload_user_agent && $this->cacheFilePath && @file_exists($this->cacheFilePath."index.html")){
-					if($content = @file_get_contents($this->cacheFilePath."index.html")){
+				if(!$this->preload_user_agent && $this->cacheFilePath && (@file_exists($this->cacheFilePath."index.html") || @file_exists($this->cacheFilePath."index.json") || @file_exists($this->cacheFilePath."index.xml"))){
+
+					$via_php = "";
+					if(@file_exists($this->cacheFilePath."index.json")){
+						$file_extension = "json";
+
+						header('Content-type: application/json');
+					}else if(@file_exists($this->cacheFilePath."index.xml")){
+						$file_extension = "xml";
+
+						header('Content-type: text/xml');
+					}else{
+						$file_extension = "html";
+						$via_php = "<!-- via php -->";
+					}
+
+					if($content = @file_get_contents($this->cacheFilePath."index.".$file_extension)){
 						if(defined('WPFC_REMOVE_VIA_FOOTER_COMMENT') && WPFC_REMOVE_VIA_FOOTER_COMMENT){
-							die($content);
-						}else{
-							$content = $content."<!-- via php -->";
-							die($content);
+							$via_php = "";
 						}
+
+						$content = $content.$via_php;
+
+						die($content);
 					}
 				}else{
 					if($this->isMobile()){
@@ -394,10 +411,38 @@
 					if($create_cache){
 						$this->startTime = microtime(true);
 
+
+						add_action('wp', array($this, "detect_current_page_type"));
 						add_action('get_footer', array($this, "detect_current_page_type"));
 						add_action('get_footer', array($this, "wp_print_scripts_action"));
 
+						// to exclude current page hook
+						add_action("wpfc_exclude_current_page", array($this, 'exclude_current_page'), 10, 0);
+
 						ob_start(array($this, "callback"));
+					}
+				}
+			}
+		}
+
+		public function exclude_current_page($some = true){
+			$via = debug_backtrace();
+
+			if(isset($via) && is_array($via)){
+				foreach ($via as $key => $value){
+					if($value["function"] == "wpfc_exclude_current_page"){
+						
+						if(defined('WPFC_DEBUG') && (WPFC_DEBUG === true)){
+							if(preg_match("/wp-content\/themes/", $value["file"])){
+								$this->exclude_current_page_text = "<!-- This page has been excluded by ".basename($value["file"])." of the Theme -->";
+							}else if(preg_match("/wp-content\/plugins/", $value["file"])){
+								$this->exclude_current_page_text = "<!-- This page has been excluded by ".basename($value["file"])." of ".preg_replace("/([^\/]+)\/.+/", "$1", plugin_basename($value["file"]))." -->";
+							}
+						}else{
+							$this->exclude_current_page_text = "<!-- This page has been excluded -->";
+						}
+
+						break;
 					}
 				}
 			}
@@ -410,8 +455,6 @@
 		public function ignored($buffer){
 			$list = array(
 						"\/wp\-comments\-post\.php",
-						"\/sitemap\.xml",
-						"\/sitemap_index\.xml",
 						"\/wp\-login\.php",
 						"\/robots\.txt",
 						"\/wp\-cron\.php",
@@ -446,7 +489,7 @@
 					//"\/product"
 					//"\/product-category"
 
-					array_push($list, "\/cart", "\/checkout", "\/receipt", "\/confirmation", "\/wc-api\/");
+					array_push($list, "\/cart\/?$", "\/checkout", "\/receipt", "\/confirmation", "\/wc-api\/");
 				}
 			}
 
@@ -467,7 +510,7 @@
 
 		public function exclude_page($buffer = false){
 			$preg_match_rule = "";
-			$request_url = trim($_SERVER["REQUEST_URI"], "/");
+			$request_url = urldecode(trim($_SERVER["REQUEST_URI"], "/"));
 
 			if($this->exclude_rules){
 
@@ -478,11 +521,11 @@
 						if(preg_match("/utm_(source|medium|campaign|content|term)/i", $request_url)){
 							return true;
 						}
-					}else if($buffer && isset($value->prefix) && $value->prefix && ($value->type == "page")){
+					}else if(isset($value->prefix) && $value->prefix && ($value->type == "page")){
 						$value->content = trim($value->content);
 						$value->content = trim($value->content, "/");
 
-						if(preg_match("/^(homepage|category|tag|post|page|archive|attachment)$/", $value->prefix)){
+						if($buffer && preg_match("/^(homepage|category|tag|post|page|archive|attachment)$/", $value->prefix)){
 							if(preg_match('/<\!--WPFC_PAGE_TYPE_'.$value->prefix.'-->/i', $buffer)){
 								return true;
 							} 
@@ -497,8 +540,10 @@
 								$preg_match_rule = preg_quote($value->content, "/");
 							}
 
-							if(preg_match("/".$preg_match_rule."/i", $request_url)){
-								return true;
+							if($preg_match_rule){
+								if(preg_match("/".$preg_match_rule."/i", $request_url)){
+									return true;
+								}
 							}
 						}
 					}else if($value->type == "useragent"){
@@ -518,31 +563,39 @@
 			return false;
 		}
 
-		public function is_json($buffer){
-			if(isset($_SERVER["HTTP_ACCEPT"]) && preg_match("/json/i", $_SERVER["HTTP_ACCEPT"])){
-				return true;
-			}
+		public function is_json(){
+			return $this->current_page_content_type == "json" ? true : false;
 
-			if(preg_match("/^\/wp-json/", $_SERVER["REQUEST_URI"])){
-				return true;
-			}
+			// if(isset($_SERVER["HTTP_ACCEPT"]) && preg_match("/json/i", $_SERVER["HTTP_ACCEPT"])){
+			// 	return true;
+			// }
 
-			if(preg_match("/^\s*\{\s*[\"\']/i", $buffer)){
-				return true;
-			}
+			// if(preg_match("/^\/wp-json/", $_SERVER["REQUEST_URI"])){
+			// 	return true;
+			// }
 
-			if(preg_match("/^\s*\[\s*\{\s*[\"\']/i", $buffer)){
-				return true;
-			}
+			// if(preg_match("/^\s*\{\s*[\"\']/i", $buffer)){
+			// 	return true;
+			// }
 
-			return false;
+			// if(preg_match("/^\s*\[\s*\{\s*[\"\']/i", $buffer)){
+			// 	return true;
+			// }
+
+			// return false;
 		}
 
-		public function is_xml($buffer){
-			if(preg_match("/^\s*\<\?xml/i", $buffer)){
-				return true;
-			}
-			return false;
+		public function is_xml(){
+			return $this->current_page_content_type == "xml" ? true : false;
+			
+			// if(preg_match("/^\s*\<\?xml/i", $buffer)){
+			// 	return true;
+			// }
+			// return false;
+		}
+
+		public function is_html(){
+			return $this->current_page_content_type == "html" ? true : false;
 		}
 
 		public function set_current_page_type($buffer){
@@ -551,8 +604,43 @@
 			$this->current_page_type = isset($out[1]) ? $out[1] : false;
 		}
 
+		public function set_current_page_content_type($buffer){
+			$content_type = false;
+			if(function_exists("headers_list")){
+				$headers = headers_list();
+				foreach($headers as $header){
+					if(preg_match("/Content-Type\:/i", $header)){
+						$content_type = preg_replace("/Content-Type\:\s(.+)/i", "$1", $header);
+					}
+				}
+			}
+
+			if(preg_match("/xml/i", $content_type)){
+				$this->current_page_content_type = "xml";
+			}else if(preg_match("/json/i", $content_type)){
+				$this->current_page_content_type = "json";
+			}else{
+				$this->current_page_content_type = "html";
+			}
+		}
+
+		public function last_error($buffer = false){
+			if(function_exists("http_response_code") && (http_response_code() === 404)){
+				return true;
+			}
+
+			if(is_404()){
+				return true;
+			}
+
+			if(preg_match("/<body id\=\"error-page\">\s*<p>[^\>]+<\/p>\s*<\/body>/i", $buffer)){
+				return true;
+			}
+		}
+
 		public function callback($buffer){
 			$this->set_current_page_type($buffer);
+			$this->set_current_page_content_type($buffer);
 
 			$buffer = $this->checkShortCode($buffer);
 
@@ -570,23 +658,21 @@
 
 			$buffer = preg_replace('/<\!--WPFC_PAGE_TYPE_[a-z]+-->/i', '', $buffer);
 
-			if(preg_match("/Mediapartners-Google|Google\sWireless\sTranscoder/i", $_SERVER['HTTP_USER_AGENT'])){
+			if($this->exclude_current_page_text){
+				return $buffer.$this->exclude_current_page_text;
+			}else if($this->is_json() && (!defined('WPFC_CACHE_JSON') || (defined('WPFC_CACHE_JSON') && WPFC_CACHE_JSON !== true))){
 				return $buffer;
-			}else if($this->is_xml($buffer)){
+			}else if(preg_match("/Mediapartners-Google|Google\sWireless\sTranscoder/i", $_SERVER['HTTP_USER_AGENT'])){
 				return $buffer;
 			}else if (is_user_logged_in() || $this->isCommenter()){
 				return $buffer;
-			}else if($this->is_json($buffer)){
-				return $buffer;
-			}else if(isset($_COOKIE["wptouch-pro-view"])){
-				return $buffer."<!-- \$_COOKIE['wptouch-pro-view'] has been set -->";
 			}else if($this->isPasswordProtected($buffer)){
 				return $buffer."<!-- Password protected content has been detected -->";
 			}else if($this->isWpLogin($buffer)){
 				return $buffer."<!-- wp-login.php -->";
 			}else if($this->hasContactForm7WithCaptcha($buffer)){
 				return $buffer."<!-- This page was not cached because ContactForm7's captcha -->";
-			}else if(is_404() || preg_match("/<title>404\sNot\sFound<\/title>/", $buffer)){
+			}else if($this->last_error($buffer)){
 				return $buffer;
 			}else if($this->ignored($buffer)){
 				return $buffer;
@@ -688,10 +774,6 @@
 				}else{
 					$content = $this->cacheDate($content);
 					$content = $this->minify($content);
-
-					$content = $this->cdn_rewrite($content);
-					
-					
 					$content = str_replace("<!--WPFC_FOOTER_START-->", "", $content);
 
 
@@ -699,7 +781,7 @@
 						$execute_lazy_load = true;
 						
 						// to disable Lazy Load if the page is amp
-						if(preg_match("/<html[^\>]+amp[^\>]*>/i", $content)){
+						if($this->is_amp($content)){
 							$execute_lazy_load = false;
 						}
 						
@@ -725,17 +807,26 @@
 						}
 					}
 
-					// WP Hide & Security Enhancer
-					if($this->isPluginActive('wp-hide-security-enhancer/wp-hide.php')){
-						global $wph;
-						$content = $wph->functions->content_urls_replacement($content, $wph->functions->get_replacement_list());
-					}
+					$content = $this->cdn_rewrite($content);
+
+					$content = $this->fix_pre_tag($content, $buffer);
 
 					if($this->cacheFilePath){
-						$this->createFolder($this->cacheFilePath, $content);
+						if($this->is_html()){
+							$this->createFolder($this->cacheFilePath, $content);
+							do_action('wpfc_is_cacheable_action');
+						}else if($this->is_xml()){
+							$this->createFolder($this->cacheFilePath, $buffer, "xml");
+							do_action('wpfc_is_cacheable_action');
+
+							return $buffer;
+						}else if($this->is_json()){
+							$this->createFolder($this->cacheFilePath, $buffer, "json");
+							do_action('wpfc_is_cacheable_action');
+
+							return $buffer;
+						}
 					}
-					
-					$content = $this->fix_pre_tag($content, $buffer);
 
 					return $content."<!-- need to refresh to see cached version -->";
 				}
@@ -749,6 +840,15 @@
 
 				if(isset($pre_content[0]) && isset($pre_content[0][0])){
 					foreach ($pre_content[0] as $key => $value){
+						/*
+						location ~ / {
+						    set $path /path/$1/index.html;
+						}
+						*/
+						$pre_buffer[0][$key] = preg_replace('/\$(\d)/', '\\\$$1', $pre_buffer[0][$key]);
+
+						
+
 						$content = preg_replace("/".preg_quote($value, "/")."/", $pre_buffer[0][$key], $content);
 					}
 				}
@@ -759,13 +859,27 @@
 
 		public function cdn_rewrite($content){
 			if($this->cdn){
-				$content = preg_replace_callback("/(srcset|src|href|data-bg-url|data-lazyload|data-source-url|data-srcsmall|data-srclarge|data-srcfull|data-slide-img|data-lazy-original)\s{0,2}\=[\'\"]([^\'\"]+)[\'\"]/i", array($this, 'cdn_replace_urls'), $content);
+				$content = preg_replace_callback("/(srcset|src|href|data-vc-parallax-image|data-bg|data-fullurl|data-mobileurl|data-img-url|data-cvpsrc|data-cvpset|data-thumb|data-bg-url|data-large_image|data-lazyload|data-lazy|data-source-url|data-srcsmall|data-srclarge|data-srcfull|data-slide-img|data-lazy-original)\s{0,2}\=\s{0,2}[\'\"]([^\'\"]+)[\'\"]/i", array($this, 'cdn_replace_urls'), $content);
+
 				//url()
 				$content = preg_replace_callback("/(url)\(([^\)\>]+)\)/i", array($this, 'cdn_replace_urls'), $content);
+
 				//{"concatemoji":"http:\/\/your_url.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.7"}
 				$content = preg_replace_callback("/\{\"concatemoji\"\:\"[^\"]+\"\}/i", array($this, 'cdn_replace_urls'), $content);
+				
 				//<script>var loaderRandomImages=["https:\/\/www.site.com\/wp-content\/uploads\/2016\/12\/image.jpg"];</script>
 				$content = preg_replace_callback("/[\"\']([^\'\"]+)[\"\']\s*\:\s*[\"\']https?\:\\\\\/\\\\\/[^\"\']+[\"\']/i", array($this, 'cdn_replace_urls'), $content);
+
+				// <script>
+				// jsFileLocation:"//domain.com/wp-content/plugins/revslider/public/assets/js/"
+				// </script>
+				$content = preg_replace_callback("/(jsFileLocation)\s*\:[\"\']([^\"\']+)[\"\']/i", array($this, 'cdn_replace_urls'), $content);
+
+				// <form data-product_variations="[{&quot;src&quot;:&quot;//domain.com\/img.jpg&quot;}]">
+				$content = preg_replace_callback("/data-product_variations\=[\"\'][^\"\']+[\"\']/i", array($this, 'cdn_replace_urls'), $content);
+
+				// <object data="https://site.com/source.swf" type="application/x-shockwave-flash"></object>
+				$content = preg_replace_callback("/<object[^\>]+(data)\s{0,2}\=[\'\"]([^\'\"]+)[\'\"][^\>]+>/i", array($this, 'cdn_replace_urls'), $content);
 			}
 
 			return $content;
@@ -785,6 +899,10 @@
 		}
 
 		public function checkHtml($buffer){
+			if(!$this->is_html()){
+				return false;
+			}
+
 			if(preg_match('/<html[^\>]*>/si', $buffer) && preg_match('/<body[^\>]*>/si', $buffer)){
 				return false;
 			}
@@ -836,7 +954,7 @@
 			$name = "";
 			
 			foreach ($arr as $tag_key => $tag_value){
-				$tmp = preg_replace("/\?.*/", "", $tag_value["href"]); //to remove version number
+				$tmp = preg_replace("/(\.css|\.js)\?.*/", "$1", $tag_value["href"]); //to remove version number
 				$name = $name.$tmp;
 			}
 			
@@ -848,7 +966,7 @@
 			$file_name = "index.";
 			$update_db_statistic = true;
 			
-			if($buffer && strlen($buffer) > 100 && $extension == "html"){
+			if($buffer && strlen($buffer) > 100 && preg_match("/html|xml|json/i", $extension)){
 				if(!preg_match("/^\<\!\-\-\sMobile\:\sWP\sFastest\sCache/i", $buffer)){
 					if(!preg_match("/^\<\!\-\-\sWP\sFastest\sCache/i", $buffer)){
 						$create = true;
@@ -863,7 +981,7 @@
 				}
 			}
 
-			if(($extension == "css" || $extension == "js") && $buffer && strlen($buffer) > 5){
+			if(($extension == "svg" || $extension == "woff" || $extension == "css" || $extension == "js") && $buffer && strlen($buffer) > 5){
 				$create = true;
 				$file_name = base_convert(substr(time(), -6), 20, 36).".";
 				$buffer = trim($buffer);
@@ -880,6 +998,8 @@
 					if(!is_dir($cachFilePath)){
 						if(is_writable($this->getWpContentDir()) || ((is_dir($this->getWpContentDir()."/cache")) && (is_writable($this->getWpContentDir()."/cache")))){
 							if (@mkdir($cachFilePath, 0755, true)){
+
+								$buffer = (string) apply_filters('wpfc_buffer_callback_filter', $buffer, $extension);
 
 								file_put_contents($cachFilePath."/".$file_name.$extension, $buffer);
 								
@@ -913,7 +1033,8 @@
 						if(file_exists($cachFilePath."/".$file_name.$extension)){
 
 						}else{
-
+							$buffer = (string) apply_filters('wpfc_buffer_callback_filter', $buffer, $extension);
+							
 							file_put_contents($cachFilePath."/".$file_name.$extension, $buffer);
 							
 							if(class_exists("WpFastestCacheStatics")){
@@ -937,8 +1058,12 @@
 		public function is_amp($content){
 			$request_uri = trim($_SERVER["REQUEST_URI"], "/");
 
-			if(preg_match("/^amp/", $request_uri) || preg_match("/amp$/", $request_uri)){
+			if(preg_match("/^amp/", $request_uri) || preg_match("/\/amp\//", $request_uri) || preg_match("/amp$/", $request_uri)){
 				if(preg_match("/<html[^\>]+amp[^\>]*>/i", $content)){
+					return true;
+				}
+
+				if(preg_match("/<html[^\>]+\⚡[^\>]*>/i", $content)){
 					return true;
 				}
 			}
@@ -958,6 +1083,16 @@
 					return true;
 				}
 			}
+
+		    if(isset($_SERVER['HTTP_CLOUDFRONT_IS_MOBILE_VIEWER']) && "true" === $_SERVER['HTTP_CLOUDFRONT_IS_MOBILE_VIEWER']){
+		        $is_mobile = true;
+		    }
+
+
+		    if(isset($_SERVER['HTTP_CLOUDFRONT_IS_TABLET_VIEWER']) && "true" === $_SERVER['HTTP_CLOUDFRONT_IS_TABLET_VIEWER']){
+		        $is_mobile = true;
+		    }
+
 		}
 
 		public function isWpLogin($buffer){

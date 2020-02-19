@@ -71,76 +71,76 @@ class ET_Builder_Plugin_Compat_Easy_Digital_Downloads extends ET_Builder_Plugin_
 		// Normalize UI for Divi Builder
 		if ( et_is_builder_plugin_active() ) {
 			wp_add_inline_style( 'et-builder-modules-style', "
-				.et_divi_builder #et_builder_outer_content .edd_download_inner {
+				" . ET_BUILDER_CSS_PREFIX . " .edd_download_inner {
 					padding: 0 8px 8px;
 					margin: 0 0 10px;
 				}
 
-				.et_divi_builder #et_builder_outer_content .edd_download_excerpt p {
+				" . ET_BUILDER_CSS_PREFIX . " .edd_download_excerpt p {
 					margin-bottom: 25px;
 				}
 
-				.et_divi_builder #et_builder_outer_content .edd_purchase_submit_wrapper {
+				" . ET_BUILDER_CSS_PREFIX . " .edd_purchase_submit_wrapper {
 					margin-top: 15px;
 					margin-bottom: 35px;
 				}
 
-				.et_divi_builder #et_builder_outer_content ul.edd-cart {
+				" . ET_BUILDER_CSS_PREFIX . " ul.edd-cart {
 					border: 1px solid #eee;
 					margin-top: 0.8em;
 				}
 
-				.et_divi_builder #et_builder_outer_content ul.edd-cart li {
+				" . ET_BUILDER_CSS_PREFIX . " ul.edd-cart li {
 					padding: 0.8em 1.387em;
 					border-bottom: 1px solid #eee;
 				}
 
-				.et_divi_builder #et_builder_outer_content ul.edd-cart li:last-child {
+				" . ET_BUILDER_CSS_PREFIX . " ul.edd-cart li:last-child {
 					border-bottom: none;
 				}
 
-				.et_divi_builder #et_builder_outer_content ul.edd-cart .edd-cart-item span {
+				" . ET_BUILDER_CSS_PREFIX . " ul.edd-cart .edd-cart-item span {
 					padding: 0 3px;
 				}
 
-				.et_divi_builder #et_builder_outer_content ul.edd-cart .edd-cart-item a {
+				" . ET_BUILDER_CSS_PREFIX . " ul.edd-cart .edd-cart-item a {
 					text-decoration: underline !important;
 				}
 
-				.et_divi_builder #et_builder_outer_content .edd_cart_item_image {
+				" . ET_BUILDER_CSS_PREFIX . " .edd_cart_item_image {
 					margin-right: 10px;
 					display: inline-block;
 					vertical-align: middle;
 				}
 
-				.et_divi_builder #et_builder_outer_content .edd-cart-meta.edd_subtotal,
-				.et_divi_builder #et_builder_outer_content .edd-cart-meta.edd_total {
+				" . ET_BUILDER_CSS_PREFIX . " .edd-cart-meta.edd_subtotal,
+				" . ET_BUILDER_CSS_PREFIX . " .edd-cart-meta.edd_total {
 					background: #f9f9f9;
 				}
 
-				.et_divi_builder #et_builder_outer_content .cart_item.edd_checkout {
+				" . ET_BUILDER_CSS_PREFIX . " .cart_item.edd_checkout {
 					padding: 1.387em;
 				}
 
-				.et_divi_builder #et_builder_outer_content .et_pb_module a.edd_cart_remove_item_btn {
+				" . ET_BUILDER_CSS_PREFIX . " .et_pb_module a.edd_cart_remove_item_btn {
 					text-decoration: underline !important;
 				}
 
-				.et_divi_builder #et_builder_outer_content #edd_profile_editor_form .edd-select,
-				.et_divi_builder #et_builder_outer_content #edd_profile_editor_form .edd-input {
+				" . ET_BUILDER_CSS_PREFIX . " #edd_profile_editor_form .edd-select,
+				" . ET_BUILDER_CSS_PREFIX . " #edd_profile_editor_form .edd-input {
 					margin-bottom: 5px;
 				}
 
-				.et_divi_builder #et_builder_outer_content #edd_final_total_wrap {
+				" . ET_BUILDER_CSS_PREFIX . " #edd_final_total_wrap {
 					margin-bottom: 20px;
 				}
 
-				.et_divi_builder #et_builder_outer_content .et_pb_module .et_pb_button {
+				" . ET_BUILDER_CSS_PREFIX . " .et_pb_module .et_pb_button {
 					border-bottom-style: solid;
 					border-bottom-width: 2px;
 				}
 
-				.et_divi_builder #et_builder_outer_content .et_pb_module input.et_pb_button:hover {
+				" . ET_BUILDER_CSS_PREFIX . " .et_pb_module input.et_pb_button:hover {
 					padding-right: 1em;
 				}
 			" );

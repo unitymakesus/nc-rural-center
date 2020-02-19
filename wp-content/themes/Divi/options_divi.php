@@ -83,14 +83,6 @@ $options = array (
 				   "desc" => esc_html__( "If you would like to use your own custom logo image click the Upload Image button.", $themename )
 			),
 
-			array( "name" => esc_html__( "Favicon", $themename ),
-				   "id" => $shortname . "_favicon",
-				   "type" => "upload",
-				   "button_text" => esc_html__( "Set As Favicon", $themename ),
-				   "std" => "",
-				   "desc" => esc_html__( "If you would like to use your own custom favicon image click the Upload Image button.", $themename )
-			),
-
 			array( "name" => esc_html__( "Fixed Navigation Bar", $themename ),
 				   "id" => $shortname . "_fixed_nav",
 				   "type" => "checkbox",
@@ -152,7 +144,7 @@ $options = array (
 				"id"                => "et_google_api_settings_api_key",
 				"std"               => "",
 				"type"              => "text",
-				"validation_type"   => "nohtml",
+				"validation_type"   => "apikey",
 				'is_global'         => true,
 				'main_setting_name' => 'et_google_api_settings',
 				'sub_setting_name'  => 'api_key',
@@ -199,6 +191,12 @@ $options = array (
                    "std" => "on",
                    "desc" =>esc_html__( "Here you can choose to display the Google+ Icon on your homepage. ", $themename ) ),
 
+			array( 'name' => esc_html__( 'Show Instagram Icon', $themename ),
+                   'id' => $shortname . '_show_instagram_icon',
+                   'type' => 'checkbox',
+                   'std' => ( true === et_divi_is_fresh_install() ) ? 'on' : 'false',
+                   'desc' => esc_html__( 'Here you can choose to display the Instagram Icon on your homepage. ', $themename ) ),
+
 			array( "name" =>esc_html__( "Show RSS Icon", $themename ),
                    "id" => $shortname . "_show_rss_icon",
                    "type" => "checkbox2",
@@ -225,6 +223,13 @@ $options = array (
                    "type" => "text",
                    "validation_type" => "url",
 				   "desc" =>esc_html__( "Enter the URL of your Google+ Profile. ", $themename ) ),
+
+			array( 'name' => esc_html__( 'Instagram Profile Url', $themename ),
+                   'id' => $shortname . '_instagram_url',
+                   'std' => '#',
+                   'type' => 'text',
+                   'validation_type' => 'url',
+				   'desc' => esc_html__( 'Enter the URL of your Instagram Profile. ', $themename ) ),
 
 			array( "name" =>esc_html__( "RSS Icon Url", $themename ),
                    "id" => $shortname . "_rss_url",
@@ -321,6 +326,14 @@ $options = array (
 				   "type" => "checkbox2",
 				   "std" => "false",
 				   "desc" => esc_html__( "Disable translations if you don't want to display translated theme strings on your site.", $themename )
+			),
+
+			array(
+				"name" => esc_html__( "Enable Responsive Images", $themename ),
+				"id"   => $shortname . "_enable_responsive_images",
+				"type" => "checkbox",
+				"std"  => "on",
+				"desc" => esc_html__( "Enable this option to get responsive images size generated when uploading images and adding srcset attribute for images element.", $themename )
 			),
 
 			array( 'name'               => esc_html__( 'Minify And Combine Javascript Files', $themename ),
@@ -538,11 +551,11 @@ $options = array (
 		array( "name" => "layout-1",
 			   "type" => "subcontent-start",),
 
-			array( "name" => esc_html__( "Choose which items to display in the postinfo section", $themename ),
+			array( "name" => esc_html__( "Choose which items to display in the post info section", $themename ),
 				   "id" => $shortname . "_postinfo2",
 				   "type" => "different_checkboxes",
 				   "std" => array("author","date","categories","comments"),
-				   "desc" => esc_html__( "Here you can choose which items appear in the postinfo section on single post pages. This is the area, usually below the post title, which displays basic information about your post. The highlighted itmes shown below will appear. ", $themename ),
+				   "desc" => esc_html__( "Here you can choose which items appear in the post info section on single post pages. This is the area, usually below the post title, which displays basic information about your post. The highlighted items shown below will appear. ", $themename ),
 				   "options" => array("author","date","categories","comments")),
 
 			array(
@@ -590,7 +603,7 @@ $options = array (
 				   "id" => $shortname . "_postinfo1",
 				   "type" => "different_checkboxes",
 				   "std" => array("author","date","categories"),
-				   "desc" => esc_html__( "Here you can choose which items appear in the postinfo section on pages. This is the area, usually below the post title, which displays basic information about your post. The highlighted itmes shown below will appear. ", $themename ),
+				   "desc" => esc_html__( "Here you can choose which items appear in the post info section on pages. This is the area, usually below the post title, which displays basic information about your post. The highlighted items shown below will appear. ", $themename ),
 				   "options" => array("author","date","categories","comments")),
 
 			array( "name" => esc_html__( "Show Thumbs on Index pages", $themename ),
@@ -935,6 +948,8 @@ $options = array (
 				'main_setting_name' => 'et_automatic_updates_options',
 				'sub_setting_name'  => 'api_key',
 			),
+
+			et_divi_version_rollback()->get_epanel_option(),
 
 		array( "name" => "updates-1",
 			   "type" => "subcontent-end",),

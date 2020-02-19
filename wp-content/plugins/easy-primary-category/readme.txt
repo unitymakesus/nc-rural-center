@@ -3,14 +3,17 @@ Contributors: gagan0123
 Donate Link: PayPal.me/gagan0123
 Tags: category, primary
 Requires at least: 4.5
-Tested up to: 4.8.1
-Stable tag: 1.1
+Requires PHP: 5.6
+Tested up to: 5.1
+Stable tag: 1.1.1
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Allows you to choose primary category for posts and custom post types.
 
 == Description ==
+
+**Notice: Currently works only with WordPress Classic Editor, not Gutenberg compatible**
 
 Allows you to choose primary category for posts and custom post types.
 
@@ -54,6 +57,10 @@ Want to contribute to Easy Primary Category? That would be awesome!
 1. Click the "Make Primary" button to mark the category as primary.
 
 == Changelog ==
+
+= 1.1.1 =
+* Made code WordPress coding standards compatible.
+* Tested with latest version of WordPress.
 
 = 1.1 =
 * Escaping some output values.

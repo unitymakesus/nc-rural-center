@@ -39,8 +39,11 @@ class ET_Builder_Plugin_Compat_WPML_Multilingual_CMS extends ET_Builder_Plugin_C
 			'et_pb_module_shortcode_attributes',
 			array( $this, '_filter_traslate_shop_module_categories_ids' ),
 			10,
-			4
+			5
 		);
+		// Override the language code used in the AJAX request that checks if
+		// cached definitions/helpers needs to be updated.
+		add_filter( 'et_fb_current_page_params', array( $this, 'override_current_page_params' ) );
 	}
 
 	/**
@@ -128,11 +131,11 @@ class ET_Builder_Plugin_Compat_WPML_Multilingual_CMS extends ET_Builder_Plugin_C
 	 **/
 	public function _filter_traslate_shop_module_categories_ids( $shortcode_atts, $atts, $slug, $address ) {
 		if (
-			! is_admin() && $slug == 'et_pb_shop'
+			! is_admin() && $slug === 'et_pb_shop'
 			&&
 			! empty( $shortcode_atts['type'] )
 			&&
-			$shortcode_atts['type'] == 'product_category'
+			$shortcode_atts['type'] === 'product_category'
 			&&
 			! empty( $shortcode_atts['include_categories'] )
 		) {
@@ -147,6 +150,24 @@ class ET_Builder_Plugin_Compat_WPML_Multilingual_CMS extends ET_Builder_Plugin_C
 		}
 
 		return $shortcode_atts;
+	}
+
+	/**
+	 * Override the language code used in the AJAX request that checks if
+	 * cached definitions/helpers needs to be updated.
+	 *
+	 * @param array $params
+	 *
+	 * @return array
+	 */
+	public function override_current_page_params( $params ) {
+		$langCode = apply_filters( 'wpml_current_language', false );
+
+		if ( $langCode ) {
+			$params['langCode'] = $langCode;
+		}
+
+		return $params;
 	}
 }
 

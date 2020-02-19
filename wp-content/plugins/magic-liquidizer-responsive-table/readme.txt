@@ -3,8 +3,8 @@ Contributors: esstat17
 Donate link: http://www.innovedesigns.com/
 Tags: responsive, table, fluid, mobile, rwd, smartphone, tablet
 Requires at least: 3.0.1
-Tested up to: 4.9
-Stable tag: 2.0.3
+Tested up to: 5.3
+Stable tag: 2.0.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -60,6 +60,9 @@ It's very simple, just add these CSS lines into your stylesheet
 3. This screenshot was taken from our DEMO page AFTER installation. Client-side screenshot. screenshot-3.png
 
 == Changelog ==
+= 2.0.4 - 11/19/2019 = 
+* [Fixed] "Notice: Undefined index" PHP warning
+
 = 2.0.3 - 08/13/2018 = 
 * [Fixed] Fatal Error on Older PHP versions
 
@@ -121,6 +124,9 @@ It's very simple, just add these CSS lines into your stylesheet
 * Initial Released Date
 
 == Upgrade Notice ==
+
+= 2.0.4 - 11/19/2019 = 
+* [Fixed] "Notice: Undefined index" PHP warning
 
 = 2.0.3 - 08/13/2018 = 
 * [Important] Fatal Error on Older PHP versions

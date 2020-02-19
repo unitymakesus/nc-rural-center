@@ -3,6 +3,7 @@
 class ET_Builder_Module_Testimonial extends ET_Builder_Module {
 	function init() {
 		$this->name       = esc_html__( 'Testimonial', 'et_builder' );
+		$this->plural     = esc_html__( 'Testimonials', 'et_builder' );
 		$this->slug       = 'et_pb_testimonial';
 		$this->vb_support = 'on';
 		$this->main_css_element = '%%order_class%%.et_pb_testimonial';
@@ -12,7 +13,6 @@ class ET_Builder_Module_Testimonial extends ET_Builder_Module {
 				'toggles' => array(
 					'main_content' => esc_html__( 'Text', 'et_builder' ),
 					'image'        => esc_html__( 'Image', 'et_builder' ),
-					'link'         => esc_html__( 'Link', 'et_builder' ),
 					'elements'     => esc_html__( 'Elements', 'et_builder' ),
 				),
 			),
@@ -21,11 +21,11 @@ class ET_Builder_Module_Testimonial extends ET_Builder_Module {
 					'icon'       => esc_html__( 'Quote Icon', 'et_builder' ),
 					'text'       => array(
 						'title'    => esc_html__( 'Text', 'et_builder' ),
-						'priority' => 49,
+						'priority' => 51,
 					),
 					'image' => array(
 						'title' => esc_html__( 'Image', 'et_builder' ),
-						'priority' => 51,
+						'priority' => 49,
 					),
 					'animation' => array(
 						'title'    => esc_html__( 'Animation', 'et_builder' ),
@@ -37,17 +37,121 @@ class ET_Builder_Module_Testimonial extends ET_Builder_Module {
 
 		$this->advanced_fields = array(
 			'fonts'                 => array(
-				'body' => array(
+				'body'     => array(
 					'label'            => esc_html__( 'Body', 'et_builder' ),
 					'css'              => array(
 						'main' => "{$this->main_css_element} *",
 					),
 					'hide_text_shadow' => true,
+					'block_elements'   => array(
+						'tabbed_subtoggles' => true,
+						'bb_icons_support'  => true,
+					),
+				),
+				'author'   => array(
+					'label'          => esc_html__( 'Author', 'et_builder' ),
+					'css'            => array(
+						'main' => "{$this->main_css_element} .et_pb_testimonial_author",
+					),
+					'font'           => array(
+						'default' => '|700|||||||',
+					),
+					'line_height'    => array(
+						'default' => floatval( et_get_option( 'body_font_height', '1.5' ) ) . 'em',
+					),
+					'font_size'      => array(
+						'default' => absint( et_get_option( 'body_font_size', '14' ) ) . 'px',
+					),
+					'letter_spacing' => array(
+						'default' => '0px',
+					),
+				),
+				'position' => array(
+					'label'           => esc_html__( 'Position', 'et_builder' ),
+					'css'             => array(
+						'main' => "{$this->main_css_element} .et_pb_testimonial_position, {$this->main_css_element} .et_pb_testimonial_separator",
+					),
+					'hide_text_align' => true,
+					'line_height'    => array(
+						'default' => floatval( et_get_option( 'body_font_height', '1.5' ) ) . 'em',
+					),
+					'font_size'      => array(
+						'default' => absint( et_get_option( 'body_font_size', '14' ) ) . 'px',
+					),
+					'letter_spacing' => array(
+						'default' => '0px',
+					),
+				),
+				'company'  => array(
+					'label'           => esc_html__( 'Company', 'et_builder' ),
+					'css'             => array(
+						'main' => "{$this->main_css_element} .et_pb_testimonial_company",
+					),
+					'hide_text_align' => true,
+					'line_height'    => array(
+						'default' => floatval( et_get_option( 'body_font_height', '1.5' ) ) . 'em',
+					),
+					'font_size'      => array(
+						'default' => absint( et_get_option( 'body_font_size', '14' ) ) . 'px',
+					),
+					'letter_spacing' => array(
+						'default' => '0px',
+					),
+				),
+				'author'   => array(
+					'label'          => esc_html__( 'Author', 'et_builder' ),
+					'css'            => array(
+						'main' => "{$this->main_css_element} .et_pb_testimonial_author",
+					),
+					'font'           => array(
+						'default' => '|700|||||||',
+					),
+					'line_height'    => array(
+						'default' => floatval( et_get_option( 'body_font_height', '1.5' ) ) . 'em',
+					),
+					'font_size'      => array(
+						'default' => absint( et_get_option( 'body_font_size', '14' ) ) . 'px',
+					),
+					'letter_spacing' => array(
+						'default' => '0px',
+					),
+				),
+				'position' => array(
+					'label'           => esc_html__( 'Position', 'et_builder' ),
+					'css'             => array(
+						'main' => "{$this->main_css_element} .et_pb_testimonial_position, {$this->main_css_element} .et_pb_testimonial_separator",
+					),
+					'hide_text_align' => true,
+					'line_height'    => array(
+						'default' => floatval( et_get_option( 'body_font_height', '1.5' ) ) . 'em',
+					),
+					'font_size'      => array(
+						'default' => absint( et_get_option( 'body_font_size', '14' ) ) . 'px',
+					),
+					'letter_spacing' => array(
+						'default' => '0px',
+					),
+				),
+				'company'  => array(
+					'label'           => esc_html__( 'Company', 'et_builder' ),
+					'css'             => array(
+						'main' => "{$this->main_css_element} .et_pb_testimonial_company",
+					),
+					'hide_text_align' => true,
+					'line_height'    => array(
+						'default' => floatval( et_get_option( 'body_font_height', '1.5' ) ) . 'em',
+					),
+					'font_size'      => array(
+						'default' => absint( et_get_option( 'body_font_size', '14' ) ) . 'px',
+					),
+					'letter_spacing' => array(
+						'default' => '0px',
+					),
 				),
 			),
 			'background'            => array(
 				'has_background_color_toggle' => true,
-				'use_background_color' => 'fields_only',
+				'use_background_color' => true,
 				'options' => array(
 					'use_background_color' => array(
 						'default'          => 'on',
@@ -112,8 +216,16 @@ class ET_Builder_Module_Testimonial extends ET_Builder_Module {
 					),
 					'background_layout' => array(
 						'default' => 'light',
+						'hover'   => 'tabs',
 					),
 				),
+				'css' => array(
+					'main' => implode(', ', array(
+						'%%order_class%% .et_pb_testimonial_description p',
+						'%%order_class%% .et_pb_testimonial_description a',
+						'%%order_class%% .et_pb_testimonial_description .et_pb_testimonial_author',
+					))
+				)
 			),
 			'filters'               => array(
 				'child_filters_target' => array(
@@ -126,7 +238,9 @@ class ET_Builder_Module_Testimonial extends ET_Builder_Module {
 					'main' => '%%order_class%% .et_pb_testimonial_portrait',
 				),
 			),
-			'button'                => false,
+			'position_fields'       => array(
+				'default' => 'relative',
+			),
 		);
 
 		$this->custom_css_fields = array(
@@ -159,11 +273,14 @@ class ET_Builder_Module_Testimonial extends ET_Builder_Module {
 	function get_fields() {
 		$fields = array(
 			'author' => array(
-				'label'           => esc_html__( 'Author Name', 'et_builder' ),
+				'label'           => esc_html__( 'Author', 'et_builder' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Input the name of the testimonial author.', 'et_builder' ),
 				'toggle_slug'     => 'main_content',
+				'dynamic_content' => 'text',
+				'mobile_options'  => true,
+				'hover'           => 'tabs',
 			),
 			'job_title' => array(
 				'label'           => esc_html__( 'Job Title', 'et_builder' ),
@@ -171,35 +288,42 @@ class ET_Builder_Module_Testimonial extends ET_Builder_Module {
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Input the job title.', 'et_builder' ),
 				'toggle_slug'     => 'main_content',
+				'dynamic_content' => 'text',
+				'mobile_options'  => true,
+				'hover'           => 'tabs',
 			),
 			'company_name' => array(
-				'label'           => esc_html__( 'Company Name', 'et_builder' ),
+				'label'           => esc_html__( 'Company', 'et_builder' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Input the name of the company.', 'et_builder' ),
 				'toggle_slug'     => 'main_content',
+				'dynamic_content' => 'text',
+				'mobile_options'  => true,
+				'hover'           => 'tabs',
 			),
 			'url' => array(
-				'label'           => esc_html__( 'Author/Company URL', 'et_builder' ),
+				'label'           => esc_html__( 'Company Link URL', 'et_builder' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Input the website of the author or leave blank for no link.', 'et_builder' ),
-				'toggle_slug'     => 'link',
+				'toggle_slug'     => 'link_options',
+				'dynamic_content' => 'url',
 			),
 			'url_new_window' => array(
-				'label'           => esc_html__( 'URLs Open', 'et_builder' ),
+				'label'           => esc_html__( 'Company Link Target', 'et_builder' ),
 				'type'            => 'select',
 				'option_category' => 'configuration',
 				'options'         => array(
 					'off' => esc_html__( 'In The Same Window', 'et_builder' ),
 					'on'  => esc_html__( 'In The New Tab', 'et_builder' ),
 				),
-				'toggle_slug'     => 'link',
+				'toggle_slug'     => 'link_options',
 				'description'     => esc_html__( 'Choose whether or not the URL should open in a new window.', 'et_builder' ),
 				'default_on_front' => 'off',
 			),
 			'portrait_url' => array(
-				'label'              => esc_html__( 'Portrait Image URL', 'et_builder' ),
+				'label'              => esc_html__( 'Image', 'et_builder' ),
 				'type'               => 'upload',
 				'option_category'    => 'basic_option',
 				'upload_button_text' => esc_attr__( 'Upload an image', 'et_builder' ),
@@ -207,6 +331,9 @@ class ET_Builder_Module_Testimonial extends ET_Builder_Module {
 				'update_text'        => esc_attr__( 'Set As Image', 'et_builder' ),
 				'description'        => esc_html__( 'Upload your desired image, or type in the URL to the image you would like to display.', 'et_builder' ),
 				'toggle_slug'        => 'image',
+				'dynamic_content'    => 'image',
+				'mobile_options'  => true,
+				'hover'           => 'tabs',
 			),
 			'quote_icon' => array(
 				'label'           => esc_html__( 'Show Quote Icon', 'et_builder' ),
@@ -219,158 +346,290 @@ class ET_Builder_Module_Testimonial extends ET_Builder_Module {
 				'default_on_front' => 'on',
 				'description'     => esc_html__( 'Choose whether or not the quote icon should be visible.', 'et_builder' ),
 				'toggle_slug'     => 'elements',
+				'mobile_options'  => true,
+				'hover'           => 'tabs',
 			),
 			'content' => array(
-				'label'           => esc_html__( 'Content', 'et_builder' ),
+				'label'           => esc_html__( 'Body', 'et_builder' ),
 				'type'            => 'tiny_mce',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Input the main text content for your module here.', 'et_builder' ),
 				'toggle_slug'     => 'main_content',
+				'dynamic_content' => 'text',
+				'mobile_options'  => true,
+				'hover'           => 'tabs',
 			),
 			'quote_icon_color' => array(
 				'label'             => esc_html__( 'Quote Icon Color', 'et_builder' ),
+				'description'       => esc_html__( 'Here you can define a custom color for the quote icon.', 'et_builder' ),
 				'type'              => 'color-alpha',
 				'custom_color'      => true,
 				'tab_slug'          => 'advanced',
 				'toggle_slug'       => 'icon',
+				'hover'             => 'tabs',
+				'mobile_options'    => true,
 			),
 			'quote_icon_background_color' => array(
-				'label'             => esc_html__( 'Quote Icon Background Color', 'et_builder' ),
-				'type'              => 'color-alpha',
-				'custom_color'      => true,
-				'tab_slug'          => 'advanced',
-				'toggle_slug'       => 'icon',
-				'default'           => '#f5f5f5',
+				'label'            => esc_html__( 'Quote Icon Background Color', 'et_builder' ),
+				'description'      => esc_html__( 'Pick a color to use for the circular background area behind the quote icon.', 'et_builder' ),
+				'type'             => 'color-alpha',
+				'custom_color'     => true,
+				'tab_slug'         => 'advanced',
+				'toggle_slug'      => 'icon',
+				'default'          => '#f5f5f5',
 				'default_on_front' => '',
+				'hover'            => 'tabs',
+				'mobile_options'   => true,
 			),
 			'portrait_width' => array(
-				'label'           => esc_html__( 'Portrait Width', 'et_builder' ),
+				'label'           => esc_html__( 'Image Width', 'et_builder' ),
+				'description'     => esc_html__( "Adjust the width of the person's portrait photo within the testimonial.", 'et_builder' ),
 				'type'            => 'range',
 				'option_category' => 'layout',
 				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'image',
 				'default_unit'    => 'px',
+				'allowed_units'   => array( '%', 'em', 'rem', 'px', 'cm', 'mm', 'in', 'pt', 'pc', 'ex', 'vh', 'vw' ),
 				'range_settings'  => array(
 					'min'  => '1',
 					'max'  => '200',
 					'step' => '1',
 				),
+				'mobile_options'  => true,
 			),
 			'portrait_height' => array(
-				'label'           => esc_html__( 'Portrait Height', 'et_builder' ),
+				'label'           => esc_html__( 'Image Height', 'et_builder' ),
+				'description'     => esc_html__( "Adjust the height of the person's portrait photo within the testimonial.", 'et_builder' ),
 				'type'            => 'range',
 				'option_category' => 'layout',
 				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'image',
+				'allowed_units'   => array( 'em', 'rem', 'px', 'cm', 'mm', 'in', 'pt', 'pc', 'ex', 'vh', 'vw' ),
 				'range_settings'  => array(
 					'min'  => '1',
 					'max'  => '200',
 					'step' => '1',
 				),
+				'mobile_options'  => true,
+			),
+			'use_icon_font_size' => array(
+				'label'            => esc_html__( 'Use Custom Quote Icon Size', 'et_builder' ),
+				'description'      => esc_html__( 'If you would like to control the size of the icon, you must first enable this option.', 'et_builder' ),
+				'type'             => 'yes_no_button',
+				'options'          => array(
+					'off' => esc_html__( 'No', 'et_builder' ),
+					'on'  => esc_html__( 'Yes', 'et_builder' ),
+				),
+				'default_on_front' => 'off',
+				'affects'          => array(
+					'icon_font_size',
+				),
+				'tab_slug'         => 'advanced',
+				'toggle_slug'      => 'icon',
+				'option_category'  => 'font_option',
+			),
+			'icon_font_size'     => array(
+				'label'            => esc_html__( 'Quote Icon Font Size', 'et_builder' ),
+				'description'      => esc_html__( 'Control the size of the icon by increasing or decreasing the font size.', 'et_builder' ),
+				'type'             => 'range',
+				'option_category'  => 'font_option',
+				'tab_slug'         => 'advanced',
+				'toggle_slug'      => 'icon',
+				'default'          => '32px',
+				'default_unit'     => 'px',
+				'default_on_front' => '',
+				'allowed_units'    => array( '%', 'em', 'rem', 'px', 'cm', 'mm', 'in', 'pt', 'pc', 'ex', 'vh', 'vw' ),
+				'range_settings'   => array(
+					'min'  => '1',
+					'max'  => '120',
+					'step' => '1',
+				),
+				'mobile_options'   => true,
+				'depends_show_if'  => 'on',
+				'responsive'       => true,
+				'hover'            => 'tabs',
 			),
 		);
 
 		return $fields;
 	}
 
+	public function get_transition_fields_css_props() {
+		$fields = parent::get_transition_fields_css_props();
+
+		$fields['quote_icon_color'] = array( 'color' => '%%order_class%%.et_pb_testimonial:before' );
+		$fields['quote_icon_background_color'] = array( 'background-color' => '%%order_class%%.et_pb_testimonial:before' );
+		$fields['icon_font_size']              = array(
+			'font-size'     => '%%order_class%%:before',
+			'border-radius' => '%%order_class%%:before',
+			'height'        => '%%order_class%% .et-fb-quick-access-item-testimonial-icon',
+			'width'         => '%%order_class%% .et-fb-quick-access-item-testimonial-icon',
+			'top'           => '%%order_class%%:before, %%order_class%% .et-fb-quick-access-item-testimonial-icon',
+			'margin-left'   => '%%order_class%%:before, %%order_class%% .et-fb-quick-access-item-testimonial-icon',
+		);
+
+		return $fields;
+	}
+
+	public function get_transition_image_fields_css_props() {
+		$fields = parent::get_transition_image_fields_css_props();
+		$fields = array_merge( $this->get_transition_borders_fields_css_props( 'portrait' ), $fields );
+
+		return $fields;
+	}
+
 	function render( $attrs, $content = null, $render_slug ) {
-		$author                 = $this->props['author'];
-		$job_title              = $this->props['job_title'];
-		$portrait_url           = $this->props['portrait_url'];
-		$company_name           = $this->props['company_name'];
-		$url                    = $this->props['url'];
-		$quote_icon             = $this->props['quote_icon'];
-		$url_new_window         = $this->props['url_new_window'];
-		$use_background_color   = $this->props['use_background_color'];
-		$background_color       = $this->props['background_color'];
-		$background_layout      = $this->props['background_layout'];
-		$quote_icon_color       = $this->props['quote_icon_color'];
-		$quote_icon_background_color = $this->props['quote_icon_background_color'];
-		$portrait_width         = $this->props['portrait_width'];
-		$portrait_height        = $this->props['portrait_height'];
+		$multi_view                        = et_pb_multi_view_options( $this );
+		// Allowing full html for backwards compatibility.
+		$author                            = $this->_esc_attr( 'author', 'full' );
+		$job_title                         = $this->_esc_attr( 'job_title' );
+		$portrait_url                      = $this->props['portrait_url'];
+		// Allowing full html for backwards compatibility.
+		$company_name                      = $this->_esc_attr( 'company_name', 'full' );
+		$url                               = $this->props['url'];
+		$quote_icon                        = $this->props['quote_icon'];
+		$url_new_window                    = $this->props['url_new_window'];
+		$use_background_color              = $this->props['use_background_color'];
+		$background_color                  = $this->props['background_color'];
+		$background_color_hover            = $this->get_hover_value( 'background_color' );
+		$use_icon_font_size                = $this->props['use_icon_font_size'];
+		$quote_icon_color_hover            = $this->get_hover_value('quote_icon_color');
+		$quote_icon_color_values           = et_pb_responsive_options()->get_property_values( $this->props, 'quote_icon_color' );
+		$quote_icon_background_color_hover = $this->get_hover_value('quote_icon_background_color');
+		$quote_icon_background_colors      = et_pb_responsive_options()->get_property_values( $this->props, 'quote_icon_background_color' );
+		$portrait_width_values             = et_pb_responsive_options()->get_property_values( $this->props, 'portrait_width' );
+		$portrait_height_values            = et_pb_responsive_options()->get_property_values( $this->props, 'portrait_height' );
+		$icon_font_size_hover              = $this->get_hover_value( 'icon_font_size' );
+		$icon_font_size_values             = et_pb_responsive_options()->get_property_values( $this->props, 'icon_font_size' );
 
-		if ( '' !== $portrait_width ) {
+		// Potrait Width.
+		et_pb_responsive_options()->generate_responsive_css( $portrait_width_values, '%%order_class%% .et_pb_testimonial_portrait', 'width', $render_slug, ' !important;' );
+
+		// Potrait Height.
+		et_pb_responsive_options()->generate_responsive_css( $portrait_height_values, '%%order_class%% .et_pb_testimonial_portrait', 'height', $render_slug, ' !important;' );
+
+		// Quote Icon Color.
+		et_pb_responsive_options()->generate_responsive_css( $quote_icon_color_values, '%%order_class%%.et_pb_testimonial:before', 'color', $render_slug, '', 'color' );
+
+		if ( et_builder_is_hover_enabled( 'quote_icon_color', $this->props ) ) {
 			ET_Builder_Element::set_style( $render_slug, array(
-				'selector'    => '%%order_class%% .et_pb_testimonial_portrait',
-				'declaration' => sprintf(
-					'width: %1$s;',
-					esc_html( et_builder_process_range_value( $portrait_width ) )
-				),
-			) );
-		}
-
-		if ( '' !== $portrait_height ) {
-			ET_Builder_Element::set_style( $render_slug, array(
-				'selector'    => '%%order_class%% .et_pb_testimonial_portrait',
-				'declaration' => sprintf(
-					'height: %1$s;',
-					esc_html( et_builder_process_range_value( $portrait_height ) )
-				),
-			) );
-		}
-
-		$style = '';
-
-		if ( 'on' === $use_background_color && ! $this->_is_field_default( 'background_color', $background_color ) ) {
-			$style .= sprintf(
-				'background-color: %1$s !important; ',
-				esc_html( $background_color )
-			);
-		}
-
-		if ( '' !== $style ) {
-			ET_Builder_Element::set_style( $render_slug, array(
-				'selector'    => '%%order_class%%.et_pb_testimonial',
-				'declaration' => rtrim( $style ),
-			) );
-		}
-
-		if ( '' !== $quote_icon_color ) {
-			ET_Builder_Element::set_style( $render_slug, array(
-				'selector'    => '%%order_class%%.et_pb_testimonial:before',
+				'selector'    => '%%order_class%%.et_pb_testimonial:hover:before',
 				'declaration' => sprintf(
 					'color: %1$s;',
-					esc_html( $quote_icon_color )
+					esc_html( $quote_icon_color_hover )
 				),
 			) );
 		}
 
-		if ( '' !== $quote_icon_background_color ) {
+		// Quote Icon Background Color.
+		et_pb_responsive_options()->generate_responsive_css( $quote_icon_background_colors, '%%order_class%%.et_pb_testimonial:before', 'background-color', $render_slug, '', 'color' );
+
+		if ( et_builder_is_hover_enabled( 'quote_icon_background_color', $this->props ) ) {
 			ET_Builder_Element::set_style( $render_slug, array(
-				'selector'    => '%%order_class%%.et_pb_testimonial:before',
+				'selector'    => '%%order_class%%.et_pb_testimonial:hover:before',
 				'declaration' => sprintf(
 					'background-color: %1$s;',
-					esc_html( $quote_icon_background_color )
+					esc_html( $quote_icon_background_color_hover )
 				),
 			) );
 		}
 
-		$portrait_image = '';
+		// Icon Size.
+		$icon_selector = '%%order_class%%:before';
+		if ( 'off' !== $quote_icon && 'off' !== $use_icon_font_size ) {
+			// Proccess for each devices.
+			foreach ( $icon_font_size_values as $font_size_key => $font_size_value ) {
+				if ( '' === $font_size_value ) {
+					continue;
+				}
+
+				$media_query = 'general';
+				if ( 'tablet' === $font_size_key ) {
+					$media_query = ET_Builder_Element::get_media_query( 'max_width_980' );
+				} elseif ( 'phone' === $font_size_key ) {
+					$media_query = ET_Builder_Element::get_media_query( 'max_width_767' );
+				}
+
+				$font_size_value_int  = (int) $font_size_value;
+				$font_size_value_unit = str_replace( $font_size_value_int, '', $font_size_value );
+				$font_size_value_half = 0 < $font_size_value_int ? $font_size_value_int / 2 : 0;
+				$font_size_value_half = (string) $font_size_value_half . $font_size_value_unit;
+				ET_Builder_Element::set_style( $render_slug, array(
+					'selector'    => $icon_selector,
+					'declaration' => sprintf(
+						'font-size:%1$s; border-radius:%1$s; top:-%2$s; margin-left:-%2$s;',
+						esc_html( $font_size_value ),
+						esc_html( $font_size_value_half )
+					),
+					'media_query' => $media_query,
+				) );
+			}
+
+			// Icon hover styles.
+			if ( et_builder_is_hover_enabled( 'icon_font_size', $this->props ) && '' !== $icon_font_size_hover ) {
+				$icon_font_size_hover_int  = (int) $icon_font_size_hover;
+				$icon_font_size_hover_unit = str_replace( $icon_font_size_hover_int, '', $icon_font_size_hover );
+				$icon_font_size_hover_half = 0 < $icon_font_size_hover_int ? $icon_font_size_hover_int / 2 : 0;
+				$icon_font_size_hover_half = (string) $icon_font_size_hover_half . $icon_font_size_hover_unit;
+				ET_Builder_Element::set_style( $render_slug, array(
+					'selector'    => $this->add_hover_to_order_class( $icon_selector ),
+					'declaration' => sprintf(
+						'font-size:%1$s; border-radius:%1$s; top:-%2$s; margin-left:-%2$s;',
+						esc_html( $icon_font_size_hover ),
+						esc_html( $icon_font_size_hover_half )
+					),
+				) );
+			}
+		}
 
 		$video_background = $this->video_background();
 		$parallax_image_background = $this->get_parallax_image_background();
 
-		if ( '' !== $portrait_url ) {
-			$portrait_image = sprintf(
-				'<div class="et_pb_testimonial_portrait" style="background-image: url(%1$s);">
-				</div>',
-				esc_attr( $portrait_url )
-			);
+		$portrait_image = $multi_view->render_element( array(
+			'tag'   => 'div',
+			'attrs' => array(
+				'class' => 'et_pb_testimonial_portrait',
+			),
+			'styles' => array(
+				'background-image' => 'url({{portrait_url}})',
+			),
+			'required' => 'portrait_url',
+		) );
+
+		$metas = array();
+
+		// Job title data.
+		$job_title = $multi_view->render_element( array(
+			'content' => '{{job_title}}',
+			'attrs'   => array(
+				'class' => 'et_pb_testimonial_position',
+			)
+		) );
+
+		if ( $job_title ) {
+			$metas['job_title'] = $job_title;
 		}
 
-		if ( '' !== $url && ( '' !== $company_name || '' !== $author ) ) {
-			$link_output = sprintf( '<a href="%1$s"%3$s>%2$s</a>',
-				esc_url( $url ),
-				( '' !== $company_name ? esc_html( $company_name ) : esc_html( $author ) ),
-				( 'on' === $url_new_window ? ' target="_blank"' : '' )
-			);
+		// Company name data.
+		$company_name = $multi_view->render_element( array(
+			'content' => '{{company_name}}',
+			'attrs'   => array(
+				'class' => 'et_pb_testimonial_company',
+			)
+		) );
 
-			if ( '' !== $company_name ) {
-				$company_name = $link_output;
-			} else {
-				$author = $link_output;
-			}
+		if ( $company_name ) {
+			$metas['company_name'] = $company_name;
 		}
+
+		// Author data.
+		$author = $multi_view->render_element( array(
+			'tag'      => 'span',
+			'content'  => '{{author}}',
+			'attrs'    => array(
+				'class' => 'et_pb_testimonial_author',
+			),
+		) );
 
 		// Images: Add CSS Filters and Mix Blend Mode rules (if set)
 		if ( array_key_exists( 'image', $this->advanced_fields ) && array_key_exists( 'css', $this->advanced_fields['image'] ) ) {
@@ -384,15 +643,18 @@ class ET_Builder_Module_Testimonial extends ET_Builder_Module {
 		// Module classnames
 		$this->add_classname( array(
 			'clearfix',
-			"et_pb_bg_layout_{$background_layout}",
 			$this->get_text_orientation_classname(),
 		) );
 
-		if ( 'off' === $quote_icon ) {
+		// Background layout class names.
+		$background_layout_class_names = et_pb_background_layout_options()->get_background_layout_class( $this->props );
+		$this->add_classname( $background_layout_class_names );
+
+		if ( ! $multi_view->has_value( 'quote_icon', 'on', 'desktop' ) ) {
 			$this->add_classname( 'et_pb_icon_off' );
 		}
 
-		if ( '' === $portrait_image ) {
+		if ( ! $multi_view->has_value( 'portrait_url', 'desktop' ) ) {
 			$this->add_classname( 'et_pb_testimonial_no_image' );
 		}
 
@@ -400,41 +662,137 @@ class ET_Builder_Module_Testimonial extends ET_Builder_Module {
 			$this->add_classname( 'et_pb_testimonial_no_bg' );
 		}
 
+		// Background layout data attributes.
+		$data_background_layout = et_pb_background_layout_options()->get_background_layout_attrs( $this->props );
+
+		if ( 'on' === $use_background_color ) {
+			ET_Builder_Element::set_style( $render_slug, array(
+				'selector'    => '%%order_class%%.et_pb_testimonial',
+				'declaration' => sprintf(
+					'background-color: %1$s;',
+					esc_html( $background_color )
+				),
+			) );
+
+			if ( et_builder_is_hover_enabled( 'background_color', $this->props ) ) {
+				ET_Builder_Element::set_style( $render_slug, array(
+					'selector'    => $this->add_hover_to_order_class( '%%order_class%%.et_pb_testimonial' ),
+					'declaration' => sprintf(
+						'background-color: %1$s;',
+						esc_html( $background_color_hover )
+					),
+				) );
+			}
+		}
+
+		$multi_view_testimonial_content = $multi_view->render_element(
+			array(
+				'tag'     => 'div',
+				'content' => '{{content}}',
+				'attrs'   => array(
+					'class' => 'et_pb_testimonial_content',
+				),
+			)
+		);
+
+		$multi_view_icon_off_data_attr = $multi_view->render_attrs( array(
+			'classes' => array(
+				'et_pb_icon_off' => array(
+					'quote_icon' => 'off',
+				),
+				'et_pb_testimonial_no_image' => array(
+					'portrait_url' => '__empty',
+				),
+			),
+		) );
+
 		$output = sprintf(
-			'<div%3$s class="%4$s"%8$s>
-				%10$s
+			'<div%3$s class="%4$s"%10$s%11$s>
 				%9$s
+				%8$s
 				%7$s
 				<div class="et_pb_testimonial_description">
-					<div class="et_pb_testimonial_description_inner">
-					%1$s
-					<strong class="et_pb_testimonial_author">%2$s</strong>
-					<p class="et_pb_testimonial_meta">%5$s%6$s</p>
-					</div> <!-- .et_pb_testimonial_description_inner -->
+					<div class="et_pb_testimonial_description_inner">%1$s</div> <!-- .et_pb_testimonial_description_inner -->
+					%2$s
+					<p class="et_pb_testimonial_meta">%5$s</p>
 				</div> <!-- .et_pb_testimonial_description -->
 			</div> <!-- .et_pb_testimonial -->',
-			$this->content,
-			$author,
+			$multi_view_testimonial_content,
+			et_core_esc_previously( $author ),
 			$this->module_id(),
 			$this->module_classname( $render_slug ),
-			( '' !== $job_title ? esc_html( $job_title ) : '' ),
-			( '' !== $company_name
-				? sprintf( '%2$s%1$s',
-					$company_name,
-					( '' !== $job_title ? ', ' : '' )
-				)
-				: ''
-			),
-			( '' !== $portrait_image ? $portrait_image : '' ),
-			( 'on' === $use_background_color
-				? sprintf( ' style="background-color: %1$s;"', esc_attr( $background_color ) )
-				: ''
-			),
+			et_core_esc_previously( implode( ', ', $metas ) ), // #5
+			'', // Deprecated
+			$portrait_image,
 			$video_background,
-			$parallax_image_background
+			$parallax_image_background,
+			et_core_esc_previously( $data_background_layout ), // #10
+			et_core_esc_previously( $multi_view_icon_off_data_attr )
 		);
 
 		return $output;
+	}
+
+	/**
+	 * Filter multi view value.
+	 *
+	 * @since 3.27.1
+	 *
+	 * @see ET_Builder_Module_Helper_MultiViewOptions::filter_value
+	 *
+	 * @param mixed $raw_value Props raw value.
+	 * @param array $args {
+	 *     Context data.
+	 *
+	 *     @type string $context      Context param: content, attrs, visibility, classes.
+	 *     @type string $name         Module options props name.
+	 *     @type string $mode         Current data mode: desktop, hover, tablet, phone.
+	 *     @type string $attr_key     Attribute key for attrs context data. Example: src, class, etc.
+	 *     @type string $attr_sub_key Attribute sub key that availabe when passing attrs value as array such as styes. Example: padding-top, margin-botton, etc.
+	 * }
+	 * @param ET_Builder_Module_Helper_MultiViewOptions $multi_view Multiview object instance.
+	 *
+	 * @return mixed
+	 */
+	public function multi_view_filter_value( $raw_value, $args, $multi_view ) {
+		$context            = et_()->array_get( $args, 'context', '' );
+		$name               = et_()->array_get( $args, 'name', '' );
+		$mode               = et_()->array_get( $args, 'mode', '' );
+		$url                = $this->props['url'];
+		$link_target        = 'on' === $this->props['url_new_window'] ? ' target="_blank"' : '';
+		$fields_need_escape = array(
+			'author',
+			'job_title',
+			'company_name',
+		);
+
+		if ( ! $raw_value ) {
+			return $raw_value;
+		}
+
+		if ( $raw_value && 'content' === $context && in_array( $name, $fields_need_escape, true ) ) {
+			$raw_value = $this->_esc_attr( $multi_view->get_name_by_mode( $name, $mode ) );
+
+			if ( $url && $raw_value ) {
+				if ( 'author' === $name && ! $this->_esc_attr( $multi_view->get_name_by_mode( 'company_name', $mode ) ) ) {
+					$raw_value = sprintf(
+						'<a href="%2$s" target="%3$s">%1$s</a>',
+						$raw_value,
+						esc_url( $url ),
+						esc_attr( $link_target )
+					);
+				} elseif ( 'company_name' === $name ) {
+					$raw_value = sprintf(
+						'<a href="%2$s" target="%3$s">%1$s</a>',
+						$raw_value,
+						esc_url( $url ),
+						esc_attr( $link_target )
+					);
+				}
+			}
+		}
+
+		return $raw_value;
 	}
 }
 

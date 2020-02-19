@@ -133,6 +133,14 @@ abstract class ET_Core_API_Service {
 	public $http_auth = false;
 
 	/**
+	 * Maximum number of accounts user is allowed to add for the service.
+	 *
+	 * @since 4.0.7
+	 * @var int
+	 */
+	public $max_accounts;
+
+	/**
 	 * The service's proper name (will be shown in the UI).
 	 *
 	 * @since 1.1.0
@@ -223,7 +231,7 @@ abstract class ET_Core_API_Service {
 	 * @param string $api_key      The api key for the account. Optional (can be set after instantiation).
 	 */
 	public function __construct( $owner = 'ET_Core', $account_name = '', $api_key = '' ) {
-		$this->account_name   = sanitize_text_field( $account_name );
+		$this->account_name   = str_replace( '.', '', sanitize_text_field( $account_name ) );
 		$this->owner          = sanitize_text_field( $owner );
 		$this->account_fields = $this->get_account_fields();
 
@@ -357,6 +365,8 @@ abstract class ET_Core_API_Service {
 	 * @return array|bool
 	 */
 	public function authenticate() {
+		et_core_nonce_verified_previously();
+
 		if ( '1.0a' === $this->oauth_version || ( '2.0' === $this->oauth_version && ! empty( $_GET['code'] ) ) ) {
 			$authenticated = $this->_do_oauth_access_token_request();
 
@@ -365,10 +375,11 @@ abstract class ET_Core_API_Service {
 				return true;
 			}
 		} else if ( '2.0' === $this->oauth_version ) {
-			$args = array(
+			$nonce = wp_create_nonce( 'et_core_api_service_oauth2' );
+			$args  = array(
 				'client_id'     => $this->data['api_key'],
 				'response_type' => 'code',
-				'state'         => rawurlencode( "ET_Core|{$this->name}|{$this->account_name}" ),
+				'state'         => rawurlencode( "ET_Core|{$this->name}|{$this->account_name}|{$nonce}" ),
 				'redirect_uri'  => $this->REDIRECT_URL,
 			);
 
