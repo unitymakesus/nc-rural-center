@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.2.0] - 2020-02-19
+
+### Fixed
+
+* Removed the extra itemprop span from around the last element in list
+
 ## [1.1.0] - 2017-09-24
 
 ### Added

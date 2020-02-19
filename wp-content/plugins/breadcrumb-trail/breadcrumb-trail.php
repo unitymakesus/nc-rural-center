@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: Breadcrumb Trail
- * Plugin URI:  https://themehybrid.com/plugins/breadcrumb-trail
+ * Plugin Name: Breadcrumb Trail (forked from Justin Tadlock's)
+ * Plugin URI:  https://github.com/unitymakesus/breadcrumb-trail
  * Description: A smart breadcrumb menu plugin embedded with <a href="http://schema.org">Schema.org</a> microdata that can handle variations in site structure more accurately than any other breadcrumb plugin for WordPress. Insert into your theme with the <code>breadcrumb_trail()</code> template tag.
- * Version:     1.1.0
- * Author:      Justin Tadlock
- * Author URI:  https://themehybrid.com
+ * Version:     1.2.0
+ * Author:      Alisa Herr
+ * Author URI:  https://www.unitymakes.us/
  * Text Domain: breadcrumb-trail
  * Domain Path: /lang
  */
